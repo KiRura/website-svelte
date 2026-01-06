@@ -88,9 +88,10 @@
 					class={cx(link(), css({ fontWeight: "bold", fontSize: "xl" }))}
 					aria-label="ホーム"
 				>
-					<!-- svelte-ignore a11y_missing_attribute -->
 					<enhanced:img
+						aria-hidden="true"
 						src={kiruraIcon}
+						alt="きるらのアイコン Kの文字"
 						class={css({ boxSize: "8", maxW: "8", rounded: "full" })}
 					/>
 					<span class={css({ hideBelow: "sm" })}> KiRura </span>

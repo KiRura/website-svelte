@@ -10,6 +10,7 @@
 <button
 	class={cx(button({ variant: "outline" }), css({ p: "0" }))}
 	onclick={() => (theme.theme = theme.theme === "light" ? "dark" : "light")}
+	aria-label={`${theme.resolvedTheme === "light" ? "ダーク" : "ライト"}モードに切り替える`}
 >
 	{#if theme.resolvedTheme === "light"}
 		<Sun />
