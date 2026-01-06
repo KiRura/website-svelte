@@ -50,7 +50,7 @@
 					})}
 				>
 					<enhanced:img
-						src={`${data.coverImage.url}?blur=256&saturation=1.5`}
+						src={`${data.coverImage.url}?blur=192&saturation=1.5&fm=webp`}
 						alt={data.coverImage.alt}
 						class={css({
 							pos: "absolute",

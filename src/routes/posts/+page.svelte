@@ -31,9 +31,14 @@
 				>
 					{#if post.coverImage}
 						<enhanced:img
-							src={post.coverImage.url}
+							src={`${post.coverImage.url}?w=900&fm=webp`}
 							alt={post.coverImage.alt}
-							class={css({ w: "full", maxH: "40", objectFit: "cover" })}
+							class={css({
+								w: "full",
+								maxH: "40",
+								h: `${post.coverImage.height}px`,
+								objectFit: "cover",
+							})}
 						/>
 						<span class={separator()}></span>
 					{/if}
