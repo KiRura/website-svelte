@@ -4,7 +4,8 @@
 	import kiruraIcon from "$lib/assets/kirura/512p.png?w=128";
 
 	import "../app.css";
-	import favicon from "$lib/assets/favicon.svg";
+	import favicon from "$lib/assets/kirura/rounded/favicon.ico";
+	import icon from "$lib/assets/kirura/512p.png";
 	import {
 		button,
 		emptyState,
@@ -42,6 +43,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<link rel="shortcut icon" href={icon} />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link
 		rel="preconnect"
@@ -52,6 +54,13 @@
 		href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=M+PLUS+1+Code:wght@100..700&family=Noto+Sans+JP:wght@100..900&display=swap"
 		rel="stylesheet"
 	/>
+	<title>きるら</title>
+	<meta name="description" content="しがないSvelteサイト" />
+	<meta name="og:type" content="website" />
+	<meta name="og:image" content={icon} />
+	<meta name="og:locale" content="ja_JP" />
+	<meta name="theme-color" content="#FFBF7F" />
+	<meta name="twitter:card" content="summary" />
 </svelte:head>
 
 <SvelteTheme attribute="data-color-mode">
