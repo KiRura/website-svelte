@@ -1,16 +1,52 @@
 <script lang="ts">
-	let { data } = $props();
+	import { css, cx } from "styled-system/css";
+	import { linkOverlay } from "styled-system/patterns";
+	import { card, container, separator, timeline } from "styled-system/recipes";
+
+	const { data } = $props();
 </script>
 
-<div>
+<main class={cx(timeline().root, container(), css({ maxW: "2xl", py: "8" }))}>
 	{#each data.contents as post}
-		<a href={`/posts/${post.id}`}>
-			<article>
-				<h2>{post.title}</h2>
-				{#if post.subtitle}
-					<h3>{post.subtitle}</h3>
-				{/if}
+		<div class={timeline().item}>
+			<div class={timeline().connector}>
+				<div class={timeline().separator}></div>
+				<div class={timeline().indicator}></div>
+			</div>
+			<article class={timeline().content}>
+				<time class={timeline().description} datetime={post.publishedAt}
+					>{post.publishedAt}</time
+				>
+				<a
+					class={cx(
+						card({ size: "sm", variant: "elevated" }).root,
+						css({
+							_hover: { bgColor: "bg.muted" },
+							transition: "background",
+							"&[data-hasimage]": { roundedTop: "none" },
+						}),
+					)}
+					data-hasimage={post.coverImage || undefined}
+					href={`/posts/${post.id}`}
+				>
+					{#if post.coverImage}
+						<enhanced:img
+							src={post.coverImage.url}
+							alt={post.coverImage.alt}
+							class={css({ w: "full", maxH: "40", objectFit: "cover" })}
+						/>
+						<span class={separator()}></span>
+					{/if}
+					<div class={card().body}>
+						<hgroup>
+							<h1 class={card().title}>{post.title}</h1>
+							{#if post.subtitle}
+								<p class={card().description}>{post.subtitle}</p>
+							{/if}
+						</hgroup>
+					</div>
+				</a>
 			</article>
-		</a>
+		</div>
 	{/each}
-</div>
+</main>

@@ -1,6 +1,6 @@
-import type { LayoutServerLoad } from "./$types";
+import type { PageServerLoad } from "./$types";
 
-export const load: LayoutServerLoad = async ({ setHeaders }) => {
+export const load: PageServerLoad = async ({ setHeaders }) => {
 	setHeaders({
 		"cache-control": "max-age=31536000",
 	});
