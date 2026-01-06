@@ -18,7 +18,11 @@ const schema = z
 
 export const prerender = true;
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ setHeaders }) => {
+	setHeaders({
+		"cache-control": "max-age=3600",
+	});
+
 	const [prod, dev] = await Promise.all([
 		exec("./node_modules/.bin/license-report --only=prod"),
 		exec("./node_modules/.bin/license-report --only=dev"),

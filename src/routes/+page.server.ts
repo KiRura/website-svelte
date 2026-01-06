@@ -5,3 +5,5 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 		"cache-control": "max-age=31536000",
 	});
 };
+
+export const prerender = true;
