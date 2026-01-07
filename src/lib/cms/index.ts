@@ -1,11 +1,7 @@
-import {
-	createClient,
-	type MicroCMSContentId,
-	type MicroCMSDate,
-	type MicroCMSQueries,
-} from "microcms-js-sdk";
+import { createClient, type MicroCMSQueries } from "microcms-js-sdk";
 import type { Post, PostWithContent } from "../../interface/cms";
 import { MICROCMS_API_KEY } from "$env/static/private";
+import { error } from "@sveltejs/kit";
 
 const cmsClient = createClient({
 	serviceDomain: "kirura",
@@ -23,16 +19,17 @@ export async function getPosts(queries?: MicroCMSQueries) {
 }
 
 export async function getPost(id: string) {
-	let post: PostWithContent & MicroCMSContentId & MicroCMSDate;
-
+	// status codeぐらい取得させてくれないか？
 	try {
-		post = await cmsClient.getListDetail<PostWithContent>({
+		return await cmsClient.getListDetail<PostWithContent>({
 			endpoint: "blog",
 			contentId: id,
 		});
-	} catch (error) {
-		return { error: String(error) };
+	} catch (e) {
+		console.error(e);
+		error(404, {
+			message:
+				"多分404\nhttps://github.com/microcmsio/microcms-js-sdk/issues/47",
+		});
 	}
-
-	return post;
 }
