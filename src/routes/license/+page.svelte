@@ -8,6 +8,11 @@
 	const { data }: PageProps = $props();
 </script>
 
+<svelte:head>
+	<title>ライセンス</title>
+	<meta name="description" content="本当に、有り難う" />
+</svelte:head>
+
 <main
 	class={cx(
 		grid({ columns: { mdDown: 1, md: 2 }, gap: "4" }),
