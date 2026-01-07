@@ -19,7 +19,7 @@
 	import type { LayoutProps } from "./$types";
 	import { SvelteTheme, useTheme } from "svelte-themes";
 	import { css, cx } from "styled-system/css";
-	import { Icon, PenTool, Scale } from "@lucide/svelte";
+	import { Github, Icon, PenTool, Scale } from "@lucide/svelte";
 	import { navigating } from "$app/state";
 	import { hstack } from "styled-system/patterns";
 	import { page as appPage } from "$app/state";
@@ -39,6 +39,15 @@
 			icon: Scale,
 		},
 	];
+
+	const headerCSS = css({
+		bg: "bg/80",
+		backdropFilter: "blur({blurs.md})",
+		borderWidth: "1px",
+		rounded: "md",
+		shadow: "sm",
+		p: "2",
+	});
 </script>
 
 <svelte:head>
@@ -66,11 +75,10 @@
 <SvelteTheme attribute="data-color-mode">
 	<header
 		class={css({
-			borderBottomWidth: "1px",
 			top: "0",
 			pos: "sticky",
 			zIndex: "docked",
-			bgColor: "bg",
+			py: "2",
 		})}
 	>
 		<div
@@ -82,7 +90,7 @@
 				}),
 			)}
 		>
-			<nav class={hstack({ py: "2", gap: "8" })}>
+			<nav class={cx(hstack({ gap: "8", px: "3" }), headerCSS)}>
 				<a
 					href="/"
 					class={cx(link(), css({ fontWeight: "bold", fontSize: "xl" }))}
@@ -132,7 +140,15 @@
 					{/each}
 				</div>
 			</nav>
-			<div class={hstack()}>
+			<div class={cx(hstack(), headerCSS)}>
+				<a
+					class={cx(button({ variant: "outline" }), css({ p: "0" }))}
+					href="https://github.com/KiRura/website-svelte"
+					target="_blank"
+					referrerpolicy="no-referrer"
+				>
+					<Github />
+				</a>
 				<ColorModeButton />
 			</div>
 		</div>
