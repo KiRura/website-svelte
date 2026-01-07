@@ -36,6 +36,8 @@
 						<enhanced:img
 							src={`${post.coverImage.url}?w=900&fm=webp`}
 							alt={post.coverImage.alt}
+							fetchpriority="high"
+							loading="lazy"
 							class={css({
 								w: "full",
 								maxH: "40",

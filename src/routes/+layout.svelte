@@ -136,7 +136,7 @@
 							data-loading={navigating.to?.route.id?.startsWith(page.href) ||
 								undefined}
 						>
-							<page.icon />{page.label}
+							<page.icon aria-hidden />{page.label}
 						</a>
 					{/each}
 				</div>
@@ -147,8 +147,9 @@
 					href="https://github.com/KiRura/website-svelte"
 					target="_blank"
 					referrerpolicy="no-referrer"
+					aria-label="ソースコード"
 				>
-					<Github />
+					<Github aria-hidden />
 				</a>
 				<ColorModeButton />
 			</div>

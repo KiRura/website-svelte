@@ -62,6 +62,7 @@
 					<enhanced:img
 						src={`${data.coverImage.url}?blur=192&saturation=1.5&fm=webp`}
 						alt={data.coverImage.alt}
+						fetchpriority="high"
 						class={css({
 							pos: "absolute",
 							w: "full",

@@ -72,10 +72,10 @@
 		positioning={{ placement: "bottom-end" }}
 	>
 		<Select.Control class={select.control}>
-			<Select.Trigger class={selectTrigger}>
+			<Select.Trigger class={selectTrigger} aria-label="テーマ切り替え">
 				<Select.Context>
 					{#snippet render(selected)}
-						<Select.ValueText placeholder="Loading..." class={select.valueText}>
+						<Select.ValueText class={select.valueText} aria-hidden="true">
 							{@const Icon = themes.items.find(
 								(theme) => theme.value === selected().value[0],
 							)?.label.icon}
@@ -102,10 +102,16 @@
 							{#if item.value !== theme.theme}
 								<div class={bleed({ w: "4" })}></div>
 							{/if}
-							<Select.ItemIndicator class={select.itemIndicator}>
+							<Select.ItemIndicator
+								class={select.itemIndicator}
+								aria-label="選択中"
+							>
 								<Check />
 							</Select.ItemIndicator>
-							<item.label.icon class={icon({ size: "md" })} />
+							<item.label.icon
+								class={icon({ size: "md" })}
+								aria-label={item.label.name}
+							/>
 						</Select.Item>
 					{/each}
 				</Select.Content>
