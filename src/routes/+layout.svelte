@@ -15,13 +15,14 @@
 		container,
 		link,
 		select,
+		separator,
 	} from "styled-system/recipes";
 	import type { LayoutProps } from "./$types";
 	import { SvelteTheme, useTheme } from "svelte-themes";
 	import { css, cx } from "styled-system/css";
 	import { Github, Icon, PenTool, Scale } from "@lucide/svelte";
 	import { navigating } from "$app/state";
-	import { hstack } from "styled-system/patterns";
+	import { divider, hstack } from "styled-system/patterns";
 	import { page as appPage } from "$app/state";
 	import ColorModeButton from "../component/ColorModeButton.svelte";
 
@@ -142,7 +143,7 @@
 			</nav>
 			<div class={cx(hstack(), headerCSS)}>
 				<a
-					class={cx(button({ variant: "outline" }), css({ p: "0" }))}
+					class={cx(button({ variant: "ghost" }), css({ p: "0" }))}
 					href="https://github.com/KiRura/website-svelte"
 					target="_blank"
 					referrerpolicy="no-referrer"

@@ -25,6 +25,14 @@
 	import { useTheme } from "svelte-themes";
 
 	const select = selectRecipe();
+	const selectTrigger = cx(
+		select.trigger,
+		css({
+			border: "none",
+			_hover: { bg: "bg.subtle" },
+			transition: "background",
+		}),
+	);
 
 	const theme = useTheme();
 	let selectedTheme = $derived([theme.theme]);
@@ -45,7 +53,7 @@
 				defaultValue={["Sun"]}
 				class={select.root}
 			>
-				<Select.Trigger class={select.trigger}>
+				<Select.Trigger class={selectTrigger}>
 					<Sun />
 					<Select.Indicator class={select.indicator}>
 						<ChevronDown />
@@ -64,7 +72,7 @@
 		positioning={{ placement: "bottom-end" }}
 	>
 		<Select.Control class={select.control}>
-			<Select.Trigger class={select.trigger}>
+			<Select.Trigger class={selectTrigger}>
 				<Select.Context>
 					{#snippet render(selected)}
 						<Select.ValueText placeholder="Loading..." class={select.valueText}>
