@@ -18,6 +18,16 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{data.title}</title>
+	<meta name="description" content={data.subtitle ?? ""} />
+	<meta name="og:sitename" content="きるら" />
+	{#if data.coverImage}
+		<meta name="og:image" content={`${data.coverImage.url}?fm=webp`} />
+		<meta name="twitter:card" content="summary_large_image" />
+	{/if}
+</svelte:head>
+
 <main
 	class={cx(
 		container(),

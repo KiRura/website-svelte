@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { css, cx } from "styled-system/css";
-	import { linkOverlay } from "styled-system/patterns";
 	import { card, container, separator, timeline } from "styled-system/recipes";
 
 	const { data } = $props();
 </script>
+
+<svelte:head>
+	<title>呟き</title>
+</svelte:head>
 
 <main class={cx(timeline().root, container(), css({ maxW: "2xl", py: "8" }))}>
 	{#each data.contents as post}
