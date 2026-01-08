@@ -5,22 +5,13 @@
 		Portal,
 		Select,
 	} from "@ark-ui/svelte";
-	import {
-		Check,
-		ChevronDown,
-		Moon,
-		Sun,
-		SunMoon,
-		type Icon,
-	} from "@lucide/svelte";
+	import { Check, ChevronDown, Moon, Sun, SunMoon } from "@lucide/svelte";
 	import { css, cx } from "styled-system/css";
-	import { bleed, flex, hstack } from "styled-system/patterns";
+	import { bleed } from "styled-system/patterns";
 	import {
-		button,
 		icon,
 		select as selectRecipe,
 		skeleton,
-		spinner,
 	} from "styled-system/recipes";
 	import { useTheme } from "svelte-themes";
 

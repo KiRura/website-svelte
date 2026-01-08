@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/state";
-	import { Bomb, CircleX } from "@lucide/svelte";
+	import { CircleX } from "@lucide/svelte";
 	import { css, cx } from "styled-system/css";
 	import { container, emptyState } from "styled-system/recipes";
 	import ZZZ from "../component/ZZZ.svelte";

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { container, heading } from "styled-system/recipes";
 	import { css, cx } from "styled-system/css";
-	import { box, center, flex } from "styled-system/patterns";
+	import { center } from "styled-system/patterns";
 
 	const { data } = $props();
 
@@ -354,6 +354,7 @@
 				},
 			})}
 		>
+			<!--eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html data.content}
 		</div>
 	</article>

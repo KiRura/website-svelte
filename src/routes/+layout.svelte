@@ -1,34 +1,25 @@
 <script lang="ts">
-	// @ts-expect-error
-	// fuck
-	import kiruraIcon from "$lib/assets/kirura/512p.png?w=128";
+	// import kiruraIcon from "$lib/assets/kirura/512p.png?w=128";
+	import kiruraIcon from "$lib/assets/kirura/512p.png";
 
 	import "../app.css";
 	import favicon from "$lib/assets/kirura/rounded/favicon.ico";
 	import icon from "$lib/assets/kirura/512p.png";
-	import {
-		button,
-		emptyState,
-		progress,
-		progressCircle,
-		spinner,
-		container,
-		link,
-		select,
-		separator,
-	} from "styled-system/recipes";
+	import { button, container, link } from "styled-system/recipes";
 	import type { LayoutProps } from "./$types";
-	import { SvelteTheme, useTheme } from "svelte-themes";
+	import { SvelteTheme } from "svelte-themes";
 	import { css, cx } from "styled-system/css";
 	import { Github, Icon, PenTool, Scale } from "@lucide/svelte";
 	import { navigating } from "$app/state";
-	import { divider, hstack } from "styled-system/patterns";
+	import { hstack } from "styled-system/patterns";
 	import { page as appPage } from "$app/state";
 	import ColorModeButton from "../component/ColorModeButton.svelte";
+	import { resolve } from "$app/paths";
+	import type { Pathname } from "$app/types";
 
 	const { children }: LayoutProps = $props();
 
-	const pages: { label: string; href: string; icon: typeof Icon }[] = [
+	const pages: { label: string; href: Pathname; icon: typeof Icon }[] = [
 		{
 			label: "呟き",
 			href: "/posts",
@@ -92,7 +83,7 @@
 		>
 			<nav class={cx(hstack({ gap: "8", px: "3" }), headerCSS)}>
 				<a
-					href="/"
+					href={resolve("/")}
 					class={cx(link(), css({ fontWeight: "bold", fontSize: "xl" }))}
 					aria-label="ホーム"
 				>
@@ -105,7 +96,7 @@
 					<span class={css({ hideBelow: "sm" })}> KiRura </span>
 				</a>
 				<div class={hstack({ gap: "6" })}>
-					{#each pages as page}
+					{#each pages as page (`page-${page.label}-${page.href}`)}
 						<a
 							class={cx(
 								button({ variant: "plain" }),
@@ -129,7 +120,7 @@
 									transitionProperty: "color, border",
 								}),
 							)}
-							href={page.href}
+							href={resolve(page.href)}
 							data-selected={appPage.route.id?.startsWith(page.href) ||
 								undefined}
 							data-loading={navigating.to?.route.id?.startsWith(page.href) ||

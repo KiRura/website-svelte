@@ -1,6 +1,6 @@
 <script>
 	import { css, cx } from "styled-system/css";
-	import { heading, container, separator } from "styled-system/recipes";
+	import { container, separator } from "styled-system/recipes";
 	import ZZZ from "../component/ZZZ.svelte";
 	import { center } from "styled-system/patterns";
 	import { dev } from "$app/environment";

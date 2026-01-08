@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from "$app/paths";
 	import { css, cx } from "styled-system/css";
 	import { card, container, separator, timeline } from "styled-system/recipes";
 
@@ -10,7 +11,7 @@
 </svelte:head>
 
 <main class={cx(timeline().root, container(), css({ maxW: "2xl", py: "8" }))}>
-	{#each data.contents as post}
+	{#each data.contents as post (`posts-${post.id}`)}
 		<div class={timeline().item}>
 			<div class={timeline().connector}>
 				<div class={timeline().separator}></div>
@@ -30,7 +31,7 @@
 						}),
 					)}
 					data-hasimage={post.coverImage || undefined}
-					href={`/posts/${post.id}`}
+					href={resolve(`/posts/${post.id}`)}
 				>
 					{#if post.coverImage}
 						<enhanced:img

@@ -20,7 +20,7 @@
 		css({ maxW: "4xl", py: "4" }),
 	)}
 >
-	{#each data.categories as category}
+	{#each data.categories as category (`deps-category-${category.label}`)}
 		<section class={css({ spaceY: "2" })}>
 			<h2 class={heading()}>
 				{category.label}
@@ -33,7 +33,7 @@
 				)}
 			>
 				<tbody class={table().body}>
-					{#each category.deps as dep}
+					{#each category.deps as dep (`dep-${dep.name}`)}
 						<tr class={cx(table().row, css({ _odd: { bgColor: "bg.panel" } }))}>
 							<td
 								class={cx(
