@@ -154,7 +154,7 @@
 			</div>
 		</div>
 	</header>
-	{#if navigating.type !== null}
+	<!-- {#if navigating.type !== null}
 		<main class={cx(container(), emptyState().root)}>
 			<div class={emptyState().content}>
 				<div class={emptyState().indicator}>
@@ -165,7 +165,7 @@
 				</h2>
 			</div>
 		</main>
-	{:else}
-		{@render children()}
-	{/if}
+	{:else} -->
+	{@render children()}
+	<!-- {/if} -->
 </SvelteTheme>
