@@ -42,8 +42,7 @@
 	];
 
 	const headerCSS = css({
-		bg: "bg/80",
-		backdropFilter: "blur({blurs.md})",
+		bg: "bg",
 		borderWidth: "1px",
 		rounded: "md",
 		shadow: "sm",
