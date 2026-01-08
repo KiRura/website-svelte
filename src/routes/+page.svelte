@@ -1,12 +1,13 @@
 <script>
 	import { css, cx } from "styled-system/css";
 	import { heading, container, separator } from "styled-system/recipes";
-	import ZZZ from "../component/ZZZ.svelte";
+	// import ZZZ from "../component/ZZZ.svelte";
+	import ZZZ2 from "../component/ZZZ2.svelte";
 	import { center } from "styled-system/patterns";
 	import { dev } from "$app/environment";
 </script>
 
-<ZZZ
+<!-- <ZZZ
 	class={css.raw({
 		pos: "absolute",
 		top: "0",
@@ -30,7 +31,8 @@
 			gradientTo: "bg",
 		},
 	})}
-/>
+/> -->
+<ZZZ2 columns={5} />
 <main>
 	<div class={container()}>
 		<section
