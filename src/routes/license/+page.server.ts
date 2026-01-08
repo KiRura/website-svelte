@@ -20,7 +20,7 @@ export const prerender = true;
 
 export const load: PageServerLoad = async ({ setHeaders }) => {
 	setHeaders({
-		"cache-control": "max-age=3600",
+		"cache-control": "no-cache, public",
 	});
 
 	const [prod, dev] = await Promise.all([
