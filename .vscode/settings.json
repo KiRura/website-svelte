@@ -7,12 +7,17 @@
 		"editor.defaultFormatter": "prettier.prettier-vscode"
 	},
 	"[svelte]": {
-		"editor.defaultFormatter": "prettier.prettier-vscode"
+		"editor.defaultFormatter": "svelte.svelte-vscode"
 	},
 	"[json]": {
 		"editor.defaultFormatter": "prettier.prettier-vscode"
 	},
 	"[jsonc]": {
 		"editor.defaultFormatter": "prettier.prettier-vscode"
-	}
+	},
+	"[html]": {
+		"editor.defaultFormatter": "prettier.prettier-vscode"
+	},
+	"svelte.enable-ts-plugin": true,
+	"eslint.validate": ["svelte"]
 }
