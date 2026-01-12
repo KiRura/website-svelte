@@ -6,10 +6,6 @@
 	const { data } = $props();
 </script>
 
-<svelte:head>
-	<title>呟き</title>
-</svelte:head>
-
 <main class={cx(timeline().root, container(), css({ maxW: "2xl", py: "8" }))}>
 	{#each data.contents as post (`posts-${post.id}`)}
 		<div class={timeline().item}>

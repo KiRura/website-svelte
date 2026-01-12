@@ -4,7 +4,6 @@
 
 	import "../app.css";
 	import favicon from "$lib/assets/kirura/rounded/favicon.ico";
-	import icon from "$lib/assets/kirura/512p.png";
 	import { button, container, link } from "styled-system/recipes";
 	import type { LayoutProps } from "./$types";
 	import { SvelteTheme } from "svelte-themes";
@@ -16,8 +15,13 @@
 	import ColorModeButton from "../component/ColorModeButton.svelte";
 	import { resolve } from "$app/paths";
 	import type { Pathname } from "$app/types";
+	import { deepMerge, MetaTags } from "svelte-meta-tags";
 
-	const { children }: LayoutProps = $props();
+	const { data, children }: LayoutProps = $props();
+
+	const metaTags = $derived(
+		deepMerge(data.baseMetaTags, appPage.data.pageMetaTags),
+	);
 
 	const pages: { label: string; href: Pathname; icon: typeof Icon }[] = [
 		{
@@ -43,7 +47,6 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<link rel="shortcut icon" href={icon} />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link
 		rel="preconnect"
@@ -54,14 +57,9 @@
 		href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=M+PLUS+1+Code:wght@100..700&family=Noto+Sans+JP:wght@100..900&display=swap"
 		rel="stylesheet"
 	/>
-	<title>きるら</title>
-	<meta name="description" content="しがないSvelteサイト" />
-	<meta name="og:type" content="website" />
-	<meta name="og:image" content={icon} />
-	<meta name="og:locale" content="ja_JP" />
-	<meta name="theme-color" content="#FFBF7F" />
-	<meta name="twitter:card" content="summary" />
 </svelte:head>
+
+<MetaTags {...metaTags} />
 
 <SvelteTheme attribute="data-color-mode">
 	<header
