@@ -18,6 +18,9 @@
 	"[html]": {
 		"editor.defaultFormatter": "prettier.prettier-vscode"
 	},
+	"[css]": {
+		"editor.defaultFormatter": "prettier.prettier-vscode"
+	},
 	"svelte.enable-ts-plugin": true,
 	"eslint.validate": ["svelte", "typescript", "javascript"]
 }
