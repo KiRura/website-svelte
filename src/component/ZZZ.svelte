@@ -7,11 +7,13 @@
 		class: wrapperClass,
 		disableHighlight,
 		disableOptimize,
+		disableAnimation,
 		text,
 	}: {
 		class?: SystemStyleObject;
 		disableHighlight?: boolean;
 		disableOptimize?: boolean;
+		disableAnimation?: boolean;
 		text?: string;
 	} = $props();
 
@@ -43,6 +45,7 @@
 				data-highlight={(!disableHighlight && num / 2 <= i) || undefined}
 				data-right={i % (columns * 2) >= columns || undefined}
 				data-optimize={(!disableOptimize && columns * 2 <= i) || undefined}
+				data-animate={!disableAnimation || undefined}
 				class={css({
 					fontSize: "16rem",
 					fontWeight: "black",
@@ -52,10 +55,18 @@
 					m: "-2px",
 					lineHeight: 0.9,
 					whiteSpace: "nowrap",
-					animationName: "slide-to-left-full",
-					animationDuration: "37s",
-					animationIterationCount: "infinite",
-					animationTimingFunction: "linear",
+					"&[data-animate]": {
+						animationName: "slide-to-left-full",
+						animationDuration: "37s",
+						animationIterationCount: "infinite",
+						animationTimingFunction: "linear",
+						"&[data-right]": {
+							animationName: "slide-to-right-full",
+						},
+						_motionReduce: {
+							animation: "none",
+						},
+					},
 					"&[data-highlight]": {
 						bg: "orange.400",
 						color: "white/8",
@@ -64,12 +75,6 @@
 						smDown: {
 							display: "none",
 						},
-					},
-					"&[data-right]": {
-						animationName: "slide-to-right-full",
-					},
-					_motionReduce: {
-						animation: "none",
 					},
 				})}
 			>
