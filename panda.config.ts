@@ -5,7 +5,6 @@ export default defineConfig({
 	include: ["./src/**/*.{js,jsx,ts,tsx,svelte}"],
 	outdir: "src/styled-system",
 	minify: true,
-	hash: true,
 	conditions: {
 		light: "[data-color-mode=light] &",
 		dark: "[data-color-mode=dark] &",
