@@ -27,7 +27,7 @@
 						}),
 					)}
 					data-hasimage={post.coverImage || undefined}
-					href={resolve(`/posts/${post.id}`)}
+					href={resolve(`/posts/[id]`, { id: post.id })}
 				>
 					{#if post.coverImage}
 						<enhanced:img
