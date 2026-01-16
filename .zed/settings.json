@@ -1,0 +1,29 @@
+// Folder-specific settings
+//
+// For a full list of overridable settings, and general information on folder-specific settings,
+// see the documentation: https://zed.dev/docs/configuring-zed#settings-files
+{
+	"languages": {
+		"Svelte": {
+			"formatter": "language_server"
+		},
+		"TypeScript": {
+			"formatter": "prettier"
+		},
+		"JavaScript": {
+			"formatter": "prettier"
+		},
+		"JSON": {
+			"formatter": "prettier"
+		},
+		"JSONC": {
+			"formatter": "prettier"
+		},
+		"HTML": {
+			"formatter": "prettier"
+		},
+		"CSS": {
+			"formatter": "prettier"
+		}
+	}
+}

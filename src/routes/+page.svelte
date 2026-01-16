@@ -1,15 +1,10 @@
 <script lang="ts">
 	import { css, cx } from "styled-system/css";
-	import { button, container } from "styled-system/recipes";
+	import { container } from "styled-system/recipes";
 	import ZZZ from "../component/ZZZ.svelte";
 	import { center } from "styled-system/patterns";
 	import { dev } from "$app/environment";
-	import herta from "$lib/assets/herta.webp";
-	import kurukuru from "$lib/assets/kurukuru.webp";
-	import { Presence } from "@ark-ui/svelte";
-
-	let isKurukuru = $state(false);
-	let kurukuruTimeout = $state<NodeJS.Timeout | null>(null);
+	import Herta from "../component/herta.svelte";
 </script>
 
 <ZZZ
@@ -21,7 +16,6 @@
 		h: { "2xlDown": "vh", "2xl": "60rem" },
 		maxH: "full",
 		overflow: "hidden",
-		clipPath: "inset(0)",
 		userSelect: "none",
 		_after: {
 			pos: "absolute",
@@ -78,65 +72,5 @@
 			class={css({ mx: "auto" })}
 		/>
 	</div>
-	<div
-		class={css({
-			w: "fit",
-			mx: "auto",
-			filter: "drop-shadow(0 0 16px {colors.bg/80})",
-		})}
-	>
-		<button
-			class={cx(button({ variant: "plain" }), css({ h: "24" }))}
-			onclick={() => {
-				if (kurukuruTimeout) clearTimeout(kurukuruTimeout);
-				window.scrollTo({ top: 0, behavior: "smooth" });
-				isKurukuru = true;
-				kurukuruTimeout = setTimeout(() => {
-					isKurukuru = false;
-				}, 1000);
-			}}
-		>
-			<!-- data-state="open"の時だけwidthの計算に異常が発生する -->
-			<!-- position: fixedが機能しない -->
-			<!-- ChromeよりFirefoxの方が若干widthが細い差異が見られるためブラウザのバグと判断 -->
-			<Presence
-				present={isKurukuru}
-				class={css({
-					h: "24",
-					pos: "fixed",
-					bottom: "0",
-					zIndex: "docked",
-					_closed: {
-						animationName: "slide-to-bottom-full",
-						animationDuration: "slowest",
-						animationTimingFunction: "ease-in",
-					},
-				})}
-			>
-				<img
-					src={kurukuru}
-					alt="kurukuru~"
-					class={css({ h: "full", objectFit: "cover" })}
-				/>
-			</Presence>
-			<Presence
-				present={!isKurukuru}
-				class={css({
-					h: "full",
-					_open: {
-						animationName: "slide-from-bottom-full",
-						animationDuration: "slowest",
-						animationTimingFunction: "ease-in-smooth",
-					},
-				})}
-			>
-				<img
-					src={herta}
-					alt="herta"
-					loading="lazy"
-					class={css({ h: "full", objectFit: "cover" })}
-				/>
-			</Presence>
-		</button>
-	</div>
+	<Herta />
 </main>
