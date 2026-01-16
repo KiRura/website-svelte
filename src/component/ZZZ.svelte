@@ -16,7 +16,7 @@
 		disableHighlightAnimation?: boolean;
 		disableOptimize?: boolean;
 		disableAnimation?: boolean;
-		text?: string;
+		text?: string | number;
 	} = $props();
 
 	const columns = 10;

@@ -31,7 +31,7 @@
 		},
 	})}
 	disableHighlight
-	text="Error"
+	text={page.status}
 />
 <main class={cx(container(), emptyState().root)}>
 	<div class={emptyState().content}>
