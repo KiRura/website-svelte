@@ -6,6 +6,8 @@
 	import ZZZ from "../component/ZZZ.svelte";
 </script>
 
+<!-- metaを実装したいけど気持ち悪い事になるので妥協 -->
+
 <ZZZ
 	class={css.raw({
 		pos: "absolute",

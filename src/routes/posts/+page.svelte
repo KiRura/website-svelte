@@ -1,25 +1,33 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 	import { css, cx } from "styled-system/css";
-	import { card, container, separator, timeline } from "styled-system/recipes";
+	import {
+		card as _card,
+		container,
+		separator,
+		timeline as _timeline,
+	} from "styled-system/recipes";
 
 	const { data } = $props();
+
+	const timeline = _timeline();
+	const card = _card({ size: "sm", variant: "elevated" });
 </script>
 
-<main class={cx(timeline().root, container(), css({ maxW: "2xl", py: "8" }))}>
+<main class={cx(timeline.root, container(), css({ maxW: "2xl", py: "8" }))}>
 	{#each data.contents as post (`posts-${post.id}`)}
-		<div class={timeline().item}>
-			<div class={timeline().connector}>
-				<div class={timeline().separator}></div>
-				<div class={timeline().indicator}></div>
+		<div class={timeline.item}>
+			<div class={timeline.connector}>
+				<div class={timeline.separator}></div>
+				<div class={timeline.indicator}></div>
 			</div>
-			<article class={timeline().content}>
-				<time class={timeline().description} datetime={post.publishedAt}
+			<article class={timeline.content}>
+				<time class={timeline.description} datetime={post.publishedAt}
 					>{post.publishedAt}</time
 				>
 				<a
 					class={cx(
-						card({ size: "sm", variant: "elevated" }).root,
+						card.root,
 						css({
 							_hover: { bgColor: "bg.muted" },
 							transition: "background",
@@ -44,11 +52,11 @@
 						/>
 						<span class={separator()}></span>
 					{/if}
-					<div class={card().body}>
+					<div class={card.body}>
 						<hgroup>
-							<h1 class={card().title}>{post.title}</h1>
+							<h1 class={card.title}>{post.title}</h1>
 							{#if post.subtitle}
-								<p class={card().description}>{post.subtitle}</p>
+								<p class={card.description}>{post.subtitle}</p>
 							{/if}
 						</hgroup>
 					</div>

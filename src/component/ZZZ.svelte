@@ -53,6 +53,8 @@
 	<div
 		class={grid({
 			"--columns": columns, // propsとして指定できる仕様を必要になった時に実装するため
+			// と、思ったけど全く意味が無い variableをインラインで指定するとtypescriptに叱られるのでどうしようもない
+			// https://svelte.jp/docs/svelte/custom-properties
 			rotate: ["-90deg", "-45deg"],
 			gridTemplateColumns: "repeat(var(--columns), fit-content(100%))",
 			gap: "0",
@@ -100,7 +102,7 @@
 					transitionProperty: "background, color",
 					transitionDuration: "moderate",
 				})}
-				style={`transition-delay: ${(i - num / 2) * 8}ms`}
+				style:transition-delay={`${(i - num / 2) * 8}ms`}
 			>
 				{text ?? "KiRura"}
 			</p>
