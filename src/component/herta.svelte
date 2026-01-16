@@ -10,7 +10,13 @@
 	let isKurukuru = $state(false);
 	let kurukuruTimeout = $state<NodeJS.Timeout | null>(null);
 
-	const sounds = [kuru1, kuru2];
+	let sounds = $state<HTMLAudioElement[]>([]);
+
+	$effect(() => {
+		setTimeout(() => {
+			sounds = [new Audio(kuru1), new Audio(kuru2)];
+		}, 0);
+	});
 </script>
 
 <!-- data-state="open"の時だけwidthの計算に異常が発生する -->
@@ -38,7 +44,7 @@
 				isKurukuru = false;
 			}, 1000);
 
-			const sound = new Audio(sounds[Math.round(Math.random())]);
+			const sound = sounds[Math.round(Math.random())];
 			sound.volume = 0.3;
 			sound.play();
 		}}
