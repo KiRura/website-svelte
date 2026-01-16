@@ -6,19 +6,37 @@
 	const {
 		class: wrapperClass,
 		disableHighlight,
+		disableHighlightAnimation,
 		disableOptimize,
 		disableAnimation,
 		text,
 	}: {
 		class?: SystemStyleObject;
 		disableHighlight?: boolean;
+		disableHighlightAnimation?: boolean;
 		disableOptimize?: boolean;
 		disableAnimation?: boolean;
 		text?: string;
 	} = $props();
 
-	const columns = 5;
-	const num = columns * 20;
+	const columns = 10;
+	const rows = 10;
+	const num = columns * rows;
+
+	let animatingDisableHighlight = $state(false);
+	if (!(() => disableHighlightAnimation)()) {
+		$effect(() => {
+			const interval = setInterval(async () => {
+				animatingDisableHighlight = true;
+				await new Promise((r) =>
+					setTimeout(() => r(true), (num / 2) * 8 * 1.5),
+				);
+				animatingDisableHighlight = false;
+			}, 37 * 1000);
+
+			return () => clearInterval(interval);
+		});
+	}
 </script>
 
 <div
@@ -34,7 +52,7 @@
 >
 	<div
 		class={grid({
-			"--columns": columns,
+			"--columns": columns, // propsとして指定できる仕様を必要になった時に実装するため
 			rotate: ["-90deg", "-45deg"],
 			gridTemplateColumns: "repeat(var(--columns), fit-content(100%))",
 			gap: "0",
@@ -42,7 +60,10 @@
 	>
 		{#each { length: num }, i}
 			<p
-				data-highlight={(!disableHighlight && num / 2 <= i) || undefined}
+				data-highlight={(!disableHighlight &&
+					!animatingDisableHighlight &&
+					num / 2 <= i) ||
+					undefined}
 				data-right={i % (columns * 2) >= columns || undefined}
 				data-optimize={(!disableOptimize && columns * 2 <= i) || undefined}
 				data-animate={!disableAnimation || undefined}
@@ -76,7 +97,10 @@
 							display: "none",
 						},
 					},
+					transitionProperty: "background, color",
+					transitionDuration: "moderate",
 				})}
+				style={`transition-delay: ${(i - num / 2) * 8}ms`}
 			>
 				{text ?? "KiRura"}
 			</p>
