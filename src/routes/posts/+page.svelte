@@ -14,7 +14,7 @@
 	const card = _card({ size: "sm", variant: "elevated" });
 </script>
 
-<main class={cx(timeline.root, container(), css({ maxW: "2xl", py: "8" }))}>
+<div class={cx(timeline.root, container(), css({ maxW: "3xl", py: "8" }))}>
 	{#each data.contents as post (`posts-${post.id}`)}
 		<div class={timeline.item}>
 			<div class={timeline.connector}>
@@ -34,7 +34,7 @@
 							"&[data-hasimage]": { roundedTop: "none" },
 						}),
 					)}
-					data-hasimage={post.coverImage || undefined}
+					data-hasimage={Boolean(post.coverImage) || undefined}
 					href={resolve(`/posts/[id]`, { id: post.id })}
 				>
 					{#if post.coverImage}
@@ -64,4 +64,4 @@
 			</article>
 		</div>
 	{/each}
-</main>
+</div>

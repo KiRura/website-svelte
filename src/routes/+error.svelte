@@ -9,7 +9,7 @@
 <!-- metaを実装したいけど気持ち悪い事になるので妥協 -->
 
 <ZZZ
-	class={css.raw({
+	style={{
 		pos: "absolute",
 		top: "0",
 		left: "0",
@@ -31,7 +31,7 @@
 			gradientFrom: "transparent",
 			gradientTo: "bg",
 		},
-	})}
+	}}
 	disableHighlight
 	text={page.status}
 />

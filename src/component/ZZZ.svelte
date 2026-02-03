@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { css, cx } from "styled-system/css";
 	import { center, grid } from "styled-system/patterns";
-	import type { SystemStyleObject } from "styled-system/types";
 
 	const {
 		class: wrapperClass,
@@ -11,7 +10,7 @@
 		disableAnimation,
 		text,
 	}: {
-		class?: SystemStyleObject;
+		class?: string;
 		disableHighlight?: boolean;
 		disableHighlightAnimation?: boolean;
 		disableOptimize?: boolean;
@@ -44,21 +43,18 @@
 		center({
 			animationName: "fade-in",
 			animationDuration: "slow",
-			_motionReduce: { animation: "none" },
-			...wrapperClass,
 		}),
+		wrapperClass,
 	)}
 	aria-hidden="true"
 >
 	<div
 		class={grid({
-			"--columns": columns, // propsとして指定できる仕様を必要になった時に実装するため
-			// と、思ったけど全く意味が無い variableをインラインで指定するとtypescriptに叱られるのでどうしようもない
-			// https://svelte.jp/docs/svelte/custom-properties
 			rotate: ["-90deg", "-45deg"],
 			gridTemplateColumns: "repeat(var(--columns), fit-content(100%))",
 			gap: "0",
 		})}
+		style="--columns: {columns}"
 	>
 		{#each { length: num }, i}
 			<p
@@ -85,9 +81,6 @@
 						animationTimingFunction: "linear",
 						"&[data-right]": {
 							animationName: "slide-to-right-full",
-						},
-						_motionReduce: {
-							animation: "none",
 						},
 					},
 					"&[data-highlight]": {

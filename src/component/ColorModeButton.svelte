@@ -34,6 +34,8 @@
 			{ label: { icon: SunMoon, name: "システム" }, value: "system" },
 		],
 	});
+
+	const iconStyle = cx(icon({ size: "md" }), css({ minW: "5" }));
 </script>
 
 <ClientOnly>
@@ -43,9 +45,10 @@
 				collection={themes}
 				defaultValue={["Sun"]}
 				class={select.root}
+				aria-hidden
 			>
 				<Select.Trigger class={selectTrigger}>
-					<Sun />
+					<Sun class={iconStyle} />
 					<Select.Indicator class={select.indicator}>
 						<ChevronDown />
 					</Select.Indicator>
@@ -73,9 +76,9 @@
 
 							<ClientOnly>
 								{#snippet fallback()}
-									<Sun />
+									<Sun class={iconStyle} />
 								{/snippet}
-								<Icon />
+								<Icon class={iconStyle} />
 							</ClientOnly>
 						</Select.ValueText>
 					{/snippet}

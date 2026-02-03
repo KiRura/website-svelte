@@ -8,8 +8,8 @@ const cmsClient = createClient({
 	apiKey: MICROCMS_API_KEY,
 });
 
-export async function getPosts(queries?: MicroCMSQueries) {
-	return await cmsClient.getList<Post>({
+export async function getPosts<T = Post>(queries?: MicroCMSQueries) {
+	return await cmsClient.getList<T>({
 		endpoint: "blog",
 		queries: {
 			orders: "-publishedAt",

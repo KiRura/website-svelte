@@ -16,6 +16,8 @@
 		rounded: "md",
 		shadow: "sm",
 		p: "2",
+		pointerEvents: "all",
+		touchAction: "auto",
 	});
 </script>
 
@@ -25,6 +27,8 @@
 		pos: "sticky",
 		zIndex: "docked",
 		py: "2",
+		pointerEvents: "none",
+		touchAction: "none",
 	})}
 >
 	<div
@@ -33,11 +37,14 @@
 			css({
 				flexDir: "row",
 				justifyContent: "space-between",
-				maxW: "none",
+				maxW: "vw",
+				gap: "2",
 			}),
 		)}
 	>
-		<nav class={cx(hstack({ gap: "8", px: "3" }), headerCSS)}>
+		<nav
+			class={cx(hstack({ gap: "4", px: "3", overflow: "hidden" }), headerCSS)}
+		>
 			<a
 				href={resolve("/")}
 				class={cx(link(), css({ fontWeight: "bold", fontSize: "xl" }))}
@@ -49,9 +56,9 @@
 					alt="きるらのアイコン Kの文字"
 					class={css({ boxSize: "8", maxW: "8", rounded: "full" })}
 				/>
-				<span class={css({ hideBelow: "sm" })}> KiRura </span>
+				<span class={css({ hideBelow: "md" })}>KiRura</span>
 			</a>
-			<div class={hstack({ gap: "6" })}>
+			<div class={hstack({ gap: "6", overflow: "auto" })}>
 				{#each pages as page (`page-${page.label}-${page.href}`)}
 					<a
 						class={cx(

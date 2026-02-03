@@ -8,15 +8,15 @@
 </script>
 
 <ZZZ
-	class={css.raw({
+	class={css({
 		pos: "absolute",
 		top: "0",
 		left: "0",
 		w: "full",
 		h: { "2xlDown": "vh", "2xl": "60rem" },
-		maxH: "full",
 		overflow: "hidden",
 		userSelect: "none",
+		zIndex: "hide",
 		_after: {
 			pos: "absolute",
 			top: "0",
@@ -24,7 +24,6 @@
 			content: `""`,
 			w: "full",
 			h: { "2xlDown": "vh", "2xl": "60rem" },
-			maxH: "full",
 			bgGradient: "to-b",
 			gradientFrom: "transparent",
 			gradientTo: "bg",

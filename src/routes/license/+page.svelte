@@ -6,6 +6,8 @@
 	import { SquareArrowOutUpRight } from "@lucide/svelte";
 
 	const { data }: PageProps = $props();
+
+	const tableStyle = table({ variant: "outline", striped: true });
 </script>
 
 <main
@@ -20,22 +22,16 @@
 			<h2 class={heading()}>
 				{category.label}
 			</h2>
-			<!-- striped機能してなくね？ -->
-			<table
-				class={cx(
-					table({ variant: "outline", striped: true }).root,
-					css({ rounded: "md" }),
-				)}
-			>
-				<tbody class={table().body}>
+			<table class={tableStyle.root}>
+				<tbody class={tableStyle.body}>
 					{#each category.deps as dep (`dep-${dep.name}`)}
-						<tr class={cx(table().row, css({ _odd: { bgColor: "bg.panel" } }))}>
+						<tr class={tableStyle.row}>
 							<td
 								class={cx(
-									table().cell,
+									tableStyle.cell,
 									css({
 										pos: "relative",
-										_hover: { bgColor: "bg.muted" },
+										_hover: { bgColor: "bg.emphasized" },
 										transition: "background",
 									}),
 								)}
@@ -61,10 +57,10 @@
 									</span>
 								</a>
 							</td>
-							<td class={table().cell}>{dep.licenseType}</td>
+							<td class={tableStyle.cell}>{dep.licenseType}</td>
 							<td
 								class={cx(
-									table().cell,
+									tableStyle.cell,
 									css({
 										textAlign: "end",
 										fontFamily: "mono",
