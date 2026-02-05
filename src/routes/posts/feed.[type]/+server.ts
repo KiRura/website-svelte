@@ -52,7 +52,7 @@ export const GET: RequestHandler = async ({ url, params }) => {
 	for (const post of posts.contents) {
 		feed.addItem({
 			title: post.title,
-			link: `${url.protocol}://${url.host}/posts/${post.id}`,
+			link: `${url.protocol}//${url.host}/posts/${post.id}`,
 			date: new Date(post.updatedAt),
 			id: post.id,
 			description: post.subtitle,
