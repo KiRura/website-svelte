@@ -13,6 +13,8 @@
 	import { afterNavigate } from "$app/navigation";
 	import { Collapsible } from "@ark-ui/svelte";
 	import { LucideChevronDown } from "@lucide/svelte";
+	import { on } from "svelte/events";
+	import { onMount } from "svelte";
 
 	const { data } = $props();
 
@@ -20,11 +22,19 @@
 
 	let headingOffsets = $state<{ id: string; offsetTop: number }[] | null>(null);
 
-	afterNavigate(() => {
+	function updateOffsets() {
 		headingOffsets = data.post.headings.map((heading) => {
 			const element = document.getElementById(heading.id);
-			return { id: heading.id, offsetTop: element?.offsetTop || 0 };
+			return {
+				id: heading.id,
+				offsetTop: (element?.offsetTop || 0) - window.innerHeight / 7,
+			};
 		});
+	}
+
+	afterNavigate(updateOffsets);
+	onMount(() => {
+		on(window, "resize", updateOffsets);
 	});
 </script>
 
@@ -121,6 +131,7 @@
 					}),
 				)}
 				defaultOpen={false}
+				onOpenChange={updateOffsets}
 			>
 				<Collapsible.Trigger
 					class={cx(
@@ -209,6 +220,7 @@
 					w: "full",
 					mx: "auto",
 					lg: { order: "-1" },
+					lineHeight: 2.2,
 				}),
 			)}
 		>
