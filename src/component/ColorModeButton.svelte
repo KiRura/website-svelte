@@ -5,7 +5,11 @@
 		Portal,
 		Select,
 	} from "@ark-ui/svelte";
-	import { Check, ChevronDown, Moon, Sun, SunMoon } from "@lucide/svelte";
+	import LucideCheck from "@lucide/svelte/icons/check";
+	import LucideChevronDown from "@lucide/svelte/icons/chevron-down";
+	import LucideMoon from "@lucide/svelte/icons/moon";
+	import LucideSun from "@lucide/svelte/icons/sun";
+	import LucideSunMoon from "@lucide/svelte/icons/sun-moon";
 	import { css, cx } from "styled-system/css";
 	import { bleed } from "styled-system/patterns";
 	import {
@@ -29,9 +33,9 @@
 	let selectedTheme = $derived([theme.theme]);
 	const themes = createListCollection({
 		items: [
-			{ label: { icon: Sun, name: "明" }, value: "light" },
-			{ label: { icon: Moon, name: "暗" }, value: "dark" },
-			{ label: { icon: SunMoon, name: "システム" }, value: "system" },
+			{ label: { icon: LucideSun, name: "明" }, value: "light" },
+			{ label: { icon: LucideMoon, name: "暗" }, value: "dark" },
+			{ label: { icon: LucideSunMoon, name: "システム" }, value: "system" },
 		],
 	});
 
@@ -48,9 +52,9 @@
 				aria-hidden
 			>
 				<Select.Trigger class={selectTrigger}>
-					<Sun class={iconStyle} />
+					<LucideSun class={iconStyle} />
 					<Select.Indicator class={select.indicator}>
-						<ChevronDown />
+						<LucideChevronDown />
 					</Select.Indicator>
 				</Select.Trigger>
 			</Select.Root>
@@ -76,7 +80,7 @@
 
 							<ClientOnly>
 								{#snippet fallback()}
-									<Sun class={iconStyle} />
+									<LucideSun class={iconStyle} />
 								{/snippet}
 								<Icon class={iconStyle} />
 							</ClientOnly>
@@ -84,7 +88,7 @@
 					{/snippet}
 				</Select.Context>
 				<Select.Indicator class={select.indicator}>
-					<ChevronDown />
+					<LucideChevronDown />
 				</Select.Indicator>
 			</Select.Trigger>
 		</Select.Control>
@@ -100,7 +104,7 @@
 								class={select.itemIndicator}
 								aria-label="選択中"
 							>
-								<Check />
+								<LucideCheck />
 							</Select.ItemIndicator>
 							<item.label.icon
 								class={icon({ size: "md" })}

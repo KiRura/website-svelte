@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 	import { Menu } from "@ark-ui/svelte";
-	import {
-		LucideChevronDown,
-		LucideExternalLink,
-		LucideRss,
-	} from "@lucide/svelte";
+	import LucideChevronDown from "@lucide/svelte/icons/chevron-down";
+	import LucideExternalLink from "@lucide/svelte/icons/external-link";
+	import LucideRss from "@lucide/svelte/icons/rss";
 	import { css, cx } from "styled-system/css";
 
 	import { button, icon, menu } from "styled-system/recipes";

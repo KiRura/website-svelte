@@ -12,9 +12,9 @@
 	import { scrollY } from "svelte/reactivity/window";
 	import { afterNavigate } from "$app/navigation";
 	import { Collapsible } from "@ark-ui/svelte";
-	import { LucideChevronDown } from "@lucide/svelte";
 	import { on } from "svelte/events";
 	import { onMount } from "svelte";
+	import LucideChevronDown from "@lucide/svelte/icons/chevron-down";
 
 	const { data } = $props();
 

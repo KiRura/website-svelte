@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { navigating } from "$app/state";
-	import { Github } from "@lucide/svelte";
+	import LucideGithub from "@lucide/svelte/icons/github";
 	import { css, cx } from "styled-system/css";
 	import { hstack } from "styled-system/patterns";
 	import { button, container, link } from "styled-system/recipes";
@@ -101,7 +101,7 @@
 				referrerpolicy="no-referrer"
 				aria-label="ソースコード"
 			>
-				<Github aria-hidden />
+				<LucideGithub aria-hidden />
 			</a>
 			<ColorModeButton />
 		</div>

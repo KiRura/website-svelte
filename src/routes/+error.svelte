@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/state";
-	import { CircleX } from "@lucide/svelte";
+	import LucideCircleX from "@lucide/svelte/icons/circle-x";
 	import { css, cx } from "styled-system/css";
 	import { container, emptyState } from "styled-system/recipes";
 	import ZZZ from "../component/ZZZ.svelte";
@@ -38,7 +38,7 @@
 <main class={cx(container(), emptyState().root)}>
 	<div class={emptyState().content}>
 		<div class={emptyState().indicator}>
-			<CircleX />
+			<LucideCircleX />
 		</div>
 		<h1
 			class={cx(
