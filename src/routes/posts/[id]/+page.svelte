@@ -213,16 +213,14 @@
 			</Collapsible.Root>
 		</aside>
 		<div
-			class={cx(
-				prose,
-				css({
-					maxW: "prose",
-					w: "full",
-					mx: "auto",
-					lg: { order: "-1" },
-					lineHeight: 2.2,
-				}),
-			)}
+			class={css({
+				...prose,
+				maxW: "prose",
+				w: "full",
+				mx: "auto",
+				lg: { order: "-1" },
+				lineHeight: "2.5em",
+			})}
 		>
 			<!--eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html data.post.content}

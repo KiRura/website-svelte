@@ -14,7 +14,7 @@ function inWhere<T extends string>(selector: T): T {
 	return `& :where(${base}):not(${EXCLUDE_CLASSNAME}, ${EXCLUDE_CLASSNAME} *)${pseudo}` as T;
 }
 
-export default css({
+export default css.raw({
 	colorPalette: "orange",
 	color: "fg.muted",
 	fontSize: "md",
