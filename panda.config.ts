@@ -1,4 +1,4 @@
-import { defineConfig, defineRecipe } from "@pandacss/dev";
+import { defineConfig } from "@pandacss/dev";
 
 export default defineConfig({
 	presets: ["@chakra-ui/panda-preset"],
@@ -19,15 +19,43 @@ export default defineConfig({
 					body: { value: `Inter, "Noto Sans JP", sans-serif` },
 					mono: { value: `"Google Sans Code", "M PLUS 1 Code", monospace` },
 				},
+				colors: {
+					black: { value: "#000000" },
+				},
+			},
+			semanticTokens: {
+				colors: {
+					fg: {
+						DEFAULT: {
+							value: {
+								_dark: "{colors.white}",
+							},
+						},
+					},
+				},
 			},
 			recipes: {
-				container: defineRecipe({
-					className: "container",
+				container: {
 					base: {
 						animationName: "fade-in",
 						animationDuration: "slow",
 					},
-				}),
+				},
+			},
+			slotRecipes: {
+				table: {
+					variants: {
+						striped: {
+							true: {
+								row: {
+									"&:nth-of-type(odd) td": {
+										bg: "bg.subtle",
+									},
+								},
+							},
+						},
+					},
+				},
 			},
 		},
 	},
