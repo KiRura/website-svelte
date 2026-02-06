@@ -1,6 +1,6 @@
 FROM node:25-alpine
 
-RUN apt update && apt upgrade -y && apt install -y curl wget pnpm
+RUN apt-get update && apt-get upgrade -y && apt-get install -y curl wget pnpm
 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
