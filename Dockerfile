@@ -1,6 +1,5 @@
-FROM node:current
+FROM node:25-alpine
 
-RUN apt update && apt upgrade -y && apt install -y curl wget
 RUN npm install -g corepack --force
 RUN corepack enable pnpm
 
