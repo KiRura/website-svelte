@@ -1,5 +1,6 @@
-FROM archlinux:base
+FROM archlinux:base-devel
 
+RUN pacman-key --init
 RUN pacman -Syuu --noconfirm
 RUN pacman -S --needed nodejs pnpm curl wget --noconfirm
 
