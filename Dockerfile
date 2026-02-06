@@ -1,4 +1,4 @@
-FROM node:24-alpine
+FROM node:24
 
 RUN npm install -g corepack --force
 RUN corepack enable pnpm
