@@ -1,7 +1,7 @@
 FROM node:25-alpine
 
-RUN npm i -g corepack --force
-RUN corepack enable pnpm
+RUN apk update
+RUN apk --no-cache add curl wget pnpm
 
 WORKDIR /app
 COPY . .
