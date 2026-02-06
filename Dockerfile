@@ -9,4 +9,4 @@ COPY . .
 RUN pnpm i --frozen-lockfile
 RUN pnpm run build
 
-CMD [ "node" "build" ]
+CMD [ "node" "build/index.js" ]
