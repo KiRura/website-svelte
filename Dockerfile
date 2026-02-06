@@ -1,4 +1,4 @@
-FROM node:25-alpine
+FROM node:24-alpine
 
 RUN npm install -g corepack --force
 RUN corepack enable pnpm
@@ -9,4 +9,4 @@ COPY . .
 RUN pnpm i --frozen-lockfile
 RUN pnpm run build
 
-CMD [ "node" "build/index.js" ]
+CMD [ "node" "build" ]
