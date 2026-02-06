@@ -1,7 +1,7 @@
-FROM node:24
+FROM archlinux:base
 
-RUN npm install -g corepack --force
-RUN corepack enable pnpm
+RUN pacman -Syuu --noconfirm
+RUN pacman -S --needed nodejs pnpm curl wget --noconfirm
 
 WORKDIR /app
 COPY . .
