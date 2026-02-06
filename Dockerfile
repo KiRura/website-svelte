@@ -1,6 +1,7 @@
-FROM archlinux:base
+FROM node:25-alpine
 
-RUN pacman -Sy --needed nodejs-lts-krypton pnpm curl wget --noconfirm
+RUN npm i -g corepack --force
+RUN corepack enable pnpm
 
 WORKDIR /app
 COPY . .
