@@ -1,7 +1,7 @@
 FROM node:current
 
 RUN apt update && apt upgrade -y && apt install -y curl wget
-RUN npm install -g corepack
+RUN npm install -g corepack --force
 RUN corepack enable pnpm
 
 WORKDIR /app
