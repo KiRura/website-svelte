@@ -8,4 +8,4 @@ COPY . .
 RUN pnpm i --frozen-lockfile
 RUN pnpm run build
 
-CMD [ "pnpm", "run", "preview" ]
+CMD [ "node", "/app/build" ]
