@@ -1,8 +1,6 @@
-FROM archlinux:base-devel
+FROM archlinux:base
 
-RUN pacman-key --init
-RUN pacman -Syuu --noconfirm
-RUN pacman -S --needed nodejs pnpm curl wget --noconfirm
+RUN pacman -S --needed nodejs-lts-krypton pnpm curl wget --noconfirm
 
 WORKDIR /app
 COPY . .
