@@ -1,6 +1,6 @@
 FROM node:25-alpine
 
-RUN apk update
+RUN apk -U upgrade
 RUN apk --no-cache add curl wget pnpm
 
 WORKDIR /app
