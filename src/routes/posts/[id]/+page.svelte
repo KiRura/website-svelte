@@ -116,7 +116,7 @@
 			gap: "6",
 		})}
 	>
-		<aside class={css({ h: "fit", pos: "sticky", top: "20" })}>
+		<aside class={css({ h: "fit", pos: "sticky", top: "16" })}>
 			<Collapsible.Root
 				class={cx(
 					collapsibleStyle.root,

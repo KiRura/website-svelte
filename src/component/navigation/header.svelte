@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { navigating } from "$app/state";
-	import LucideGithub from "@lucide/svelte/icons/github";
+
 	import { css, cx } from "styled-system/css";
-	import { hstack } from "styled-system/patterns";
+	import { flex, hstack } from "styled-system/patterns";
 	import { button, container, link } from "styled-system/recipes";
 	import ColorModeButton from "../ColorModeButton.svelte";
 	import { resolve } from "$app/paths";
@@ -10,100 +10,98 @@
 	import { page as appPage } from "$app/state";
 	import { pages } from "./pages";
 
-	const headerCSS = css({
-		bg: "bg",
-		borderWidth: "1px",
-		rounded: "md",
-		shadow: "sm",
-		p: "2",
+	const headerCSS = css.raw({
 		pointerEvents: "all",
 		touchAction: "auto",
 	});
 </script>
 
-<header
-	class={css({
-		top: "0",
-		pos: "sticky",
-		zIndex: "docked",
-		py: "2",
-		pointerEvents: "none",
-		touchAction: "none",
-	})}
+<nav
+	class={cx(
+		container({ centerContent: true }),
+		css({
+			top: "0",
+			pos: "sticky",
+			zIndex: "docked",
+			py: "2",
+			pointerEvents: "none",
+			touchAction: "none",
+			flexDir: "row",
+			justifyContent: "space-between",
+			maxW: "vw",
+			gap: "2",
+			filter: "drop-shadow(0 0 0.2rem {colors.blackAlpha.500})",
+		}),
+	)}
 >
 	<div
-		class={cx(
-			container({ centerContent: true }),
-			css({
-				flexDir: "row",
-				justifyContent: "space-between",
-				maxW: "vw",
-				gap: "2",
-			}),
-		)}
+		class={hstack({
+			...headerCSS,
+			overflow: "hidden ",
+		})}
 	>
-		<nav
-			class={cx(hstack({ gap: "4", px: "3", overflow: "hidden" }), headerCSS)}
+		<a
+			href={resolve("/")}
+			class={cx(
+				link({ variant: "plain" }),
+				css({ color: "fg", fontWeight: "bold", fontSize: "xl" }),
+			)}
+			aria-label="ホーム"
 		>
-			<a
-				href={resolve("/")}
-				class={cx(link(), css({ fontWeight: "bold", fontSize: "xl" }))}
-				aria-label="ホーム"
-			>
-				<enhanced:img
-					aria-hidden="true"
-					src={kiruraIcon}
-					alt="きるらのアイコン Kの文字"
-					class={css({ boxSize: "8", maxW: "8", rounded: "full" })}
-				/>
-				<span class={css({ hideBelow: "md" })}>KiRura</span>
-			</a>
-			<div class={hstack({ gap: "6", overflow: "auto" })}>
-				{#each pages as page (`page-${page.label}-${page.href}`)}
-					<a
-						class={cx(
-							button({ variant: "plain" }),
-							css({
-								px: "0",
-								color: "fg.muted",
-								rounded: "none",
-								borderWidth: "0",
-								_selected: {
-									color: "orange.fg",
-									borderBottomColor: "orange.border",
-									borderYWidth: "2px",
-								},
-								_hover: { color: "fg" },
-								_loading: {
-									color: "fg",
-									animationName: "pulse",
-									animationDuration: "1s",
-									animationIterationCount: "infinite",
-								},
-								transitionProperty: "color, border",
-							}),
-						)}
-						href={resolve(page.href)}
-						data-selected={appPage.route.id?.startsWith(page.href) || undefined}
-						data-loading={navigating.to?.route.id?.startsWith(page.href) ||
-							undefined}
-					>
-						<page.icon aria-hidden />{page.label}
-					</a>
-				{/each}
-			</div>
-		</nav>
-		<div class={cx(hstack(), headerCSS)}>
-			<a
-				class={cx(button({ variant: "ghost" }), css({ p: "0" }))}
-				href="https://github.com/KiRura/website-svelte"
-				target="_blank"
-				referrerpolicy="no-referrer"
-				aria-label="ソースコード"
-			>
-				<LucideGithub aria-hidden />
-			</a>
-			<ColorModeButton />
+			<enhanced:img
+				aria-hidden="true"
+				src={kiruraIcon}
+				alt="きるらのアイコン Kの文字"
+				class={css({ boxSize: "8", maxW: "8", rounded: "full" })}
+			/>
+			<span class={css({ hideBelow: "md" })}>KiRura</span>
+		</a>
+		<div
+			class={flex({
+				overflowX: "auto",
+			})}
+		>
+			{#each pages as page (`page-${page.label}-${page.href}`)}
+				<a
+					class={cx(
+						button({ variant: "bgoutline" }),
+						css({
+							color: "fg.muted",
+							rounded: "0",
+							borderLeftWidth: "0",
+							_selected: {
+								color: "orange.fg",
+								borderBottomColor: "orange.border",
+							},
+							_hover: { color: "fg" },
+							_loading: {
+								color: "fg",
+								animationName: "pulse",
+								animationDuration: "1s",
+								animationIterationCount: "infinite",
+							},
+							transitionProperty: "color, border, background",
+							_first: {
+								roundedLeft: "sm",
+								borderLeftWidth: "1px",
+							},
+							_last: {
+								roundedRight: "sm",
+							},
+						}),
+					)}
+					href={resolve(page.href)}
+					data-selected={appPage.route.id?.startsWith(page.href) || undefined}
+					data-loading={navigating.to?.route.id?.startsWith(page.href) ||
+						undefined}
+				>
+					<page.icon aria-hidden />
+					{page.label}
+				</a>
+			{/each}
 		</div>
 	</div>
-</header>
+	<div class={css(headerCSS)}>
+		<ColorModeButton />
+	</div>
+</nav>

@@ -3,7 +3,7 @@
 
 	import { css, cx } from "styled-system/css";
 	import { grid, hstack, vstack } from "styled-system/patterns";
-	import { button, container, separator } from "styled-system/recipes";
+	import { container, heading, link, separator } from "styled-system/recipes";
 	import RssMenu from "./RssMenu.svelte";
 
 	const { children, data, params } = $props();
@@ -28,45 +28,50 @@
 			alignItems: "stretch",
 			h: "fit",
 			pos: "sticky",
-			top: "74px",
+			top: "16",
 			maxH: "calc({sizes.vh} - {sizes.20} - {sizes.8})",
 			overflowY: "auto",
 			hideBelow: "md",
 		})}
 	>
 		<div class={hstack()}>
-			<p>呟き</p>
+			<p class={heading()}>呟き</p>
 			<span class={cx(separator(), css({ flex: 1 }))}></span>
 			<RssMenu />
 		</div>
-		{#each data.contents as post (post.id)}
-			<a
-				data-selected={params.id === post.id || undefined}
-				href={resolve("/posts/[id]", { id: post.id })}
-				class={cx(
-					button({ variant: "plain" }),
-					css({
-						w: "full",
-						justifyContent: "start",
-						_hover: { bgColor: "bg.muted" },
-						_selected: {
-							bgColor: { base: "orange.subtle", _hover: "orange.muted" },
-							borderColor: "border",
-						},
-					}),
-				)}
-			>
-				<span
-					class={css({
-						display: "block",
-						overflow: "hidden",
-						textOverflow: "ellipsis",
-					})}
+		<div class={css({ spaceY: "5" })}>
+			{#each data.contents as post (post.id)}
+				<a
+					data-selected={params.id === post.id || undefined}
+					href={resolve("/posts/[id]", { id: post.id })}
+					class={cx(
+						link({ variant: "plain" }),
+						css({
+							color: "fg",
+							w: "full",
+							justifyContent: "start",
+							_selected: {
+								color: "orange.fg",
+								textDecoration: "underline",
+								textDecorationColor: "orange.fg",
+							},
+							transitionProperty: "color",
+							transitionDuration: "slow",
+						}),
+					)}
 				>
-					{post.title}
-				</span>
-			</a>
-		{/each}
+					<span
+						class={css({
+							display: "block",
+							overflow: "hidden",
+							textOverflow: "ellipsis",
+						})}
+					>
+						{post.title}
+					</span>
+				</a>
+			{/each}
+		</div>
 	</aside>
 	{@render children()}
 </main>

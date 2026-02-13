@@ -41,6 +41,46 @@ export default defineConfig({
 						animationDuration: "slow",
 					},
 				},
+				link: {
+					variants: {
+						variant: {
+							plain: {
+								color: "orange.fg",
+								_hover: {
+									textDecorationColor: "orange.fg",
+								},
+							},
+							underline: {
+								color: "orange.fg",
+								textDecorationColor: "orange.fg",
+							},
+						},
+					},
+					defaultVariants: {
+						variant: "underline",
+					},
+				},
+				button: {
+					variants: {
+						variant: {
+							bgoutline: {
+								borderWidth: "1px",
+								"--outline-color-legacy": "colors.colorPalette.muted",
+								"--outline-color": "colors.colorPalette.border",
+								backgroundColor: "bg",
+								borderColor:
+									"var(--outline-color, var(--outline-color-legacy))",
+								color: "colorPalette.fg",
+								_hover: {
+									bg: "colorPalette.subtle",
+								},
+								_expanded: {
+									bg: "colorPalette.subtle",
+								},
+							},
+						},
+					},
+				},
 			},
 			slotRecipes: {
 				table: {

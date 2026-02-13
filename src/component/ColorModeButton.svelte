@@ -1,120 +1,72 @@
 <script lang="ts">
-	import {
-		ClientOnly,
-		createListCollection,
-		Portal,
-		Select,
-	} from "@ark-ui/svelte";
-	import LucideCheck from "@lucide/svelte/icons/check";
-	import LucideChevronDown from "@lucide/svelte/icons/chevron-down";
-	import LucideMoon from "@lucide/svelte/icons/moon";
-	import LucideSun from "@lucide/svelte/icons/sun";
-	import LucideSunMoon from "@lucide/svelte/icons/sun-moon";
-	import { css, cx } from "styled-system/css";
-	import { bleed } from "styled-system/patterns";
-	import {
-		icon,
-		select as selectRecipe,
-		skeleton,
-	} from "styled-system/recipes";
 	import { useTheme } from "svelte-themes";
-
-	const select = selectRecipe();
-	const selectTrigger = cx(
-		select.trigger,
-		css({
-			border: "none",
-			_hover: { bg: "bg.subtle" },
-			transition: "background",
-		}),
-	);
+	import LucideSun from "@lucide/svelte/icons/sun";
+	import LucideMoon from "@lucide/svelte/icons/moon";
+	import LucideSunMoon from "@lucide/svelte/icons/sun-moon";
+	import LucideChevronDown from "@lucide/svelte/icons/chevron-down";
+	import LucideCheck from "@lucide/svelte/icons/check";
+	import { button, icon, select } from "styled-system/recipes";
+	import { Select } from "melt/components";
+	import z from "zod";
+	import { css, cx } from "styled-system/css";
+	import { ClientOnly } from "@ark-ui/svelte";
 
 	const theme = useTheme();
-	let selectedTheme = $derived([theme.theme]);
-	const themes = createListCollection({
-		items: [
-			{ label: { icon: LucideSun, name: "明" }, value: "light" },
-			{ label: { icon: LucideMoon, name: "暗" }, value: "dark" },
-			{ label: { icon: LucideSunMoon, name: "システム" }, value: "system" },
-		],
-	});
+	const schema = z.literal(["light", "dark", "system"]);
+	const resolvedTheme = $derived(schema.parse(theme.theme ?? "light"));
 
+	const options: Record<
+		z.infer<typeof schema>,
+		{ readonly label: string; readonly icon: typeof LucideSun }
+	> = {
+		light: {
+			label: "ライト",
+			icon: LucideSun,
+		},
+		dark: {
+			label: "ダーク",
+			icon: LucideMoon,
+		},
+		system: {
+			label: "システム",
+			icon: LucideSunMoon,
+		},
+	} as const;
+
+	const selectStyles = select();
 	const iconStyle = cx(icon({ size: "md" }), css({ minW: "5" }));
 </script>
 
-<ClientOnly>
-	{#snippet fallback()}
-		<div class={skeleton()}>
-			<Select.Root
-				collection={themes}
-				defaultValue={["Sun"]}
-				class={select.root}
-				aria-hidden
-			>
-				<Select.Trigger class={selectTrigger}>
-					<LucideSun class={iconStyle} />
-					<Select.Indicator class={select.indicator}>
-						<LucideChevronDown />
-					</Select.Indicator>
-				</Select.Trigger>
-			</Select.Root>
+<Select bind:value={theme.theme}>
+	{#snippet children(select)}
+		{@const Icon = options[resolvedTheme].icon}
+		<button
+			{...select.trigger}
+			class={cx(selectStyles.trigger, button({ variant: "bgoutline" }))}
+		>
+			<ClientOnly>
+				{#snippet fallback()}
+					<LucideMoon class={iconStyle} />
+				{/snippet}
+				<Icon class={iconStyle} />
+			</ClientOnly>
+			<LucideChevronDown class={iconStyle} />
+		</button>
+		<div class={selectStyles.positioner}>
+			<div {...select.content} class={selectStyles.content}>
+				{#each Object.entries(options) as [value, option] (value)}
+					<div
+						{...select.getOption(value)}
+						class={selectStyles.item}
+						aria-label={option.label}
+					>
+						<option.icon aria-hidden />
+						{#if select.isSelected(value)}
+							<LucideCheck />
+						{/if}
+					</div>
+				{/each}
+			</div>
 		</div>
 	{/snippet}
-	<Select.Root
-		collection={themes}
-		bind:value={selectedTheme}
-		onValueChange={(e) => {
-			theme.theme = e.value[0];
-		}}
-		class={select.root}
-		positioning={{ placement: "bottom-end" }}
-	>
-		<Select.Control class={select.control}>
-			<Select.Trigger class={selectTrigger} aria-label="テーマ切り替え">
-				<Select.Context>
-					{#snippet render(selected)}
-						<Select.ValueText class={select.valueText} aria-hidden="true">
-							{@const Icon = themes.items.find(
-								(theme) => theme.value === selected().value[0],
-							)?.label.icon}
-
-							<ClientOnly>
-								{#snippet fallback()}
-									<LucideSun class={iconStyle} />
-								{/snippet}
-								<Icon class={iconStyle} />
-							</ClientOnly>
-						</Select.ValueText>
-					{/snippet}
-				</Select.Context>
-				<Select.Indicator class={select.indicator}>
-					<LucideChevronDown />
-				</Select.Indicator>
-			</Select.Trigger>
-		</Select.Control>
-		<Portal>
-			<Select.Positioner class={select.positioner}>
-				<Select.Content class={select.content}>
-					{#each themes.items as item (item.value)}
-						<Select.Item class={select.item} {item}>
-							{#if item.value !== theme.theme}
-								<div class={bleed({ w: "4" })}></div>
-							{/if}
-							<Select.ItemIndicator
-								class={select.itemIndicator}
-								aria-label="選択中"
-							>
-								<LucideCheck />
-							</Select.ItemIndicator>
-							<item.label.icon
-								class={icon({ size: "md" })}
-								aria-label={item.label.name}
-							/>
-						</Select.Item>
-					{/each}
-				</Select.Content>
-			</Select.Positioner>
-		</Portal>
-		<Select.HiddenSelect />
-	</Select.Root>
-</ClientOnly>
+</Select>
