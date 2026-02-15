@@ -8,7 +8,7 @@
 	import { resolve } from "$app/paths";
 	import kiruraIcon from "$lib/assets/kirura/512p.png";
 	import { page as appPage } from "$app/state";
-	import { pages } from "./pages";
+	import { pages } from "../../consts/pages";
 
 	const headerCSS = css.raw({
 		pointerEvents: "all",

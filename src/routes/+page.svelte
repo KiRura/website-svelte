@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { css, cx } from "styled-system/css";
 	import { container } from "styled-system/recipes";
-	import ZZZ from "../component/ZZZ.svelte";
+	import ZZZ from "../components/ZZZ.svelte";
 	import { center } from "styled-system/patterns";
 	import { dev } from "$app/environment";
-	import Herta from "../component/herta.svelte";
+	import Herta from "../components/herta.svelte";
 </script>
 
 <ZZZ

@@ -3,7 +3,7 @@
 	import LucideCircleX from "@lucide/svelte/icons/circle-x";
 	import { css, cx } from "styled-system/css";
 	import { container, emptyState } from "styled-system/recipes";
-	import ZZZ from "../component/ZZZ.svelte";
+	import ZZZ from "../components/ZZZ.svelte";
 </script>
 
 <!-- metaを実装したいけど気持ち悪い事になるので妥協 -->

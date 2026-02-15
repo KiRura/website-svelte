@@ -5,7 +5,7 @@
 	import { SvelteTheme } from "svelte-themes";
 	import { page as appPage } from "$app/state";
 	import { deepMerge, MetaTags } from "svelte-meta-tags";
-	import Header from "../component/navigation/header.svelte";
+	import Header from "../components/navigation/header.svelte";
 
 	const { data, children }: LayoutProps = $props();
 
