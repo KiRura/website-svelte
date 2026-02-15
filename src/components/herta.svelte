@@ -6,16 +6,15 @@
 	import { Presence } from "@ark-ui/svelte";
 	import kuru1 from "$lib/assets/kuru1.opus";
 	import kuru2 from "$lib/assets/kuru2.opus";
+	import { onMount } from "svelte";
 
 	let isKurukuru = $state(false);
 	let kurukuruTimeout = $state<NodeJS.Timeout | null>(null);
 
 	let sounds = $state<HTMLAudioElement[]>([]);
 
-	$effect(() => {
-		setTimeout(() => {
-			sounds = [new Audio(kuru1), new Audio(kuru2)];
-		}, 0);
+	onMount(() => {
+		sounds = [new Audio(kuru1), new Audio(kuru2)];
 	});
 </script>
 
@@ -34,7 +33,7 @@
 	<button
 		class={cx(
 			button({ variant: "plain" }),
-			css({ h: "24", overflow: "hidden" }),
+			css({ "--height": "{sizes.24}", h: "var(--height)", overflow: "hidden" }),
 		)}
 		onclick={() => {
 			if (kurukuruTimeout) clearTimeout(kurukuruTimeout);
@@ -52,7 +51,7 @@
 		<Presence
 			present={isKurukuru}
 			class={css({
-				h: "24",
+				h: "var(--height)",
 				pos: "fixed",
 				bottom: "0",
 				zIndex: "docked",
