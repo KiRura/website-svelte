@@ -15,6 +15,12 @@
 
 	onMount(() => {
 		sounds = [new Audio(kuru1), new Audio(kuru2)];
+
+		return () => {
+			for (const sound of sounds) {
+				sound.remove();
+			}
+		};
 	});
 </script>
 
