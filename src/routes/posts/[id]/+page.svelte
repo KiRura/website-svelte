@@ -34,7 +34,9 @@
 
 	afterNavigate(updateOffsets);
 	onMount(() => {
-		on(window, "resize", updateOffsets);
+		const resizeEvent = on(window, "resize", updateOffsets);
+
+		return resizeEvent;
 	});
 </script>
 
