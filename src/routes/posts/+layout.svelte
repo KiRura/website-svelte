@@ -53,6 +53,7 @@
 							_selected: {
 								color: "orange.fg",
 								textDecoration: "underline",
+								textUnderlineOffset: "3px",
 								textDecorationColor: "orange.fg",
 							},
 							transitionProperty: "color",
