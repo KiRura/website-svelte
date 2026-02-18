@@ -19,20 +19,6 @@ export default defineConfig({
 					body: { value: `Inter, "Noto Sans JP", sans-serif` },
 					mono: { value: `"Google Sans Code", "M PLUS 1 Code", monospace` },
 				},
-				colors: {
-					black: { value: "#000000" },
-				},
-			},
-			semanticTokens: {
-				colors: {
-					fg: {
-						DEFAULT: {
-							value: {
-								_dark: "{colors.white}",
-							},
-						},
-					},
-				},
 			},
 			recipes: {
 				container: {

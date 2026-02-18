@@ -6,6 +6,8 @@
 	import { page as appPage } from "$app/state";
 	import { deepMerge, MetaTags } from "svelte-meta-tags";
 	import Header from "../components/navigation/header.svelte";
+	import { dev } from "$app/environment";
+	import { RenderScan } from "svelte-render-scan";
 
 	const { data, children }: LayoutProps = $props();
 
@@ -31,6 +33,9 @@
 <MetaTags {...metaTags} />
 
 <SvelteTheme attribute="data-color-mode">
+	{#if dev}
+		<RenderScan />
+	{/if}
 	<Header />
 	{@render children()}
 </SvelteTheme>
