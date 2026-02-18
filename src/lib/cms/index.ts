@@ -1,5 +1,5 @@
 import { createClient, type MicroCMSQueries } from "microcms-js-sdk";
-import type { Post, PostWithContent } from "../../interface/cms";
+import type { Post, PostWithContent } from "../../interfaces/cms";
 import { MICROCMS_API_KEY } from "$env/static/private";
 import { error } from "@sveltejs/kit";
 
