@@ -9,6 +9,14 @@
 			"settings": {
 				"require_config_file": true
 			}
+		},
+		// https://github.com/zed-industries/zed/issues/49387#issuecomment-3939071502
+		"eslint": {
+			"settings": {
+				"experimental": {
+					"useFlatConfig": false
+				}
+			}
 		}
 	},
 	"languages": {
