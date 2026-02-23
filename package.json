@@ -41,6 +41,7 @@
 	},
 	"dependencies": {
 		"@ark-ui/svelte": "^5.17.0",
+		"@date-fns/tz": "^1.4.1",
 		"@lucide/svelte": "^0.575.0",
 		"date-fns": "^4.1.0",
 		"feed": "^5.2.0",

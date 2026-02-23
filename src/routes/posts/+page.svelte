@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
+	import { TZDate } from "@date-fns/tz";
+	import { format } from "date-fns";
 	import { css, cx } from "styled-system/css";
 	import {
 		card as _card,
@@ -22,9 +24,14 @@
 				<div class={timeline.indicator}></div>
 			</div>
 			<article class={timeline.content}>
-				<time class={timeline.description} datetime={post.publishedAt}
-					>{post.publishedAt}</time
-				>
+				{#if post.publishedAt}
+					<time class={timeline.description} datetime={post.publishedAt}>
+						{format(
+							new TZDate(post.publishedAt, "Asia/Tokyo"),
+							"yyyy年M月d日 h時m分",
+						)}
+					</time>
+				{/if}
 				<a
 					class={cx(
 						card.root,
