@@ -26,52 +26,65 @@
 	<aside
 		class={vstack({
 			alignItems: "stretch",
-			h: "fit",
+			h: "full",
+			maxH: "calc({sizes.vh} - {sizes.24})",
 			pos: "sticky",
-			top: "16",
-			maxH: "calc({sizes.vh} - {sizes.20} - {sizes.8})",
-			overflowY: "auto",
+			gap: "0",
+			top: "navbar",
+			overflowY: "hidden",
 			hideBelow: "md",
 		})}
 	>
-		<div class={hstack()}>
+		<div
+			class={hstack({
+				bgColor: "bg",
+				borderBottomWidth: "1px",
+				pb: "2",
+			})}
+		>
 			<p class={heading()}>呟き</p>
 			<span class={cx(separator(), css({ flex: 1 }))}></span>
 			<RssMenu />
 		</div>
-		<div class={css({ spaceY: "5" })}>
-			{#each data.contents as post (post.id)}
-				<a
-					data-selected={params.id === post.id || undefined}
-					href={resolve("/posts/[id]", { id: post.id })}
-					class={cx(
-						link({ variant: "plain" }),
-						css({
-							color: "fg",
-							w: "full",
-							justifyContent: "start",
-							_selected: {
-								color: "orange.fg",
-								textDecoration: "underline",
-								textUnderlineOffset: "3px",
-								textDecorationColor: "orange.fg",
-							},
-							transitionProperty: "color",
-							transitionDuration: "slow",
-						}),
-					)}
-				>
-					<span
-						class={css({
-							display: "block",
-							overflow: "hidden",
-							textOverflow: "ellipsis",
-						})}
+		<div class={css({ overflowY: "auto" })}>
+			<div class={css({})}>
+				{#each data.contents as post (post.id)}
+					<a
+						data-selected={params.id === post.id || undefined}
+						href={resolve("/posts/[id]", { id: post.id })}
+						class={cx(
+							link({ variant: "plain" }),
+							css({
+								color: "fg",
+								w: "full",
+								justifyContent: "start",
+								_selected: {
+									color: "orange.fg",
+									textDecoration: "underline",
+									textUnderlineOffset: "3px",
+									textDecorationColor: "orange.fg",
+									borderLeftWidth: "1px",
+									borderColor: "orange.fg",
+									pl: "3",
+								},
+								transitionProperty: "color border padding",
+								transitionDuration: "slow",
+								py: "2",
+							}),
+						)}
 					>
-						{post.title}
-					</span>
-				</a>
-			{/each}
+						<span
+							class={css({
+								display: "block",
+								overflow: "hidden",
+								textOverflow: "ellipsis",
+							})}
+						>
+							{post.title}
+						</span>
+					</a>
+				{/each}
+			</div>
 		</div>
 	</aside>
 	{@render children()}

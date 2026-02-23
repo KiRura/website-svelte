@@ -19,6 +19,12 @@ export default defineConfig({
 					body: { value: `Inter, "Noto Sans JP", sans-serif` },
 					mono: { value: `"Google Sans Code", "M PLUS 1 Code", monospace` },
 				},
+				sizes: {
+					navbar: { value: "3.6rem" },
+				},
+				spacing: {
+					navbar: { value: "{sizes.navbar}" },
+				},
 			},
 			recipes: {
 				container: {

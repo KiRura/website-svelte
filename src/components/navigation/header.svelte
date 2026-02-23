@@ -31,6 +31,7 @@
 			maxW: "vw",
 			gap: "2",
 			filter: "drop-shadow(0 0 0.2rem {colors.blackAlpha.500})",
+			h: "navbar",
 		}),
 	)}
 >
