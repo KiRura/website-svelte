@@ -8,7 +8,10 @@
 		container,
 		separator,
 		timeline as _timeline,
+		icon,
 	} from "styled-system/recipes";
+	import { flex } from "styled-system/patterns";
+	import LucideChevronRight from "@lucide/svelte/icons/chevron-right";
 
 	const { data } = $props();
 
@@ -59,13 +62,25 @@
 						/>
 						<span class={separator()}></span>
 					{/if}
-					<div class={card.body}>
-						<hgroup>
-							<h1 class={card.title}>{post.title}</h1>
-							{#if post.subtitle}
-								<p class={card.description}>{post.subtitle}</p>
-							{/if}
-						</hgroup>
+					<div class={flex({})}>
+						<div class={card.body}>
+							<hgroup>
+								<h1 class={card.title}>{post.title}</h1>
+								{#if post.subtitle}
+									<p class={card.description}>{post.subtitle}</p>
+								{/if}
+							</hgroup>
+						</div>
+						<div
+							class={flex({
+								p: "var(--card-padding) var(--card-padding) var(--card-padding) 0",
+							})}
+						>
+							<LucideChevronRight
+								class={cx(icon(), css({ color: "fg.muted" }))}
+								aria-hidden
+							/>
+						</div>
 					</div>
 				</a>
 			</article>
