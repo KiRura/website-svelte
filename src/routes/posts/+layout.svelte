@@ -47,44 +47,42 @@
 			<RssMenu />
 		</div>
 		<div class={css({ overflowY: "auto" })}>
-			<div class={css({})}>
-				{#each data.contents as post (post.id)}
-					<a
-						data-selected={params.id === post.id || undefined}
-						href={resolve("/posts/[id]", { id: post.id })}
-						class={cx(
-							link({ variant: "plain" }),
-							css({
-								color: "fg",
-								w: "full",
-								justifyContent: "start",
-								_selected: {
-									color: "orange.fg",
-									textDecoration: "underline",
-									textUnderlineOffset: "3px",
-									textDecorationColor: "orange.fg",
-									borderLeftWidth: "1px",
-									borderColor: "orange.fg",
-									pl: "3",
-								},
-								transitionProperty: "color border padding",
-								transitionDuration: "slow",
-								py: "2",
-							}),
-						)}
+			{#each data.contents as post (post.id)}
+				<a
+					data-selected={params.id === post.id || undefined}
+					href={resolve("/posts/[id]", { id: post.id })}
+					class={cx(
+						link({ variant: "plain" }),
+						css({
+							color: "fg",
+							w: "full",
+							justifyContent: "start",
+							_selected: {
+								color: "orange.fg",
+								textDecoration: "underline",
+								textUnderlineOffset: "3px",
+								textDecorationColor: "orange.fg",
+								borderLeftWidth: "1px",
+								borderColor: "orange.fg",
+								pl: "3",
+							},
+							transitionProperty: "color border padding",
+							transitionDuration: "slow",
+							py: "2",
+						}),
+					)}
+				>
+					<span
+						class={css({
+							display: "block",
+							overflow: "hidden",
+							textOverflow: "ellipsis",
+						})}
 					>
-						<span
-							class={css({
-								display: "block",
-								overflow: "hidden",
-								textOverflow: "ellipsis",
-							})}
-						>
-							{post.title}
-						</span>
-					</a>
-				{/each}
-			</div>
+						{post.title}
+					</span>
+				</a>
+			{/each}
 		</div>
 	</aside>
 	{@render children()}
