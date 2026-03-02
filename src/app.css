@@ -1,14 +1,2 @@
 @layer kiso, reset, base, tokens, recipes, utilities;
 @import "kiso.css" layer(kiso);
-
-body {
-	scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	* {
-		animation: none;
-		transition: none;
-		scroll-behavior: unset;
-	}
-}

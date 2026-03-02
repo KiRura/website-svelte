@@ -39,3 +39,25 @@
 	<Header />
 	{@render children()}
 </SvelteTheme>
+
+<style>
+	:global {
+		@layer reset {
+			* {
+				scrollbar-color: var(--colors-border-emphasized) var(--colors-bg);
+			}
+
+			body {
+				scroll-behavior: smooth;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			* {
+				animation: none;
+				transition: none;
+				scroll-behavior: unset;
+			}
+		}
+	}
+</style>
