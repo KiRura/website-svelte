@@ -15,7 +15,7 @@
 		"check:fix": "prettier --write . && eslint --fix ."
 	},
 	"devDependencies": {
-		"@chakra-ui/panda-preset": "^3.33.0",
+		"@chakra-ui/panda-preset": "^3.34.0",
 		"@eslint/compat": "^2.0.2",
 		"@eslint/js": "^10.0.1",
 		"@pandacss/dev": "^1.8.2",
@@ -30,8 +30,8 @@
 		"globals": "^17.4.0",
 		"jiti": "^2.6.1",
 		"prettier": "^3.8.1",
-		"prettier-plugin-svelte": "^3.5.0",
-		"svelte": "^5.53.6",
+		"prettier-plugin-svelte": "^3.5.1",
+		"svelte": "^5.53.7",
 		"svelte-check": "^4.4.4",
 		"svelte-meta-tags": "^4.5.0",
 		"svelte-render-scan": "^1.1.0",
@@ -40,14 +40,14 @@
 		"vite": "^7.3.1"
 	},
 	"dependencies": {
-		"@ark-ui/svelte": "^5.19.0",
+		"@ark-ui/svelte": "^5.19.1",
 		"@date-fns/tz": "^1.4.1",
-		"@lucide/svelte": "^0.576.0",
+		"@lucide/svelte": "^0.577.0",
 		"date-fns": "^4.1.0",
 		"feed": "^5.2.0",
 		"http-status-codes": "^2.3.0",
 		"kiso.css": "^1.2.4",
-		"license-report": "^6.8.1",
+		"license-report": "^6.8.2",
 		"microcms-js-sdk": "^3.3.0",
 		"node-html-parser": "^7.1.0",
 		"svelte-themes": "^2.0.10",
