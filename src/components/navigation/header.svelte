@@ -3,7 +3,7 @@
 
 	import { css, cx } from "styled-system/css";
 	import { flex, hstack } from "styled-system/patterns";
-	import { button, container, link } from "styled-system/recipes";
+	import { button, container, icon, link } from "styled-system/recipes";
 	import ColorModeButton from "../ColorModeButton.svelte";
 	import { resolve } from "$app/paths";
 	import kiruraIcon from "$lib/assets/kirura/512p.png";
@@ -96,7 +96,7 @@
 					data-loading={navigating.to?.route.id?.startsWith(page.href) ||
 						undefined}
 				>
-					<page.icon aria-hidden />
+					<page.icon class={icon()} aria-hidden />
 					{page.label}
 				</a>
 			{/each}

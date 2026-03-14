@@ -3,8 +3,7 @@ import type { RequestHandler } from "./$types";
 import { StatusCodes } from "http-status-codes";
 import { Feed } from "feed";
 import { getPosts } from "$lib/cms";
-
-import type { PostWithContent } from "../../../interface/cms";
+import type { PostWithContent } from "../../../interfaces/cms";
 
 export const GET: RequestHandler = async ({ url, params }) => {
 	const type = z.literal(["xml", "json", "atom.xml"]).safeParse(params.type);

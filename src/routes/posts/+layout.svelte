@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
-
 	import { css, cx } from "styled-system/css";
 	import { grid, hstack, vstack } from "styled-system/patterns";
 	import { container, heading, link, separator } from "styled-system/recipes";
@@ -47,7 +46,7 @@
 			<RssMenu />
 		</div>
 		<div class={css({ overflowY: "auto" })}>
-			{#each data.contents as post (post.id)}
+			{#each data.posts.contents as post (post.id)}
 				<a
 					data-selected={params.id === post.id || undefined}
 					href={resolve("/posts/[id]", { id: post.id })}
@@ -85,5 +84,11 @@
 			{/each}
 		</div>
 	</aside>
-	{@render children()}
+	<div>
+		<div class={hstack({ hideFrom: "md", mb: "2" })}>
+			<span class={cx(separator(), css({ flex: 1 }))}></span>
+			<RssMenu />
+		</div>
+		{@render children()}
+	</div>
 </main>

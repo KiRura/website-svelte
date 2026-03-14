@@ -88,6 +88,43 @@ export default defineConfig({
 						},
 					},
 				},
+				card: {
+					variants: {
+						variant: {
+							elevated: {
+								root: {
+									borderWidth: "1px",
+									borderColor: "border",
+								},
+							},
+							bgoutline: {
+								root: {
+									bg: "bg",
+									borderWidth: "1px",
+									borderColor: "border",
+								},
+							},
+							bgelevated: {
+								root: {
+									bg: "bg",
+									borderWidth: "1px",
+									borderColor: "border",
+									boxShadow: "md",
+								},
+							},
+						},
+						hover: {
+							true: {
+								root: {
+									_hover: {
+										bg: "bg.muted",
+									},
+									transition: "background",
+								},
+							},
+						},
+					},
+				},
 			},
 		},
 	},

@@ -36,12 +36,13 @@
 	];
 </script>
 
-<Popover.Root lazyMount unmountOnExit>
+<Popover.Root lazyMount unmountOnExit positioning={{ placement: "bottom-end" }}>
 	<Popover.Trigger
 		aria-label="RSS"
 		class={cx(popoverStyles.trigger, button({ size: "sm" }))}
 	>
 		<LucideRss aria-hidden />
+		<span class={css({ hideFrom: "md" })}>RSS購読</span>
 		<LucideChevronDown class={popoverStyles.indicator} />
 	</Popover.Trigger>
 	<Portal>
@@ -61,6 +62,7 @@
 					<div class={vstack({ alignItems: "start" })}>
 						{#each types as type (`rss-type-${type.type}`)}
 							<a
+								// eslint-disable-next-line svelte/no-navigation-without-resolve
 								href={type.href}
 								target="_blank"
 								class={cx(link(), css({ justifyContent: "space-between" }))}
