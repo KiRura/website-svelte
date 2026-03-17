@@ -3,7 +3,7 @@ import { defineConfig } from "@pandacss/dev";
 export default defineConfig({
 	presets: ["@chakra-ui/panda-preset"],
 	include: ["./src/**/*.{js,jsx,ts,tsx,svelte}"],
-	outdir: "src/styled-system",
+	outdir: "styled-system",
 	minify: true,
 	conditions: {
 		light: "[data-color-mode=light] &",
