@@ -8,5 +8,6 @@
 				"parser": "svelte"
 			}
 		}
-	]
+	],
+	"endOfLine": "auto"
 }
