@@ -1,5 +1,6 @@
 import type { PageServerLoad } from "./$types";
 import { exec as _exec } from "node:child_process";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 import z from "zod";
 
@@ -23,9 +24,13 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 		"cache-control": "no-cache, public",
 	});
 
+	const licenseReport = fileURLToPath(
+		pathToFileURL("node_modules/.bin/license-report"),
+	); // wtf?
+
 	const [prod, dev] = await Promise.all([
-		exec("./node_modules/.bin/license-report --only=prod"),
-		exec("./node_modules/.bin/license-report --only=dev"),
+		exec(`${licenseReport} --only=prod`),
+		exec(`${licenseReport} --only=dev`),
 	]);
 
 	return {
