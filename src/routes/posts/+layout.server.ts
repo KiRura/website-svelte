@@ -8,5 +8,5 @@ export const load: LayoutServerLoad = async ({ setHeaders }) => {
 	});
 
 	logger.info("fetching...", "all");
-	return await getPosts();
+	return { posts: await getPosts() };
 };

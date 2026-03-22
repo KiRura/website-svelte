@@ -7,6 +7,9 @@ import { defineConfig } from "eslint/config";
 import globals from "globals";
 import ts from "typescript-eslint";
 import svelteConfig from "./svelte.config.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import panda from "@pandacss/eslint-plugin";
 
 const gitignorePath = fileURLToPath(new URL("./.gitignore", import.meta.url));
 
@@ -48,6 +51,15 @@ export default defineConfig(
 					},
 				},
 			],
+		},
+	},
+	{
+		ignores: ["styled-system"],
+		plugins: {
+			"@pandacss": panda,
+		},
+		rules: {
+			...panda.configs.recommended.rules,
 		},
 	},
 );

@@ -8,7 +8,6 @@
 	import { css, cx } from "styled-system/css";
 	import { center, grid, hstack } from "styled-system/patterns";
 	import prose from "./prose";
-
 	import { scrollY } from "svelte/reactivity/window";
 	import { afterNavigate } from "$app/navigation";
 	import { Collapsible } from "@ark-ui/svelte";
@@ -19,9 +18,7 @@
 	const { data } = $props();
 
 	const collapsibleStyle = collapsible();
-
 	let headingOffsets = $state<{ id: string; offsetTop: number }[] | null>(null);
-
 	function updateOffsets() {
 		headingOffsets = data.post.headings.map((heading) => {
 			const element = document.getElementById(heading.id);
@@ -31,11 +28,9 @@
 			};
 		});
 	}
-
 	afterNavigate(updateOffsets);
 	onMount(() => {
 		const resizeEvent = on(window, "resize", updateOffsets);
-
 		return resizeEvent;
 	});
 </script>
@@ -51,7 +46,7 @@
 		data-has-image={Boolean(data.post.coverImage) || undefined}
 		class={css({
 			pos: "relative",
-			borderYWidth: "1px",
+			borderBottomWidth: "1px",
 			overflow: "hidden",
 			"&[data-has-image]": { borderWidth: "1px", rounded: "lg" },
 		})}
@@ -91,7 +86,7 @@
 			class={center({
 				flexDir: "column",
 				alignItems: "start",
-				py: "8",
+				pb: "8",
 				gap: "2",
 				"&[data-has-image]": {
 					p: "8",
@@ -167,10 +162,13 @@
 							flexDir: "column",
 							alignItems: "end",
 							gap: "2",
-							p: { base: "2", _closed: "0" },
+							p: "2",
 							bgColor: "bg",
 							transitionProperty: "padding",
 							transitionDuration: "moderate",
+							_closed: {
+								py: "0",
+							},
 						}),
 					)}
 				>

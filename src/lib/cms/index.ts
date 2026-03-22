@@ -1,4 +1,9 @@
-import { createClient, type MicroCMSQueries } from "microcms-js-sdk";
+import {
+	createClient,
+	type MicroCMSContentId,
+	type MicroCMSDate,
+	type MicroCMSQueries,
+} from "microcms-js-sdk";
 import type { Post, PostWithContent } from "../../interfaces/cms";
 import { MICROCMS_API_KEY } from "$env/static/private";
 import { error } from "@sveltejs/kit";
@@ -15,6 +20,14 @@ export async function getPosts<T = Post>(queries?: MicroCMSQueries) {
 			orders: "-publishedAt",
 			...queries,
 		},
+	});
+}
+
+export async function getPinned() {
+	return await cmsClient.getObject<{
+		posts: (MicroCMSContentId & MicroCMSDate & Post)[];
+	}>({
+		endpoint: "pinned",
 	});
 }
 

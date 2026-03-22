@@ -1,3 +1,4 @@
+/* eslint-disable @pandacss/no-dynamic-styling */
 // https://github.com/chakra-ui/chakra-ui/blob/527a04c77278bb1f7deed3cb79c797003a07fd97/apps/compositions/src/ui/prose.tsx
 
 import { css } from "styled-system/css";
@@ -42,6 +43,8 @@ export default css.raw({
 		fontWeight: "600",
 	},
 	[inWhere("& a strong")]: {
+		// wtf are you saying
+		// eslint-disable-next-line @pandacss/no-hardcoded-color
 		color: "inherit",
 	},
 	[inWhere("& em")]: {

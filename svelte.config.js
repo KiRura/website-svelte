@@ -6,7 +6,7 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		alias: {
-			"styled-system": "./src/styled-system/*",
+			"styled-system": "styled-system/*",
 		},
 	},
 };

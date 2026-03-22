@@ -3,7 +3,7 @@ import { defineConfig } from "@pandacss/dev";
 export default defineConfig({
 	presets: ["@chakra-ui/panda-preset"],
 	include: ["./src/**/*.{js,jsx,ts,tsx,svelte}"],
-	outdir: "src/styled-system",
+	outdir: "styled-system",
 	minify: true,
 	conditions: {
 		light: "[data-color-mode=light] &",
@@ -83,6 +83,43 @@ export default defineConfig({
 									"&:nth-of-type(odd) td": {
 										bg: "bg.subtle",
 									},
+								},
+							},
+						},
+					},
+				},
+				card: {
+					variants: {
+						variant: {
+							elevated: {
+								root: {
+									borderWidth: "1px",
+									borderColor: "border",
+								},
+							},
+							bgoutline: {
+								root: {
+									bg: "bg",
+									borderWidth: "1px",
+									borderColor: "border",
+								},
+							},
+							bgelevated: {
+								root: {
+									bg: "bg",
+									borderWidth: "1px",
+									borderColor: "border",
+									boxShadow: "md",
+								},
+							},
+						},
+						hover: {
+							true: {
+								root: {
+									_hover: {
+										bg: "bg.muted",
+									},
+									transition: "background",
 								},
 							},
 						},
