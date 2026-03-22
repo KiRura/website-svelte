@@ -16,5 +16,3 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 		pinnedPosts,
 	};
 };
-
-export const prerender = true;
