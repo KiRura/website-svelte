@@ -19,11 +19,29 @@
 	import { resolve } from "$app/paths";
 	import LucideChevronRight from "@lucide/svelte/icons/chevron-right";
 	import LucidePin from "@lucide/svelte/icons/pin";
+	import { on } from "svelte/events";
+	import { onMount } from "svelte";
 
 	const { data }: PageProps = $props();
 
 	const timelineStyles = timeline();
 	const cardStyles = card({ variant: "bgelevated", hover: true });
+
+	let headerHeading: HTMLElement;
+	let headerHeadingPos = $state({
+		x: 0,
+		y: 0,
+	});
+
+	onMount(() => {
+		const pointerEvent = on(headerHeading, "pointermove", (e) => {
+			headerHeadingPos = {
+				x: Math.trunc((e.offsetX - e.currentTarget.offsetWidth / 2) / 100),
+				y: Math.trunc((e.offsetY - e.currentTarget.offsetHeight / 2) / 100),
+			};
+		});
+		return pointerEvent;
+	});
 </script>
 
 <ZZZ
@@ -52,6 +70,7 @@
 <main>
 	<div class={container()}>
 		<section
+			bind:this={headerHeading}
 			class={center({ h: { "2xlDown": "vh", "2xl": "50rem" }, maxH: "90vh" })}
 		>
 			<h1
@@ -60,10 +79,15 @@
 					fontWeight: "bold",
 					fontFamily: `"Google Sans Code", "Noto Sans JP", sans-serif`,
 					filter: "drop-shadow(0px 4px 8px {colors.bg/80})",
+					transform: "translate(var(--x), var(--y))",
+					transitionProperty: "transform",
+					transitionDuration: "fast",
+					pointerEvents: "none",
 					// dropShadow: "0px 4px 8px {colors.bg/80}",
 					// hey chakra, wtf is this???????????????????????
 					// --drop-shadow: var(--empty, ) !important;
 				})}
+				style="--x: {headerHeadingPos.x}px; --y: {headerHeadingPos.y}px"
 			>
 				Hello!,
 				<br />
