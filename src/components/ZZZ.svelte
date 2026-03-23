@@ -94,6 +94,7 @@
 					},
 					transitionProperty: "background, color",
 					transitionDuration: "moderate",
+					contentVisibility: "auto",
 				})}
 				style:transition-delay={`${(i - num / 2) * 8}ms`}
 			>
