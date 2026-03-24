@@ -145,6 +145,7 @@
 							_open: {
 								borderBottomWidth: "1px",
 							},
+							transition: "background",
 						}),
 					)}
 				>
