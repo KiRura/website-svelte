@@ -26,6 +26,17 @@ export default defineConfig({
 					navbar: { value: "{sizes.navbar}" },
 				},
 			},
+			semanticTokens: {
+				colors: {
+					bg: {
+						DEFAULT: {
+							value: {
+								_dark: "#090501",
+							},
+						},
+					},
+				},
+			},
 			recipes: {
 				container: {
 					base: {
