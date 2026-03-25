@@ -1,16 +1,14 @@
-import Icon from "@lucide/svelte/icons/link";
-import Email from "@lucide/svelte/icons/mail";
-import Github from "@lucide/svelte/icons/github";
+import { LucideMail } from "@lucide/svelte";
 
 export const links: { name: string; href: string; icon: typeof Icon }[] = [
 	{
 		name: "Email",
 		href: "mailto:kirura@kirura.f5.si",
-		icon: Email,
+		icon: LucideMail,
 	},
 	{
 		name: "GitHub",
 		href: "https://github.com/KiRura",
-		icon: Github,
+		icon: LucideMail,
 	},
 ];

@@ -1,10 +1,5 @@
 <script lang="ts">
 	import { useTheme } from "svelte-themes";
-	import LucideSun from "@lucide/svelte/icons/sun";
-	import LucideMoon from "@lucide/svelte/icons/moon";
-	import LucideSunMoon from "@lucide/svelte/icons/sun-moon";
-	import LucideChevronDown from "@lucide/svelte/icons/chevron-down";
-	import LucideCheck from "@lucide/svelte/icons/check";
 	import { button, icon, select } from "styled-system/recipes";
 	import z from "zod";
 	import { cx } from "styled-system/css";
@@ -14,6 +9,13 @@
 		Portal,
 		Select,
 	} from "@ark-ui/svelte";
+	import {
+		LucideSun,
+		LucideMoon,
+		LucideSunMoon,
+		LucideChevronDown,
+		LucideCheck,
+	} from "@lucide/svelte";
 
 	const theme = useTheme();
 	let derivedTheme = $derived([theme.theme]);

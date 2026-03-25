@@ -13,7 +13,7 @@
 	import { Collapsible } from "@ark-ui/svelte";
 	import { on } from "svelte/events";
 	import { onMount } from "svelte";
-	import LucideChevronDown from "@lucide/svelte/icons/chevron-down";
+	import { LucideChevronDown } from "@lucide/svelte";
 
 	const { data } = $props();
 

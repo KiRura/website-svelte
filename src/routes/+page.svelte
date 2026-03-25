@@ -17,10 +17,9 @@
 	import { format } from "date-fns";
 	import { TZDate } from "@date-fns/tz";
 	import { resolve } from "$app/paths";
-	import LucideChevronRight from "@lucide/svelte/icons/chevron-right";
-	import LucidePin from "@lucide/svelte/icons/pin";
 	import { on } from "svelte/events";
 	import { onMount } from "svelte";
+	import { LucideChevronRight, LucidePin } from "@lucide/svelte";
 
 	const { data }: PageProps = $props();
 

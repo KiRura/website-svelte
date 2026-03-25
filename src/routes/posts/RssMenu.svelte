@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 	import { Popover, Portal } from "@ark-ui/svelte";
-	import LucideChevronDown from "@lucide/svelte/icons/chevron-down";
-	import LucideExternalLink from "@lucide/svelte/icons/external-link";
-	import LucideRss from "@lucide/svelte/icons/rss";
+	import {
+		LucideChevronDown,
+		LucideExternalLink,
+		LucideRss,
+	} from "@lucide/svelte";
 	import { css, cx } from "styled-system/css";
 	import { vstack } from "styled-system/patterns";
 	import {

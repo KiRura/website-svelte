@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from "$app/state";
-	import LucideCircleX from "@lucide/svelte/icons/circle-x";
 	import { css, cx } from "styled-system/css";
 	import { container, emptyState } from "styled-system/recipes";
 	import ZZZ from "../components/ZZZ.svelte";
+	import { LucideCircleX } from "@lucide/svelte";
 </script>
 
 <!-- metaを実装したいけど気持ち悪い事になるので妥協 -->

@@ -3,7 +3,7 @@
 	import type { PageProps } from "./$types";
 	import { css, cx } from "styled-system/css";
 	import { grid, hstack, linkOverlay } from "styled-system/patterns";
-	import LucideExternalLink from "@lucide/svelte/icons/external-link";
+	import { LucideExternalLink } from "@lucide/svelte";
 
 	const { data }: PageProps = $props();
 
