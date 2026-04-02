@@ -15,6 +15,6 @@ RUN apk -U upgrade
 RUN apk add curl wget
 
 WORKDIR /app
-COPY --from=build /app/build .
+COPY --from=build /app .
 
-CMD [ "deno", "-A", "/app/index.js" ]
+CMD [ "deno", "-A", "/app/build/index.js" ]
