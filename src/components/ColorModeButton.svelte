@@ -51,8 +51,6 @@
 	onValueChange={(e) => {
 		theme.theme = e.value[0];
 	}}
-	lazyMount
-	unmountOnExit
 	positioning={{ sameWidth: true }}
 	class={selectStyles.root}
 >
@@ -81,7 +79,7 @@
 						class={selectStyles.item}
 						aria-label={option.label}
 					>
-						<option.icon aria-hidden class={icon()} />
+						<option.icon class={icon()} />
 						<Select.ItemIndicator class={selectStyles.itemIndicator}>
 							<LucideCheck class={icon()} />
 						</Select.ItemIndicator>

@@ -43,7 +43,7 @@
 		aria-label="RSS"
 		class={cx(popoverStyles.trigger, button({ size: "sm" }))}
 	>
-		<LucideRss aria-hidden />
+		<LucideRss />
 		<span class={css({ hideFrom: "md" })}>RSS購読</span>
 		<LucideChevronDown class={popoverStyles.indicator} />
 	</Popover.Trigger>
@@ -71,7 +71,6 @@
 							>
 								{type.label}
 								<LucideExternalLink
-									aria-hidden
 									class={cx(icon({ size: "sm" }), css({ color: "fg.muted" }))}
 								/>
 							</a>

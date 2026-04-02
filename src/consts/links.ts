@@ -1,6 +1,17 @@
 import { LucideMail } from "@lucide/svelte";
+import {
+	siBluesky,
+	siGithub,
+	siSimpleicons,
+	siX,
+	siYoutube,
+} from "simple-icons";
 
-export const links: { name: string; href: string; icon: typeof Icon }[] = [
+export const links: {
+	name: string;
+	href: `https://${string}` | `mailto:${string}`;
+	icon: typeof LucideMail | typeof siSimpleicons;
+}[] = [
 	{
 		name: "Email",
 		href: "mailto:kirura@kirura.f5.si",
@@ -9,6 +20,21 @@ export const links: { name: string; href: string; icon: typeof Icon }[] = [
 	{
 		name: "GitHub",
 		href: "https://github.com/KiRura",
-		icon: LucideMail,
+		icon: siGithub,
+	},
+	{
+		name: "YouTube",
+		href: "https://www.youtube.com/@7KiRura",
+		icon: siYoutube,
+	},
+	{
+		name: "Twitter",
+		href: "https://twitter.com/7KiRura",
+		icon: siX,
+	},
+	{
+		name: "Bluesky",
+		href: "https://bsky.app/profile/7kirura.bsky.social",
+		icon: siBluesky,
 	},
 ];

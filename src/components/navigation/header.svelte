@@ -96,7 +96,7 @@
 					data-loading={navigating.to?.route.id?.startsWith(page.href) ||
 						undefined}
 				>
-					<page.icon class={icon()} aria-hidden />
+					<page.icon class={icon()} />
 					{page.label}
 				</a>
 			{/each}

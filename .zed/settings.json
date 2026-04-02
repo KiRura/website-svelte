@@ -7,80 +7,82 @@
 	"lsp": {
 		"biome": {
 			"settings": {
-				"require_config_file": true
-			}
+				"require_config_file": true,
+			},
 		},
 		// https://github.com/zed-industries/zed/issues/49387#issuecomment-3939071502
 		"eslint": {
 			"settings": {
 				"experimental": {
-					"useFlatConfig": false
-				}
-			}
-		}
+					"useFlatConfig": false,
+				},
+			},
+		},
 	},
 	"language_servers": [
 		"!biome",
 		"!tailwindcss-language-server",
 		"!typescript-language-server",
-		"..."
+		"!oxlint",
+		"!oxfmt",
+		"...",
 	],
 	"languages": {
 		"Svelte": {
 			"formatter": [
 				{
-					"code_action": "source.fixAll.eslint"
+					"code_action": "source.fixAll.eslint",
 				},
-				"prettier"
-			]
+				"prettier",
+			],
 		},
 		"TypeScript": {
 			"formatter": [
 				{
-					"code_action": "source.fixAll.eslint"
+					"code_action": "source.fixAll.eslint",
 				},
-				"prettier"
-			]
+				"prettier",
+			],
 		},
 		"JavaScript": {
 			"formatter": [
 				{
-					"code_action": "source.fixAll.eslint"
+					"code_action": "source.fixAll.eslint",
 				},
-				"prettier"
-			]
+				"prettier",
+			],
 		},
 		"JSON": {
 			"formatter": [
 				{
-					"code_action": "source.fixAll.eslint"
+					"code_action": "source.fixAll.eslint",
 				},
-				"prettier"
-			]
+				"prettier",
+			],
 		},
 		"JSONC": {
 			"formatter": [
 				{
-					"code_action": "source.fixAll.eslint"
+					"code_action": "source.fixAll.eslint",
 				},
-				"prettier"
-			]
+				"prettier",
+			],
 		},
 		"HTML": {
 			"formatter": [
 				{
-					"code_action": "source.fixAll.eslint"
+					"code_action": "source.fixAll.eslint",
 				},
-				"prettier"
-			]
+				"prettier",
+			],
 		},
 		"CSS": {
 			"formatter": [
 				{
-					"code_action": "source.fixAll.eslint"
+					"code_action": "source.fixAll.eslint",
 				},
-				"prettier"
-			]
-		}
-	}
+				"prettier",
+			],
+		},
+	},
 }

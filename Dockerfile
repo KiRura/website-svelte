@@ -1,7 +1,8 @@
-FROM node:25-alpine
+FROM node:current
 
-RUN apk -U upgrade
-RUN apk --no-cache add curl wget pnpm
+RUN apt update
+RUN apt upgrade -y
+RUN apt install curl wget pnpm -y
 
 WORKDIR /app
 COPY . .
@@ -9,4 +10,6 @@ COPY . .
 RUN pnpm i --frozen-lockfile
 RUN pnpm run build
 
-CMD [ "node", "/app/build" ]
+FROM denoland/deno:latest
+
+CMD [ "deno", "-A", "/app/build/index.js" ]

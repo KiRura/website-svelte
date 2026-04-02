@@ -54,43 +54,45 @@
 			sound.play();
 		}}
 	>
-		<Presence
-			present={isKurukuru}
-			class={css({
-				h: "var(--height)",
-				pos: "fixed",
-				bottom: "0",
-				zIndex: "docked",
-				_closed: {
-					animationName: "slide-to-bottom-full",
-					animationDuration: "slowest",
-					animationTimingFunction: "ease-in",
-				},
-			})}
-		>
-			<img
-				src={kurukuru}
-				alt="kurukuru~"
-				class={css({ h: "full", objectFit: "cover" })}
-			/>
+		<Presence present={isKurukuru}>
+			{#snippet asChild(props)}
+				<img
+					{...props()}
+					src={kurukuru}
+					alt="kurukuru~"
+					class={css({
+						objectFit: "cover",
+						h: "var(--height)",
+						pos: "fixed",
+						bottom: "0",
+						zIndex: "docked",
+						_closed: {
+							animationName: "slide-to-bottom-full",
+							animationDuration: "slowest",
+							animationTimingFunction: "ease-in",
+						},
+					})}
+				/>
+			{/snippet}
 		</Presence>
-		<Presence
-			present={!isKurukuru}
-			class={css({
-				h: "full",
-				_open: {
-					animationName: "slide-from-bottom-full",
-					animationDuration: "slowest",
-					animationTimingFunction: "ease-in-smooth",
-				},
-			})}
-		>
-			<img
-				src={herta}
-				alt="herta"
-				loading="lazy"
-				class={css({ h: "full", objectFit: "cover" })}
-			/>
+		<Presence present={!isKurukuru}>
+			{#snippet asChild(props)}
+				<img
+					{...props()}
+					src={herta}
+					alt="herta"
+					loading="lazy"
+					class={css({
+						h: "full",
+						objectFit: "cover",
+						_open: {
+							animationName: "slide-from-bottom-full",
+							animationDuration: "slowest",
+							animationTimingFunction: "ease-in-smooth",
+						},
+					})}
+				/>
+			{/snippet}
 		</Presence>
 	</button>
 </div>
