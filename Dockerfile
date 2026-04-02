@@ -1,4 +1,4 @@
-FROM node:current AS build
+FROM node:current-alpine AS build
 
 RUN apt update
 RUN apt upgrade -y
@@ -10,7 +10,7 @@ COPY . .
 RUN pnpm i --frozen-lockfile
 RUN pnpm run build
 
-FROM denoland/deno:latest AS run
+FROM denoland/deno:alpine AS run
 
 WORKDIR /app
 COPY --from=build /app/build .
