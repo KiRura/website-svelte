@@ -1,4 +1,4 @@
-FROM node:current
+FROM node:current AS build
 
 RUN apt update
 RUN apt upgrade -y
@@ -10,6 +10,9 @@ COPY . .
 RUN pnpm i --frozen-lockfile
 RUN pnpm run build
 
-FROM denoland/deno:latest
+FROM denoland/deno:latest AS run
 
-CMD [ "deno", "-A", "/app/build/index.js" ]
+WORKDIR /app
+COPY --from=build /app/build .
+
+CMD [ "deno", "-A", "/app/index.js" ]
