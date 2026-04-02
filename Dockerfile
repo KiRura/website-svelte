@@ -1,8 +1,7 @@
 FROM node:current-alpine AS build
 
-RUN apt update
-RUN apt upgrade -y
-RUN apt install curl wget pnpm -y
+RUN apk -U upgrade
+RUN apk add curl wget pnpm
 
 WORKDIR /app
 COPY . .
@@ -11,6 +10,9 @@ RUN pnpm i --frozen-lockfile
 RUN pnpm run build
 
 FROM denoland/deno:alpine AS run
+
+RUN apk -U upgrade
+RUN apk add curl wget
 
 WORKDIR /app
 COPY --from=build /app/build .
