@@ -11,7 +11,7 @@
 		timeline,
 	} from "styled-system/recipes";
 	import ZZZ from "../components/ZZZ.svelte";
-	import { center, flex, grid, hstack } from "styled-system/patterns";
+	import { flex, hstack } from "styled-system/patterns";
 	import { dev } from "$app/environment";
 	import Herta from "../components/herta.svelte";
 	import type { PageProps } from "./$types";
@@ -28,79 +28,41 @@
 	const listStyles = list();
 </script>
 
-<header
-	class={center({ h: { "2xlDown": "vh", "2xl": "50rem" }, maxH: "90vh" })}
->
+<header>
 	<div class="zzz">
 		<ZZZ />
 	</div>
-	<div class={cx(container(), css({ w: "initial" }))}>
-		<h1
-			class={css({
-				fontSize: ["5xl", "6xl", "7xl"],
-				fontWeight: "bold",
-				fontFamily: `"Google Sans Code", "Noto Sans JP", sans-serif`,
-				filter: "drop-shadow(0px 4px 8px {colors.bg/80})",
-			})}
-		>
+	<div class={container()} style:width="initial">
+		<h1>
 			Hello!,
 			<br />
-			<span class={css({ color: { base: "orange.500", _dark: "orange.300" } })}>
-				きるら
-			</span>,
+			<span>きるら</span>,
 			<br />
-			<span class={css({ color: { base: "orange.500", _dark: "orange.300" } })}>
-				(7)KiRura
-			</span>,
+			<span>(7)KiRura</span>,
 		</h1>
 	</div>
 </header>
-<main class={container()}>
-	<section
-		class={grid({
-			gridTemplateColumns: { lgDown: "1fr", lg: "1fr 20rem" },
-			gap: "10",
-		})}
-	>
-		<section class={css({ spaceY: "4" })}>
-			<div class={hstack()}>
+<main class={container()} style:margin-bottom="1rem">
+	<section class="posts_grid">
+		<section>
+			<div class={hstack()} style:margin-bottom="1rem">
 				<h2 class={heading({ size: "4xl" })}>Recent Tweets</h2>
-				<span class={cx(separator(), css({ flex: 1 }))}></span>
+				<span class={separator()} style:flex="1"></span>
 				<a class={button()} href={resolve("/posts")}>
 					全ての呟き<LucideChevronRight class={icon()} />
 				</a>
 			</div>
-			<div class={timelineStyles.root}>
+			<div class={[timelineStyles.root, "all_posts"]}>
 				{#each data.recentPosts.contents as post (`posts-${post.id}`)}
 					<div class={timelineStyles.item}>
 						<div class={timelineStyles.connector}>
 							<div class={timelineStyles.separator}></div>
 							<div class={timelineStyles.indicator}></div>
 						</div>
-						<article
-							class={cx(
-								timelineStyles.content,
-								grid({
-									gridTemplateColumns: {
-										mdDown: "1fr",
-										md: "fit-content(100%) 1fr",
-									},
-									gap: { md: "4.5" },
-								}),
-							)}
-						>
+						<article class={timelineStyles.content}>
 							{#if post.publishedAt}
 								<time
-									class={cx(
-										timelineStyles.description,
-										css({
-											fontFamily: "mono",
-											fontSize: "1rem",
-											lineHeight: 1.4,
-											h: "fit",
-											w: "fit",
-										}),
-									)}
+									class={timelineStyles.description}
 									datetime={post.publishedAt}
 									title={new TZDate(
 										post.publishedAt,
@@ -118,15 +80,11 @@
 								data-hasimage={Boolean(post.coverImage) || undefined}
 								href={resolve(`/posts/[id]`, { id: post.id })}
 							>
-								<div class={flex()}>
+								<div style:display="flex">
 									<div
-										class={cx(
-											cardStyles.body,
-											css({
-												flexDir: "row",
-												justifyContent: "space-between",
-											}),
-										)}
+										class={cardStyles.body}
+										style:flex-direction="row"
+										style:justify-content="space-between"
 									>
 										<hgroup>
 											<h1 class={cardStyles.title}>{post.title}</h1>
@@ -140,12 +98,6 @@
 												alt={post.coverImage.alt}
 												fetchpriority="high"
 												loading="lazy"
-												class={css({
-													w: "40",
-													h: "12",
-													objectFit: "cover",
-													rounded: "sm",
-												})}
 											/>
 										{/if}
 									</div>
@@ -165,26 +117,21 @@
 				{/each}
 			</div>
 		</section>
-		<section class={css({ spaceY: "4", lgDown: { order: -1 } })}>
-			<h2 class={heading({ size: "4xl" })}>
+		<section class="pinned">
+			<h2 class={heading({ size: "4xl" })} style:margin-bottom="1rem">
 				<LucidePin class={icon()} />
 				Pinned
 			</h2>
 			<div>
 				{#each data.pinnedPosts.posts as post (`pinned-${post.id}`)}
 					<a href={resolve("/posts/[id]", { id: post.id })}>
-						<article class={cx(cardStyles.root, css({ overflow: "hidden" }))}>
+						<article class={cardStyles.root} style:overflow="hidden">
 							{#if post.coverImage}
 								<enhanced:img
 									src={`${post.coverImage.url}?w=600&fm=webp`}
 									alt={post.coverImage.alt}
 									fetchpriority="high"
 									loading="lazy"
-									class={css({
-										w: "full",
-										h: "40",
-										objectFit: "cover",
-									})}
 								/>
 							{/if}
 							<div class={cardStyles.body}>
@@ -205,6 +152,7 @@
 		{#each links as link (`link-${link.name}-${link.href}`)}
 			<ul class={listStyles.root}>
 				<li class={listStyles.item}>
+					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 					<h3><a href={link.href} target="_blank">{link.name}</a></h3>
 				</li>
 			</ul>
@@ -217,43 +165,140 @@
 		alt="moe counter"
 		width="315px"
 		height="100px"
-		class={css({ mx: "auto" })}
 	/>
 	<Herta />
 </footer>
 
 <style>
-	.zzz {
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100vh;
-		overflow: hidden;
-		clip-path: inset(0);
-		user-select: none;
-		z-index: var(--z-index-hide);
+	header {
+		--header-height: 55rem;
 
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		height: calc(100vh - var(--sizes-navbar) - 4rem);
 
 		@media (min-width: 720px) {
-			height: 60rem;
+			height: calc(var(--header-height) - var(--sizes-navbar));
+		}
+
+		.zzz {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100vh;
+			overflow: hidden;
+			clip-path: inset(0);
+			user-select: none;
+			z-index: var(--z-index-hide);
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			@media (min-width: 720px) {
+				height: var(--header-height);
+			}
+		}
+
+		.zzz::after {
+			position: absolute;
+			top: 0;
+			left: 0;
+			content: "";
+			width: 100%;
+			height: 100vh;
+			background: linear-gradient(transparent, var(--colors-bg));
+
+			@media (min-width: 720px) {
+				height: var(--header-height);
+			}
+		}
+
+		h1 {
+			font-size: 2rem;
+			font-weight: 700;
+			font-family: "Google Sans Code", "Noto Sans JP", sans-serif;
+			filter: drop-shadow(0px 4px 8px rgb(from var(--colors-bg) r g b / 0.8));
+
+			@media (min-width: 360px) {
+				font-size: 3rem;
+			}
+
+			@media (min-width: 480px) {
+				font-size: 4rem;
+			}
+
+			@media (min-width: 720px) {
+				font-size: 5rem;
+			}
+
+			span {
+				color: var(--colors-orange-500);
+
+				:global([data-color-mode="dark"] &) {
+					color: var(--colors-orange-300);
+				}
+			}
 		}
 	}
 
-	.zzz::after {
-		position: absolute;
-		top: 0;
-		left: 0;
-		content: "";
-		width: 100%;
-		height: 100vh;
-		background: linear-gradient(transparent, var(--colors-bg));
+	.posts_grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
 
-		@media (min-width: 720px) {
-			height: 60rem;
+		@media (min-width: 900px) {
+			grid-template-columns: 1fr 20rem;
+		}
+
+		.all_posts article {
+			display: grid;
+			grid-template-columns: 1fr;
+			padding-bottom: 0.8rem;
+
+			@media (min-width: 1080px) {
+				grid-template-columns: fit-content(100%) 1fr;
+				gap: 1rem;
+			}
+
+			time {
+				font-family: var(--fonts-mono);
+				font-size: 1rem;
+				line-height: 1.4;
+				height: fit-content;
+				width: fit-content;
+			}
+
+			enhanced\:img {
+				width: 10rem;
+				max-width: 25%;
+				height: 3rem;
+				object-fit: cover;
+				border-radius: 0.2rem;
+				margin-left: 1rem;
+			}
+		}
+
+		.pinned {
+			@media (max-width: 899px) {
+				order: -1;
+			}
+
+			article {
+				enhanced\:img {
+					width: 100%;
+					height: 10rem;
+					object-fit: cover;
+				}
+			}
+		}
+	}
+
+	footer {
+		img {
+			margin: 0 auto 1rem auto;
 		}
 	}
 </style>

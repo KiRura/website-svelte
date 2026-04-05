@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { onMount } from "svelte";
+	import { onMount, type Snippet } from "svelte";
 
 	const {
 		disableHighlight,
 		disableHighlightAnimation,
 		disableAnimation,
-		text,
+		children,
 	}: {
 		disableHighlight?: boolean;
 		disableHighlightAnimation?: boolean;
 		disableAnimation?: boolean;
-		text?: string;
+		children?: Snippet;
 	} = $props();
 
 	const columns = 10;
@@ -19,7 +19,7 @@
 
 	let animatingDisableHighlight = $state(false);
 	onMount(() => {
-		if (!disableHighlightAnimation) {
+		if (!disableHighlight || !disableHighlightAnimation) {
 			const interval = setInterval(async () => {
 				animatingDisableHighlight = true;
 				await new Promise((r) =>
@@ -44,7 +44,11 @@
 			data-animate={!disableAnimation || undefined}
 			style:transition-delay={`${(i - num / 2) * 8}ms`}
 		>
-			{text ?? "KiRura"}
+			{#if children}
+				{@render children()}
+			{:else}
+				KiRura
+			{/if}
 		</p>
 	{/each}
 </div>

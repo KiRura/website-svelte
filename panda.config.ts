@@ -84,6 +84,30 @@ export default defineConfig({
 						},
 					},
 				},
+				icon: {
+					variants: {
+						size: {
+							xs: {
+								minWidth: "3",
+							},
+							sm: {
+								minWidth: "4",
+							},
+							md: {
+								minWidth: "5",
+							},
+							lg: {
+								minWidth: "6",
+							},
+							xl: {
+								minWidth: "7",
+							},
+							"2xl": {
+								minWidth: "8",
+							},
+						},
+					},
+				},
 			},
 			slotRecipes: {
 				table: {

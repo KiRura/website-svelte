@@ -2,51 +2,19 @@
 	import { navigating } from "$app/state";
 
 	import { css, cx } from "styled-system/css";
-	import { flex, hstack } from "styled-system/patterns";
 	import { button, container, icon, link } from "styled-system/recipes";
 	import ColorModeButton from "../ColorModeButton.svelte";
 	import { resolve } from "$app/paths";
 	import kiruraIcon from "$lib/assets/kirura/512p.png";
 	import { page as appPage } from "$app/state";
 	import { pages } from "../../consts/pages";
-
-	const headerCSS = css.raw({
-		pointerEvents: "all",
-		touchAction: "auto",
-	});
 </script>
 
-<nav
-	class={cx(
-		container({ centerContent: true }),
-		css({
-			top: "0",
-			pos: "sticky",
-			zIndex: "docked",
-			py: "2",
-			pointerEvents: "none",
-			touchAction: "none",
-			flexDir: "row",
-			justifyContent: "space-between",
-			maxW: "vw",
-			gap: "2",
-			filter: "drop-shadow(0 0 0.2rem {colors.blackAlpha.500})",
-			h: "navbar",
-		}),
-	)}
->
-	<div
-		class={hstack({
-			...headerCSS,
-			overflow: "hidden ",
-		})}
-	>
+<nav class={container({ centerContent: true })}>
+	<div class="group pages">
 		<a
 			href={resolve("/")}
-			class={cx(
-				link({ variant: "plain" }),
-				css({ color: "fg", fontWeight: "bold", fontSize: "xl" }),
-			)}
+			class={[link({ variant: "plain" }), "home"]}
 			aria-label="ホーム"
 		>
 			<enhanced:img
@@ -55,13 +23,9 @@
 				alt="きるらのアイコン Kの文字"
 				class={css({ boxSize: "8", maxW: "8", rounded: "full" })}
 			/>
-			<span class={css({ hideBelow: "md" })}>KiRura</span>
+			<span>KiRura</span>
 		</a>
-		<div
-			class={flex({
-				overflowX: "auto",
-			})}
-		>
+		<div class="pages_scroll">
 			{#each pages as page (`page-${page.label}-${page.href}`)}
 				<a
 					class={cx(
@@ -102,7 +66,58 @@
 			{/each}
 		</div>
 	</div>
-	<div class={css(headerCSS)}>
+	<div class="group theme_switcher">
 		<ColorModeButton />
 	</div>
 </nav>
+
+<style>
+	nav {
+		position: sticky;
+		top: 0;
+		max-width: 100%;
+		height: var(--sizes-navbar);
+		z-index: var(--z-index-docked);
+		padding-top: 0.4rem;
+		padding-bottom: 0.4rem;
+		pointer-events: none;
+		touch-action: none;
+		flex-direction: row;
+		justify-content: space-between;
+		gap: 1rem;
+		filter: drop-shadow(0 0 0.2rem var(--colors-black-alpha-500));
+	}
+
+	.group {
+		pointer-events: all;
+		touch-action: auto;
+		display: flex;
+		gap: 1rem;
+	}
+
+	.home {
+		color: var(--colors-fg);
+		font-weight: 700;
+		font-size: 1.6rem;
+		span {
+			white-space: nowrap;
+			@media (max-width: 719px) {
+				display: none;
+			}
+		}
+	}
+
+	.pages,
+	.pages_scroll {
+		flex-shrink: 114514;
+	}
+
+	.pages_scroll {
+		display: flex;
+		overflow-x: auto;
+	}
+
+	.theme_switcher {
+		flex-shrink: 0;
+	}
+</style>
