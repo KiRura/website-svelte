@@ -1,7 +1,8 @@
-FROM node:current-alpine AS build
+FROM node:24-alpine AS build
 
 RUN apk -U upgrade
-RUN apk add curl wget pnpm
+RUN npm i -g corepack@latest
+RUN corepack enable pnpm
 
 WORKDIR /app
 COPY . .
