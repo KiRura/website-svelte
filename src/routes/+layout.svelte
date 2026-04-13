@@ -32,13 +32,17 @@
 
 <MetaTags {...metaTags} />
 
-<SvelteTheme attribute="data-color-mode">
-	{#if dev}
-		<RenderScan />
-	{/if}
-	<Header />
-	{@render children()}
-</SvelteTheme>
+<div class="body">
+	<SvelteTheme attribute="data-color-mode">
+		{#if dev}
+			<RenderScan />
+		{/if}
+		<Header />
+		<div class="main">
+			{@render children()}
+		</div>
+	</SvelteTheme>
+</div>
 
 <style>
 	:global {
@@ -46,18 +50,32 @@
 			* {
 				scrollbar-color: var(--colors-border-emphasized) var(--colors-bg);
 			}
-
-			body {
-				scroll-behavior: smooth;
-			}
 		}
 
 		@media (prefers-reduced-motion: reduce) {
 			* {
-				animation: none;
-				transition: none;
-				scroll-behavior: unset;
+				animation: none !important;
+				transition: none !important;
+				scroll-behavior: unset !important;
 			}
+		}
+
+		body {
+			overflow-y: hidden;
+		}
+	}
+
+	.body {
+		display: grid;
+		grid-template-columns: 16rem 1fr;
+		height: 100vh;
+
+		.main {
+			position: relative;
+			overflow-y: auto;
+			max-height: 100vh;
+			border-radius: 1rem 0 0 1rem;
+			border-left-width: 1px;
 		}
 	}
 </style>

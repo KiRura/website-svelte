@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { navigating } from "$app/state";
 
-	import { css, cx } from "styled-system/css";
-	import { button, container, icon, link } from "styled-system/recipes";
+	import { css } from "styled-system/css";
+	import { icon, link, separator } from "styled-system/recipes";
 	import ColorModeButton from "../ColorModeButton.svelte";
 	import { resolve } from "$app/paths";
 	import kiruraIcon from "$lib/assets/kirura/512p.png";
@@ -10,7 +10,7 @@
 	import { pages } from "../../consts/pages";
 </script>
 
-<nav class={container({ centerContent: true })}>
+<nav>
 	<div class="group pages">
 		<a
 			href={resolve("/")}
@@ -25,36 +25,11 @@
 			/>
 			<span>KiRura</span>
 		</a>
+		<span class={separator()}></span>
 		<div class="pages_scroll">
 			{#each pages as page (`page-${page.label}-${page.href}`)}
 				<a
-					class={cx(
-						button({ variant: "bgoutline" }),
-						css({
-							color: "fg.muted",
-							rounded: "0",
-							borderLeftWidth: "0",
-							_selected: {
-								color: "orange.fg",
-								borderBottomColor: "orange.border",
-							},
-							_hover: { color: "fg" },
-							_loading: {
-								color: "fg",
-								animationName: "pulse",
-								animationDuration: "1s",
-								animationIterationCount: "infinite",
-							},
-							transitionProperty: "color, border, background",
-							_first: {
-								roundedLeft: "sm",
-								borderLeftWidth: "1px",
-							},
-							_last: {
-								roundedRight: "sm",
-							},
-						}),
-					)}
+					class={link({ variant: "plain" })}
 					href={resolve(page.href)}
 					data-selected={appPage.route.id?.startsWith(page.href) || undefined}
 					data-loading={navigating.to?.route.id?.startsWith(page.href) ||
@@ -66,6 +41,7 @@
 			{/each}
 		</div>
 	</div>
+	<span class={separator()}></span>
 	<div class="group theme_switcher">
 		<ColorModeButton />
 	</div>
@@ -73,32 +49,27 @@
 
 <style>
 	nav {
-		position: sticky;
-		top: 0;
-		max-width: 100%;
-		height: var(--sizes-navbar);
-		z-index: var(--z-index-docked);
-		padding-top: 0.4rem;
-		padding-bottom: 0.4rem;
-		pointer-events: none;
-		touch-action: none;
-		flex-direction: row;
-		justify-content: space-between;
+		display: flex;
+		flex-direction: column;
 		gap: 1rem;
-		filter: drop-shadow(0 0 0.2rem var(--colors-black-alpha-500));
+		height: 100%;
+		padding: 1rem;
+		background-color: var(--colors-bg);
 	}
 
-	.group {
-		pointer-events: all;
-		touch-action: auto;
+	.pages {
 		display: flex;
+		flex-direction: column;
 		gap: 1rem;
+		flex: 1;
 	}
 
 	.home {
 		color: var(--colors-fg);
 		font-weight: 700;
 		font-size: 1.6rem;
+		margin-left: auto;
+		margin-right: auto;
 		span {
 			white-space: nowrap;
 			@media (max-width: 719px) {
@@ -107,14 +78,32 @@
 		}
 	}
 
-	.pages,
-	.pages_scroll {
-		flex-shrink: 114514;
-	}
-
 	.pages_scroll {
 		display: flex;
-		overflow-x: auto;
+		flex-direction: column;
+		gap: 0.2rem;
+		overflow-y: auto;
+
+		a {
+			color: var(--colors-fg);
+			transition-property: color text-decoration;
+			transition-duration: 300ms;
+
+			&:first-child {
+				margin-top: 0.2rem;
+			}
+
+			&[data-selected] {
+				color: var(--colors-orange-fg);
+				text-decoration: underline;
+			}
+
+			&[data-loading] {
+				animation-name: pulse;
+				animation-duration: 1s;
+				animation-iteration-count: infinite;
+			}
+		}
 	}
 
 	.theme_switcher {
