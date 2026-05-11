@@ -5,7 +5,7 @@
 	import { icon, link, separator } from "styled-system/recipes";
 	import ColorModeButton from "../ColorModeButton.svelte";
 	import { resolve } from "$app/paths";
-	import kiruraIcon from "$lib/assets/kirura/512p.png";
+	import kiruraIcon from "$lib/assets/kirura/512p.png?enhanced";
 	import { page as appPage } from "$app/state";
 	import { pages } from "../../consts/pages";
 </script>
