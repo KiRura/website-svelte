@@ -3,7 +3,6 @@
 	import {
 		button,
 		card,
-		container,
 		heading,
 		icon,
 		list,
@@ -11,7 +10,7 @@
 		timeline,
 	} from "styled-system/recipes";
 	import ZZZ from "../components/ZZZ.svelte";
-	import { flex, hstack } from "styled-system/patterns";
+	import { container, flex, hstack } from "styled-system/patterns";
 	import { dev } from "$app/environment";
 	import Herta from "../components/herta.svelte";
 	import type { PageProps } from "./$types";
@@ -176,11 +175,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		height: calc(100vh - var(--sizes-navbar) - 4rem);
-
-		@media (min-width: 720px) {
-			height: calc(var(--header-height) - var(--sizes-navbar));
-		}
+		height: 85vh;
+		max-height: 50rem;
 
 		.zzz {
 			position: absolute;
@@ -189,7 +185,6 @@
 			width: 100%;
 			height: 100vh;
 			overflow: hidden;
-			clip-path: inset(0);
 			user-select: none;
 			z-index: var(--z-index-hide);
 

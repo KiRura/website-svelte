@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 	import { css, cx } from "styled-system/css";
-	import { grid, hstack, vstack } from "styled-system/patterns";
-	import { container, heading, link, separator } from "styled-system/recipes";
+	import { container, grid, hstack, vstack } from "styled-system/patterns";
+	import { heading, link, separator } from "styled-system/recipes";
 	import RssMenu from "./RssMenu.svelte";
 
 	const { children, data, params } = $props();
@@ -19,17 +19,17 @@
 			},
 			gap: "6",
 		}),
-		css({ maxW: "none", pb: "8" }),
+		css({ maxW: "none", py: "4" }),
 	)}
 >
 	<aside
 		class={vstack({
 			alignItems: "stretch",
 			h: "full",
-			maxH: "calc({sizes.vh} - {sizes.24})",
+			maxH: "vh",
 			pos: "sticky",
 			gap: "0",
-			top: "navbar",
+			top: "0",
 			overflowY: "hidden",
 			hideBelow: "md",
 		})}

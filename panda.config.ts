@@ -6,11 +6,26 @@ export default defineConfig({
 	outdir: "styled-system",
 	minify: true,
 	conditions: {
-		light: "[data-color-mode=light] &",
-		dark: "[data-color-mode=dark] &",
+		light: "@media (prefers-color-scheme: light)",
+		dark: "@media (prefers-color-scheme: dark)",
 	},
 	preflight: true,
 
+	patterns: {
+		extend: {
+			container: {
+				transform: (props) => ({
+					position: "relative",
+					maxWidth: "8xl",
+					mx: "auto",
+					px: { base: "4", md: "6", lg: "8" },
+					animationName: "fade-in",
+					animationDuration: "200ms",
+					...props,
+				}),
+			},
+		},
+	},
 	theme: {
 		extend: {
 			tokens: {
@@ -38,12 +53,6 @@ export default defineConfig({
 				},
 			},
 			recipes: {
-				container: {
-					base: {
-						animationName: "fade-in",
-						animationDuration: "slow",
-					},
-				},
 				link: {
 					variants: {
 						variant: {

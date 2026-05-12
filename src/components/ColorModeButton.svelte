@@ -2,7 +2,7 @@
 	import { useTheme } from "svelte-themes";
 	import { button, icon, select } from "styled-system/recipes";
 	import z from "zod";
-	import { cx } from "styled-system/css";
+	import { css, cx } from "styled-system/css";
 	import {
 		ClientOnly,
 		createListCollection,
@@ -76,7 +76,7 @@
 				{#each themes as option (option.value)}
 					<Select.Item
 						item={option}
-						class={selectStyles.item}
+						class={cx(selectStyles.item, css({ flexDirection: "column" }))}
 						aria-label={option.label}
 					>
 						<option.icon class={icon()} />

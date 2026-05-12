@@ -32,8 +32,8 @@
 
 <MetaTags {...metaTags} />
 
-<div class="body">
-	<SvelteTheme attribute="data-color-mode">
+<SvelteTheme attribute="data-color-mode">
+	<div class="body">
 		{#if dev}
 			<RenderScan />
 		{/if}
@@ -41,14 +41,33 @@
 		<div class="main">
 			{@render children()}
 		</div>
-	</SvelteTheme>
-</div>
+	</div>
+</SvelteTheme>
 
 <style>
 	:global {
 		@layer reset {
+			:root {
+				--nav-width: 4rem;
+				interpolate-size: allow-keywords;
+			}
+
 			* {
 				scrollbar-color: var(--colors-border-emphasized) var(--colors-bg);
+			}
+
+			body {
+				min-height: 100vh;
+			}
+
+			svg {
+				flex-shrink: 0;
+			}
+		}
+
+		@layer base {
+			* {
+				font-feature-settings: "palt";
 			}
 		}
 
@@ -56,25 +75,18 @@
 			* {
 				animation: none !important;
 				transition: none !important;
-				scroll-behavior: unset !important;
+				will-change: auto !important;
+				scroll-behavior: auto !important;
 			}
-		}
-
-		body {
-			overflow-y: hidden;
 		}
 	}
 
 	.body {
 		display: grid;
-		grid-template-columns: 16rem 1fr;
-		height: 100vh;
+		grid-template-columns: fit-content(100%) 1fr;
 
 		.main {
 			position: relative;
-			overflow-y: auto;
-			max-height: 100vh;
-			border-radius: 1rem 0 0 1rem;
 			border-left-width: 1px;
 		}
 	}

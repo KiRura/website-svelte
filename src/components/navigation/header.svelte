@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { navigating } from "$app/state";
 
-	import { css } from "styled-system/css";
-	import { icon, link, separator } from "styled-system/recipes";
-	import ColorModeButton from "../ColorModeButton.svelte";
+	import { link, separator, spinner } from "styled-system/recipes";
 	import { resolve } from "$app/paths";
 	import kiruraIcon from "$lib/assets/kirura/512p.png?enhanced";
 	import { page as appPage } from "$app/state";
@@ -21,9 +19,8 @@
 				aria-hidden="true"
 				src={kiruraIcon}
 				alt="きるらのアイコン Kの文字"
-				class={css({ boxSize: "8", maxW: "8", rounded: "full" })}
 			/>
-			<span>KiRura</span>
+			<span class="hover">KiRura</span>
 		</a>
 		<span class={separator()}></span>
 		<div class="pages_scroll">
@@ -35,26 +32,54 @@
 					data-loading={navigating.to?.route.id?.startsWith(page.href) ||
 						undefined}
 				>
-					<page.icon class={icon()} />
-					{page.label}
+					<page.icon size="1.4rem" />
+					<span class="hover">
+						{page.label}
+					</span>
 				</a>
 			{/each}
 		</div>
 	</div>
 	<span class={separator()}></span>
-	<div class="group theme_switcher">
+	<!-- <div class="group theme_switcher">
 		<ColorModeButton />
+	</div> -->
+	<div class="group">
+		<div class="loading">
+			{#if navigating.to}
+				<div class={spinner()}></div>
+			{/if}
+		</div>
 	</div>
 </nav>
 
 <style>
 	nav {
 		display: flex;
+		@media (max-width: 719px) {
+			display: none;
+		}
+		position: sticky;
+		top: 0;
 		flex-direction: column;
 		gap: 1rem;
-		height: 100%;
-		padding: 1rem;
-		background-color: var(--colors-bg);
+		height: 100vh;
+		padding: 1rem 0;
+		width: 4rem;
+		transition: width 300ms;
+
+		.hover {
+			animation: out 300ms forwards;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			line-height: 1;
+		}
+		&:hover {
+			width: fit-content;
+			.hover {
+				animation: in 300ms;
+			}
+		}
 	}
 
 	.pages {
@@ -67,9 +92,15 @@
 	.home {
 		color: var(--colors-fg);
 		font-weight: 700;
-		font-size: 1.6rem;
+		font-size: 1.2rem;
 		margin-left: auto;
 		margin-right: auto;
+		margin: 0 0.5rem;
+		enhanced\:img {
+			border-radius: 100vmax;
+			max-width: 2rem;
+			flex-shrink: 0;
+		}
 		span {
 			white-space: nowrap;
 			@media (max-width: 719px) {
@@ -81,13 +112,14 @@
 	.pages_scroll {
 		display: flex;
 		flex-direction: column;
-		gap: 0.2rem;
 		overflow-y: auto;
+		overflow-x: hidden;
 
 		a {
 			color: var(--colors-fg);
 			transition-property: color text-decoration;
 			transition-duration: 300ms;
+			padding: 1rem;
 
 			&:first-child {
 				margin-top: 0.2rem;
@@ -96,6 +128,7 @@
 			&[data-selected] {
 				color: var(--colors-orange-fg);
 				text-decoration: underline;
+				background-color: var(--colors-bg-muted);
 			}
 
 			&[data-loading] {
@@ -108,5 +141,29 @@
 
 	.theme_switcher {
 		flex-shrink: 0;
+	}
+
+	@keyframes in {
+		0% {
+			transform: translateX(-1rem);
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	.loading {
+		height: 1rem;
+		width: fit-content;
+		margin: 0 auto;
+	}
+
+	@keyframes out {
+		100% {
+			display: none;
+			opacity: 0;
+			transform: translateX(-1rem);
+		}
 	}
 </style>
