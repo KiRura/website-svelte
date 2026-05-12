@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { css, cx } from "styled-system/css";
-	import { container, progress as _progress } from "styled-system/recipes";
+	import { progress as _progress } from "styled-system/recipes";
 	import { differenceInMilliseconds } from "date-fns";
-	import { wrap } from "styled-system/patterns";
+	import { container, wrap } from "styled-system/patterns";
 	import { Progress } from "@ark-ui/svelte/progress";
 
 	const progressClass = _progress();
