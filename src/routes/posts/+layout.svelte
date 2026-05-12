@@ -92,3 +92,9 @@
 		{@render children()}
 	</div>
 </main>
+
+<style>
+	:global(html) {
+		scroll-behavior: smooth;
+	}
+</style>

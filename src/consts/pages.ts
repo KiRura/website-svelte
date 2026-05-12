@@ -1,19 +1,25 @@
-import type { Pathname } from "$app/types";
-import { LucidePenTool, LucideScale } from "@lucide/svelte";
+import { resolve } from "$app/paths";
+import type { ResolvedPathname } from "$app/types";
+import { LucideLink2, LucidePenTool, LucideScale } from "@lucide/svelte";
 
 export const pages: {
 	label: string;
-	href: Pathname;
+	href: ResolvedPathname;
 	icon: typeof LucidePenTool;
 }[] = [
 	{
 		label: "呟き",
-		href: "/posts",
+		href: resolve("/#posts"),
 		icon: LucidePenTool,
 	},
 	{
+		label: "リンク集",
+		href: resolve("/#links"),
+		icon: LucideLink2,
+	},
+	{
 		label: "ライセンス",
-		href: "/license",
+		href: resolve("/license"),
 		icon: LucideScale,
 	},
 ];

@@ -54,6 +54,7 @@
 
 			* {
 				scrollbar-color: var(--colors-border-emphasized) var(--colors-bg);
+				scroll-margin-top: 2rem;
 			}
 
 			body {

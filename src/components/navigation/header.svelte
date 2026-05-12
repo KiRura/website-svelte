@@ -6,6 +6,7 @@
 	import kiruraIcon from "$lib/assets/kirura/512p.png?enhanced";
 	import { page as appPage } from "$app/state";
 	import { pages } from "../../consts/pages";
+	import { fade } from "svelte/transition";
 </script>
 
 <nav>
@@ -27,9 +28,10 @@
 			{#each pages as page (`page-${page.label}-${page.href}`)}
 				<a
 					class={link({ variant: "plain" })}
-					href={resolve(page.href)}
-					data-selected={appPage.route.id?.startsWith(page.href) || undefined}
-					data-loading={navigating.to?.route.id?.startsWith(page.href) ||
+					// eslint-disable-next-line svelte/no-navigation-without-resolve
+					href={page.href}
+					data-selected={appPage.route.id?.startsWith(page.href) ||
+						appPage.url.hash === `#${page.href.split("#")[1]}` ||
 						undefined}
 				>
 					<page.icon size="1.4rem" />
@@ -47,7 +49,11 @@
 	<div class="group">
 		<div class="loading">
 			{#if navigating.to}
-				<div class={spinner()}></div>
+				<div
+					class={spinner()}
+					in:fade={{ duration: 200, delay: 300 }}
+					out:fade={{ duration: 200 }}
+				></div>
 			{/if}
 		</div>
 	</div>
@@ -95,7 +101,7 @@
 		font-size: 1.2rem;
 		margin-left: auto;
 		margin-right: auto;
-		margin: 0 0.5rem;
+		margin: 0 1rem;
 		enhanced\:img {
 			border-radius: 100vmax;
 			max-width: 2rem;
@@ -129,12 +135,6 @@
 				color: var(--colors-orange-fg);
 				text-decoration: underline;
 				background-color: var(--colors-bg-muted);
-			}
-
-			&[data-loading] {
-				animation-name: pulse;
-				animation-duration: 1s;
-				animation-iteration-count: infinite;
 			}
 		}
 	}

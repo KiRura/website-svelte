@@ -5,6 +5,7 @@
 		card,
 		heading,
 		icon,
+		link,
 		list,
 		separator,
 		timeline,
@@ -19,12 +20,57 @@
 	import { resolve } from "$app/paths";
 	import { LucideChevronRight, LucidePin } from "@lucide/svelte";
 	import { links } from "../consts/links";
+	import { onMount } from "svelte";
+	import { on } from "svelte/events";
+	import { scrollY } from "svelte/reactivity/window";
+	import { goto } from "$app/navigation";
+	import { pages } from "../consts/pages";
+	import { page } from "$app/state";
 
-	const { data }: PageProps = $props();
+	let { data }: PageProps = $props();
 
 	const timelineStyles = timeline();
 	const cardStyles = card({ variant: "bgelevated", hover: true });
 	const listStyles = list();
+
+	let hashes = $state<{ hash: string; element: HTMLElement }[] | null>(null);
+
+	function updateOffsets() {
+		const _hashes: { hash: string; element: HTMLElement }[] = [];
+		for (const page of pages) {
+			const hash = page.href.split("#")[1];
+			if (!hash) continue;
+			const element = document.getElementById(hash);
+			if (!element) continue;
+			_hashes.push({ hash, element });
+		}
+		hashes = _hashes;
+	}
+
+	onMount(() => {
+		updateOffsets();
+
+		const resizeEvent = on(window, "resize", updateOffsets);
+		const scrollEvent = on(window, "scroll", () => {
+			for (const hash of hashes!) {
+				console.log(hash.element.offsetTop, scrollY.current);
+				if (
+					hash.element.offsetTop < (scrollY.current || 0) &&
+					page.url.hash !== `#${hash.hash}`
+				) {
+					goto(resolve(`/#${hash.hash}`), {
+						noScroll: true,
+						replaceState: true,
+					});
+				}
+			}
+		});
+
+		return () => {
+			resizeEvent();
+			scrollEvent();
+		};
+	});
 </script>
 
 <header>
@@ -42,10 +88,13 @@
 	</div>
 </header>
 <main class={container()} style:margin-bottom="1rem">
-	<section class="posts_grid">
+	<section class="posts_grid" id="posts">
 		<section>
 			<div class={hstack()} style:margin-bottom="1rem">
-				<h2 class={heading({ size: "4xl" })}>Recent Tweets</h2>
+				<div>
+					<span aria-hidden="true">RECENT TWEETS</span>
+					<h2 class={heading({ size: "4xl" })}>最近の呟き</h2>
+				</div>
 				<span class={separator()} style:flex="1"></span>
 				<a class={button()} href={resolve("/posts")}>
 					全ての呟き<LucideChevronRight class={icon()} />
@@ -117,9 +166,10 @@
 			</div>
 		</section>
 		<section class="pinned">
+			<span>PINNED</span>
 			<h2 class={heading({ size: "4xl" })} style:margin-bottom="1rem">
-				<LucidePin class={icon()} />
-				Pinned
+				<LucidePin class={icon()} size="0.8em" />
+				固定
 			</h2>
 			<div>
 				{#each data.pinnedPosts.posts as post (`pinned-${post.id}`)}
@@ -147,12 +197,18 @@
 			</div>
 		</section>
 	</section>
-	<section>
-		{#each links as link (`link-${link.name}-${link.href}`)}
+	<section id="links">
+		<span aria-hidden="true">LINKS</span>
+		<h2 class={heading({ size: "4xl" })}>リンク集</h2>
+		{#each links as linkInfo (`link-${linkInfo.name}-${linkInfo.href}`)}
 			<ul class={listStyles.root}>
 				<li class={listStyles.item}>
-					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-					<h3><a href={link.href} target="_blank">{link.name}</a></h3>
+					<h3>
+						<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
+						<a href={linkInfo.href} target="_blank" class={link()}
+							>{linkInfo.name}</a
+						>
+					</h3>
 				</li>
 			</ul>
 		{/each}
@@ -169,6 +225,10 @@
 </footer>
 
 <style>
+	:global(html) {
+		scroll-behavior: smooth;
+	}
+
 	header {
 		--header-height: 55rem;
 
@@ -237,6 +297,10 @@
 				}
 			}
 		}
+	}
+
+	main {
+		position: static;
 	}
 
 	.posts_grid {

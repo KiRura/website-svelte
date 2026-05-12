@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { page } from "$app/state";
 	import { cx } from "styled-system/css";
-	import { container, emptyState } from "styled-system/recipes";
+	import { emptyState } from "styled-system/recipes";
 	import ZZZ from "../components/ZZZ.svelte";
 	import { LucideCircleX } from "@lucide/svelte";
+	import { container } from "styled-system/patterns";
 </script>
 
 <!-- metaを実装したいけど気持ち悪い事になるので妥協 -->
