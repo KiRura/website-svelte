@@ -23,9 +23,9 @@
 	import { onMount } from "svelte";
 	import { on } from "svelte/events";
 	import { scrollY } from "svelte/reactivity/window";
-	import { goto } from "$app/navigation";
 	import { pages } from "../consts/pages";
 	import { page } from "$app/state";
+	import { goto } from "$app/navigation";
 
 	let { data }: PageProps = $props();
 
@@ -34,6 +34,7 @@
 	const listStyles = list();
 
 	let hashes = $state<{ hash: string; element: HTMLElement }[] | null>(null);
+	let currentPos = $state(0);
 
 	function updateOffsets() {
 		const _hashes: { hash: string; element: HTMLElement }[] = [];
@@ -52,17 +53,25 @@
 
 		const resizeEvent = on(window, "resize", updateOffsets);
 		const scrollEvent = on(window, "scroll", () => {
-			for (const hash of hashes!) {
-				console.log(hash.element.offsetTop, scrollY.current);
-				if (
-					hash.element.offsetTop < (scrollY.current || 0) &&
-					page.url.hash !== `#${hash.hash}`
-				) {
-					goto(resolve(`/#${hash.hash}`), {
-						noScroll: true,
-						replaceState: true,
-					});
+			if (!hashes) return;
+			let hasCurrentPos = false;
+			let i = 0;
+			for (const hash of hashes) {
+				if (hash.element.offsetTop < (scrollY.current || 0)) {
+					currentPos = i;
+					hasCurrentPos = true;
 				}
+				i++;
+			}
+
+			if (
+				hasCurrentPos &&
+				hashes[currentPos].hash !== page.url.href.split("#")[1]
+			) {
+				goto(resolve(`/#${hashes[currentPos].hash}`), {
+					noScroll: true,
+					replaceState: true,
+				});
 			}
 		});
 

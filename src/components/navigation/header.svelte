@@ -26,15 +26,26 @@
 		<span class={separator()}></span>
 		<div class="pages_scroll">
 			{#each pages as page (`page-${page.label}-${page.href}`)}
+				{@const hash = page.href.split("#")[1]}
 				<a
 					class={link({ variant: "plain" })}
 					// eslint-disable-next-line svelte/no-navigation-without-resolve
 					href={page.href}
 					data-selected={appPage.route.id?.startsWith(page.href) ||
-						appPage.url.hash === `#${page.href.split("#")[1]}` ||
+						appPage.url.hash === `#${hash}` ||
 						undefined}
+					onclick={(e) => {
+						if (!hash) return;
+						e.preventDefault();
+
+						const element = document.querySelector(`#${hash}`);
+						if (!element) return;
+						element.scrollIntoView({
+							behavior: "smooth",
+						});
+					}}
 				>
-					<page.icon size="1.4rem" />
+					<page.icon size="1.6rem" />
 					<span class="hover">
 						{page.label}
 					</span>
@@ -135,6 +146,10 @@
 				color: var(--colors-orange-fg);
 				text-decoration: underline;
 				background-color: var(--colors-bg-muted);
+			}
+
+			:global(svg) {
+				padding: 0.1rem;
 			}
 		}
 	}
