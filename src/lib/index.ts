@@ -1,3 +1,7 @@
 import { Logger } from "tslog";
 
-export const logger = new Logger({ hideLogPositionForProduction: true });
+const logger = new Logger({ hideLogPositionForProduction: true });
+
+const topId = "top";
+
+export { logger, topId };

@@ -1,12 +1,22 @@
 import { resolve } from "$app/paths";
 import type { ResolvedPathname } from "$app/types";
-import { LucideLink2, LucidePenTool, LucideScale } from "@lucide/svelte";
+import {
+	LucideHouse,
+	LucideLink2,
+	LucidePenTool,
+	LucideScale,
+} from "@lucide/svelte";
 
 export const pages: {
 	label: string;
 	href: ResolvedPathname;
 	icon: typeof LucidePenTool;
 }[] = [
+	{
+		label: "TOP",
+		href: resolve("/#top"),
+		icon: LucideHouse,
+	},
 	{
 		label: "呟き",
 		href: resolve("/#posts"),

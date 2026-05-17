@@ -1,15 +1,65 @@
 <script lang="ts">
 	import { navigating } from "$app/state";
-
 	import { link, separator, spinner } from "styled-system/recipes";
 	import { resolve } from "$app/paths";
 	import kiruraIcon from "$lib/assets/kirura/512p.png?enhanced";
 	import { page as appPage } from "$app/state";
 	import { pages } from "../../consts/pages";
 	import { fade } from "svelte/transition";
+	import { afterNavigate, replaceState } from "$app/navigation";
+	import { topId } from "$lib";
+
+	let clickedHash = $state<string | null>(null);
+	let io = $state<IntersectionObserver | null>(null);
+
+	function getHash(href: string): string | undefined {
+		return href.split("#")[1];
+	}
+
+	afterNavigate(() => {
+		if (io) io.disconnect();
+		io = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.intersectionRatio > 0) {
+						const _clickedHash = document
+							.querySelector("nav")
+							?.getAttribute("data-clicked-hash");
+						if (!_clickedHash && _clickedHash === entry.target.id) {
+							clickedHash = null; // IntersectionObserver内のcallbackからsvelteにアクセスできない！！！！！！！！！！！！！！！！！！！！！！！！！
+							continue;
+						}
+						if (`#${entry.target.id}` === appPage.url.hash) continue;
+
+						if (entry.target.id === topId) {
+							replaceState(resolve("/#"), {});
+						} else {
+							replaceState(resolve(`/#${entry.target.id}`), {});
+						}
+					}
+				}
+			},
+			{
+				threshold: 0.55,
+			},
+		);
+
+		for (const page of pages) {
+			const hash = getHash(page.href);
+			if (!hash) continue;
+			const element = document.getElementById(hash);
+			if (!element) continue;
+			io.observe(element);
+		}
+
+		const top = document.getElementById(topId);
+		if (top) {
+			io.observe(top);
+		}
+	});
 </script>
 
-<nav>
+<nav data-clicked-hash={clickedHash || undefined}>
 	<div class="group pages">
 		<a
 			href={resolve("/")}
@@ -26,23 +76,23 @@
 		<span class={separator()}></span>
 		<div class="pages_scroll">
 			{#each pages as page (`page-${page.label}-${page.href}`)}
-				{@const hash = page.href.split("#")[1]}
+				{@const hash = getHash(page.href)}
 				<a
 					class={link({ variant: "plain" })}
 					// eslint-disable-next-line svelte/no-navigation-without-resolve
 					href={page.href}
 					data-selected={appPage.route.id?.startsWith(page.href) ||
-						appPage.url.hash === `#${hash}` ||
+						(hash && appPage.url.hash === hash) ||
 						undefined}
 					onclick={(e) => {
-						if (!hash) return;
-						e.preventDefault();
+						if (!hash || appPage.route.id !== "/") return;
 
-						const element = document.querySelector(`#${hash}`);
-						if (!element) return;
-						element.scrollIntoView({
-							behavior: "smooth",
-						});
+						e.preventDefault();
+						clickedHash = hash;
+						replaceState(resolve(hash === topId ? "/" : `/#${hash}`), {});
+						document
+							.getElementById(hash)
+							?.scrollIntoView({ behavior: "smooth", block: "start" });
 					}}
 				>
 					<page.icon size="1.6rem" />
@@ -60,11 +110,7 @@
 	<div class="group">
 		<div class="loading">
 			{#if navigating.to}
-				<div
-					class={spinner()}
-					in:fade={{ duration: 200, delay: 300 }}
-					out:fade={{ duration: 200 }}
-				></div>
+				<div class={spinner()} in:fade={{ duration: 200, delay: 300 }}></div>
 			{/if}
 		</div>
 	</div>

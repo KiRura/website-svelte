@@ -20,69 +20,16 @@
 	import { resolve } from "$app/paths";
 	import { LucideChevronRight, LucidePin } from "@lucide/svelte";
 	import { links } from "../consts/links";
-	import { onMount } from "svelte";
-	import { on } from "svelte/events";
-	import { scrollY } from "svelte/reactivity/window";
-	import { pages } from "../consts/pages";
-	import { page } from "$app/state";
-	import { goto } from "$app/navigation";
+	import { topId } from "$lib";
 
 	let { data }: PageProps = $props();
 
 	const timelineStyles = timeline();
 	const cardStyles = card({ variant: "bgelevated", hover: true });
 	const listStyles = list();
-
-	let hashes = $state<{ hash: string; element: HTMLElement }[] | null>(null);
-	let currentPos = $state(0);
-
-	function updateOffsets() {
-		const _hashes: { hash: string; element: HTMLElement }[] = [];
-		for (const page of pages) {
-			const hash = page.href.split("#")[1];
-			if (!hash) continue;
-			const element = document.getElementById(hash);
-			if (!element) continue;
-			_hashes.push({ hash, element });
-		}
-		hashes = _hashes;
-	}
-
-	onMount(() => {
-		updateOffsets();
-
-		const resizeEvent = on(window, "resize", updateOffsets);
-		const scrollEvent = on(window, "scroll", () => {
-			if (!hashes) return;
-			let hasCurrentPos = false;
-			let i = 0;
-			for (const hash of hashes) {
-				if (hash.element.offsetTop < (scrollY.current || 0)) {
-					currentPos = i;
-					hasCurrentPos = true;
-				}
-				i++;
-			}
-
-			if (
-				hasCurrentPos &&
-				hashes[currentPos].hash !== page.url.href.split("#")[1]
-			) {
-				goto(resolve(`/#${hashes[currentPos].hash}`), {
-					noScroll: true,
-					replaceState: true,
-				});
-			}
-		});
-
-		return () => {
-			resizeEvent();
-			scrollEvent();
-		};
-	});
 </script>
 
-<header>
+<header id={topId}>
 	<div class="zzz">
 		<ZZZ />
 	</div>
@@ -214,9 +161,9 @@
 				<li class={listStyles.item}>
 					<h3>
 						<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-						<a href={linkInfo.href} target="_blank" class={link()}
-							>{linkInfo.name}</a
-						>
+						<a href={linkInfo.href} target="_blank" class={link()}>
+							{linkInfo.name}
+						</a>
 					</h3>
 				</li>
 			</ul>
@@ -239,20 +186,18 @@
 	}
 
 	header {
-		--header-height: 55rem;
-
+		--header-height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		height: 85vh;
-		max-height: 50rem;
+		height: var(--header-height);
 
 		.zzz {
 			position: absolute;
 			left: 0;
 			top: 0;
 			width: 100%;
-			height: 100vh;
+			height: var(--header-height);
 			overflow: hidden;
 			user-select: none;
 			z-index: var(--z-index-hide);
@@ -260,10 +205,6 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-
-			@media (min-width: 720px) {
-				height: var(--header-height);
-			}
 		}
 
 		.zzz::after {
@@ -272,12 +213,8 @@
 			left: 0;
 			content: "";
 			width: 100%;
-			height: 100vh;
+			height: var(--header-height);
 			background: linear-gradient(transparent, var(--colors-bg));
-
-			@media (min-width: 720px) {
-				height: var(--header-height);
-			}
 		}
 
 		h1 {
@@ -310,6 +247,10 @@
 
 	main {
 		position: static;
+	}
+
+	main > section {
+		height: 100vh;
 	}
 
 	.posts_grid {
