@@ -9,8 +9,8 @@
 	import { afterNavigate, replaceState } from "$app/navigation";
 	import { topId } from "$lib";
 
-	let clickedHash = $state<string | null>(null);
 	let io = $state<IntersectionObserver | null>(null);
+	let navElement = $state<HTMLElement | null>(null);
 
 	function getHash(href: string): string | undefined {
 		return href.split("#")[1];
@@ -22,11 +22,10 @@
 			(entries) => {
 				for (const entry of entries) {
 					if (entry.intersectionRatio > 0) {
-						const _clickedHash = document
-							.querySelector("nav")
-							?.getAttribute("data-clicked-hash");
+						const _clickedHash = navElement?.getAttribute("data-clicked-hash");
+
 						if (!_clickedHash && _clickedHash === entry.target.id) {
-							clickedHash = null; // IntersectionObserver内のcallbackからsvelteにアクセスできない！！！！！！！！！！！！！！！！！！！！！！！！！
+							navElement?.removeAttribute("data-clicked-hash");
 							continue;
 						}
 						if (`#${entry.target.id}` === appPage.url.hash) continue;
@@ -59,7 +58,7 @@
 	});
 </script>
 
-<nav data-clicked-hash={clickedHash || undefined}>
+<nav bind:this={navElement}>
 	<div class="group pages">
 		<a
 			href={resolve("/")}
@@ -88,7 +87,7 @@
 						if (!hash || appPage.route.id !== "/") return;
 
 						e.preventDefault();
-						clickedHash = hash;
+						navElement?.setAttribute("data-clicked-hash", hash);
 						replaceState(resolve(hash === topId ? "/" : `/#${hash}`), {});
 						document
 							.getElementById(hash)

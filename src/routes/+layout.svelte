@@ -8,18 +8,12 @@
 	import Header from "../components/navigation/header.svelte";
 	import { dev } from "$app/environment";
 	import { RenderScan } from "svelte-render-scan";
-	import { setContext } from "svelte";
 
 	const { data, children }: LayoutProps = $props();
 
 	const metaTags = $derived(
 		deepMerge(data.baseMetaTags, appPage.data.pageMetaTags),
 	);
-
-	let scrolling = $state({
-		current: false,
-	});
-	setContext("scrolling", scrolling);
 </script>
 
 <svelte:head>
