@@ -20,8 +20,9 @@
 	data-animate={!disableAnimation || undefined}
 	data-highlight={!disableHighlight || undefined}
 	style="
-	   --columns: {columns};
-		--rows: {rows};
+		--zzz-columns: {columns};
+		--zzz-rows: {rows};
+		--zzz-translate-x: {100 / columns}%;
 	"
 >
 	<div class="odd">
@@ -117,9 +118,7 @@
 
 	@keyframes zzz-animation {
 		to {
-			/* ネストできないため横10個を前提に決め打ち */
-			/* https://github.com/w3c/csswg-drafts/issues/6809 */
-			transform: translateX(10%);
+			transform: translateX(var(--zzz-translate-x));
 		}
 	}
 </style>
