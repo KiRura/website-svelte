@@ -93,6 +93,7 @@
 							.getElementById(hash)
 							?.scrollIntoView({ behavior: "smooth", block: "start" });
 					}}
+					aria-label={page.label}
 				>
 					<page.icon size="1.6rem" />
 					<span class="hover">

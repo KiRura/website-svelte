@@ -30,7 +30,7 @@
 </script>
 
 <header id={topId}>
-	<div class="zzz">
+	<div class="zzz" aria-hidden="true">
 		<ZZZ />
 	</div>
 	<div class={container()} style:width="initial">
