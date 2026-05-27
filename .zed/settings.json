@@ -29,60 +29,25 @@
 	],
 	"languages": {
 		"Svelte": {
-			"formatter": [
-				{
-					"code_action": "source.fixAll.eslint"
-				},
-				"prettier"
-			]
+			"formatter": ["prettier"]
 		},
 		"TypeScript": {
-			"formatter": [
-				{
-					"code_action": "source.fixAll.eslint"
-				},
-				"prettier"
-			]
+			"formatter": ["prettier"]
 		},
 		"JavaScript": {
-			"formatter": [
-				{
-					"code_action": "source.fixAll.eslint"
-				},
-				"prettier"
-			]
+			"formatter": ["prettier"]
 		},
 		"JSON": {
-			"formatter": [
-				{
-					"code_action": "source.fixAll.eslint"
-				},
-				"prettier"
-			]
+			"formatter": ["prettier"]
 		},
 		"JSONC": {
-			"formatter": [
-				{
-					"code_action": "source.fixAll.eslint"
-				},
-				"prettier"
-			]
+			"formatter": ["prettier"]
 		},
 		"HTML": {
-			"formatter": [
-				{
-					"code_action": "source.fixAll.eslint"
-				},
-				"prettier"
-			]
+			"formatter": ["prettier"]
 		},
 		"CSS": {
-			"formatter": [
-				{
-					"code_action": "source.fixAll.eslint"
-				},
-				"prettier"
-			]
+			"formatter": ["prettier"]
 		}
 	}
 }

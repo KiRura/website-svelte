@@ -2,7 +2,7 @@
 	import { resolve } from "$app/paths";
 	import { css, cx } from "styled-system/css";
 	import { card, separator } from "styled-system/recipes";
-	import { center, grid } from "styled-system/patterns";
+	import { center } from "styled-system/patterns";
 	import KiRuraSVG from "$lib/assets/kirura/kirura.svg";
 
 	const { data } = $props();
@@ -10,18 +10,7 @@
 	const cardStyles = card({ size: "sm", variant: "bgelevated", hover: true });
 </script>
 
-<section
-	class={grid({
-		columns: [1, 1, 1, 2, 3, 3],
-		animationName: "fade-in",
-		animationDuration: "slow",
-		mdDown: {
-			mt: "4",
-		},
-		maxW: "6xl",
-		mx: "auto",
-	})}
->
+<main class="fadein">
 	{#each data.posts.contents as post (post)}
 		<a href={resolve("/posts/[id]", { id: post.id })}>
 			<article
@@ -60,4 +49,24 @@
 			</article>
 		</a>
 	{/each}
-</section>
+</main>
+
+<style>
+	main {
+		display: grid;
+		gap: 0.4rem;
+		grid-template-columns: repeat(1, 1fr);
+		max-width: 60rem;
+		margin: 0 auto;
+
+		@media (max-width: 719px) {
+			margin-top: 1rem;
+		}
+		@media (min-width: 480px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@media (min-width: 720px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+</style>

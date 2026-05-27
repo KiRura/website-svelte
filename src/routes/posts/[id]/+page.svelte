@@ -54,48 +54,14 @@
 </script>
 
 {#key data.post.id}
-	<article
-		class={css({
-			spaceY: "8px",
-		})}
-		in:fly|global={{ y: flyY, opacity: 0 }}
-	>
-		<div
-			data-has-image={Boolean(data.post.coverImage) || undefined}
-			class={css({
-				pos: "relative",
-				borderBottomWidth: "1px",
-				overflow: "hidden",
-				"&[data-has-image]": { borderWidth: "1px", rounded: "lg" },
-			})}
-		>
+	<article in:fly|global={{ y: flyY, opacity: 0, duration: 200 }}>
+		<header data-has-image={Boolean(data.post.coverImage) || undefined}>
 			{#if data.post.coverImage}
-				<div
-					aria-hidden="true"
-					class={css({
-						_after: {
-							zIndex: -1,
-							content: `""`,
-							pos: "absolute",
-							w: "full",
-							h: "full",
-							top: "0",
-							left: "0",
-							bg: "bg/70",
-						},
-					})}
-				>
+				<div aria-hidden="true" class="coverimage">
 					<enhanced:img
 						src={`${data.post.coverImage.url}?blur=192&saturation=1.5&fm=webp`}
 						alt={data.post.coverImage.alt}
 						fetchpriority="high"
-						class={css({
-							pos: "absolute",
-							w: "full",
-							h: "full",
-							objectFit: "cover",
-							zIndex: -1,
-						})}
 					/>
 				</div>
 			{/if}
@@ -120,17 +86,8 @@
 					</p>
 				{/if}
 			</hgroup>
-		</div>
-		<div
-			class={grid({
-				gridTemplateColumns: {
-					lgDown: "1fr",
-					lg: "1fr 12rem",
-					xl: "1fr 20rem",
-				},
-				gap: "6",
-			})}
-		>
+		</header>
+		<main>
 			<aside class={css({ h: "fit", pos: "sticky", top: "navbar" })}>
 				<Collapsible.Root
 					class={cx(
@@ -234,19 +191,77 @@
 					</Collapsible.Content>
 				</Collapsible.Root>
 			</aside>
-			<div
-				class={css({
-					...prose,
-					maxW: "prose",
-					w: "full",
-					mx: "auto",
-					lg: { order: "-1" },
-					lineHeight: "2.5em",
-				})}
-			>
+			<div class={[css(prose), "content"]}>
 				<!--eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html data.post.content}
 			</div>
-		</div>
+		</main>
 	</article>
 {/key}
+
+<style>
+	article > * {
+		margin-bottom: 1rem;
+
+		&:nth-last-child(1) {
+			margin-bottom: 0;
+		}
+	}
+
+	header {
+		position: relative;
+		border-bottom-width: 1px;
+		overflow: hidden;
+
+		&[data-has-image] {
+			border-width: 1px;
+			border-radius: 0.4rem;
+		}
+
+		.coverimage {
+			&::after {
+				z-index: -1;
+				content: "";
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				background: rgb(from var(--colors-bg) r g b / 0.7);
+			}
+
+			enhanced\:img {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				z-index: -1;
+			}
+		}
+	}
+
+	main {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: 1fr;
+
+		@media (min-width: 720px) {
+			grid-template-columns: 1fr 12rem;
+		}
+
+		@media (min-width: 1080px) {
+			grid-template-columns: 1fr 20rem;
+		}
+
+		.content {
+			max-width: 35rem;
+			width: 100%;
+			margin: 0 auto;
+			line-height: 2.5rem;
+
+			@media (min-width: 720px) {
+				order: -1;
+			}
+		}
+	}
+</style>

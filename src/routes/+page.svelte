@@ -43,7 +43,7 @@
 		</h1>
 	</div>
 </header>
-<main class={container()} style:margin-bottom="1rem">
+<main class={[container(), "fadein"]} style:margin-bottom="1rem">
 	<section class="posts_grid" id="posts">
 		<section>
 			<div class={hstack()} style:margin-bottom="1rem">

@@ -11,21 +11,6 @@ export default defineConfig({
 	},
 	preflight: true,
 
-	patterns: {
-		extend: {
-			container: {
-				transform: (props) => ({
-					position: "relative",
-					maxWidth: "8xl",
-					mx: "auto",
-					px: { base: "4", md: "6", lg: "8" },
-					animationName: "fade-in",
-					animationDuration: "200ms",
-					...props,
-				}),
-			},
-		},
-	},
 	theme: {
 		extend: {
 			tokens: {

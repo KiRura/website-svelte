@@ -64,6 +64,10 @@
 			svg {
 				flex-shrink: 0;
 			}
+
+			.fadein {
+				animation: fade-in 200ms ease-out;
+			}
 		}
 
 		@layer base {

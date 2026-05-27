@@ -58,7 +58,7 @@
 	});
 </script>
 
-<nav bind:this={navElement}>
+<nav bind:this={navElement} class="fadein">
 	<div class="group pages">
 		<a
 			href={resolve("/")}
