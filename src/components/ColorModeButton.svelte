@@ -2,7 +2,7 @@
 	import { useTheme } from "svelte-themes";
 	import { button, icon, select } from "styled-system/recipes";
 	import z from "zod";
-	import { cx } from "styled-system/css";
+	import { css, cx } from "styled-system/css";
 	import {
 		ClientOnly,
 		createListCollection,
@@ -51,8 +51,6 @@
 	onValueChange={(e) => {
 		theme.theme = e.value[0];
 	}}
-	lazyMount
-	unmountOnExit
 	positioning={{ sameWidth: true }}
 	class={selectStyles.root}
 >
@@ -78,10 +76,10 @@
 				{#each themes as option (option.value)}
 					<Select.Item
 						item={option}
-						class={selectStyles.item}
+						class={cx(selectStyles.item, css({ flexDirection: "column" }))}
 						aria-label={option.label}
 					>
-						<option.icon aria-hidden class={icon()} />
+						<option.icon class={icon()} />
 						<Select.ItemIndicator class={selectStyles.itemIndicator}>
 							<LucideCheck class={icon()} />
 						</Select.ItemIndicator>

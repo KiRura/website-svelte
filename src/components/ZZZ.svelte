@@ -1,105 +1,124 @@
 <script lang="ts">
-	import { css, cx } from "styled-system/css";
-	import { center, grid } from "styled-system/patterns";
+	import { type Snippet } from "svelte";
 
 	const {
-		class: wrapperClass,
 		disableHighlight,
-		disableHighlightAnimation,
-		disableOptimize,
 		disableAnimation,
-		text,
+		children,
 	}: {
-		class?: string;
 		disableHighlight?: boolean;
-		disableHighlightAnimation?: boolean;
-		disableOptimize?: boolean;
 		disableAnimation?: boolean;
-		text?: string | number;
+		children?: Snippet;
 	} = $props();
 
 	const columns = 10;
 	const rows = 10;
-	const num = columns * rows;
-
-	let animatingDisableHighlight = $state(false);
-	if (!(() => disableHighlightAnimation)()) {
-		$effect(() => {
-			const interval = setInterval(async () => {
-				animatingDisableHighlight = true;
-				await new Promise((r) =>
-					setTimeout(() => r(true), (num / 2) * 8 * 1.5),
-				);
-				animatingDisableHighlight = false;
-			}, 37 * 1000);
-
-			return () => clearInterval(interval);
-		});
-	}
 </script>
 
 <div
-	class={cx(
-		center({
-			animationName: "fade-in",
-			animationDuration: "slow",
-		}),
-		wrapperClass,
-	)}
-	aria-hidden="true"
+	class="rotate"
+	data-animate={!disableAnimation || undefined}
+	data-highlight={!disableHighlight || undefined}
+	style="
+		--zzz-columns: {columns};
+		--zzz-rows: {rows};
+		--zzz-translate-x: {100 / columns}%;
+	"
 >
-	<div
-		class={grid({
-			rotate: ["-90deg", "-45deg"],
-			gridTemplateColumns: "repeat(var(--columns), fit-content(100%))",
-			gap: "0",
-		})}
-		style="--columns: {columns}"
-	>
-		{#each { length: num }, i}
-			<p
-				data-highlight={(!disableHighlight &&
-					!animatingDisableHighlight &&
-					num / 2 <= i) ||
-					undefined}
-				data-right={i % (columns * 2) >= columns || undefined}
-				data-optimize={(!disableOptimize && columns * 2 <= i) || undefined}
-				data-animate={!disableAnimation || undefined}
-				class={css({
-					fontSize: "16rem",
-					fontWeight: "black",
-					fontStretch: "ultra-condensed",
-					px: "3",
-					color: "fg.subtle/8",
-					m: "-2px",
-					lineHeight: 0.9,
-					whiteSpace: "nowrap",
-					"&[data-animate]": {
-						animationName: "slide-to-left-full",
-						animationDuration: "37s",
-						animationIterationCount: "infinite",
-						animationTimingFunction: "linear",
-						"&[data-right]": {
-							animationName: "slide-to-right-full",
-						},
-					},
-					"&[data-highlight]": {
-						bg: "orange.400",
-						color: "white/8",
-					},
-					"&[data-optimize]": {
-						smDown: {
-							display: "none",
-						},
-					},
-					transitionProperty: "background, color",
-					transitionDuration: "moderate",
-					contentVisibility: "auto",
-				})}
-				style:transition-delay={`${(i - num / 2) * 8}ms`}
-			>
-				{text ?? "KiRura"}
-			</p>
-		{/each}
+	<div class="odd">
+		{@render row(rows / 2)}
+	</div>
+	<div class="even">
+		{@render row(rows / 2)}
 	</div>
 </div>
+
+{#snippet row(rows: number)}
+	{#each { length: rows }}
+		<div>
+			{@render text(columns)}
+		</div>
+	{/each}
+{/snippet}
+
+{#snippet text(num: number)}
+	{#each { length: num }}
+		<p class="text">
+			{#if children}
+				{@render children()}
+			{:else}
+				KiRura
+			{/if}
+		</p>
+	{/each}
+{/snippet}
+
+<style>
+	.rotate {
+		--p-font-size: 16rem;
+		--p-line-height: 0.9;
+		--p-margin: -2px;
+		--p-padding: 8px;
+		--p-height: calc(
+			var(--p-font-size) * var(--p-line-height) + var(--p-margin) * 2 +
+				var(--p-padding) * 2
+		);
+		rotate: -90deg;
+		position: relative;
+		@media (min-width: 480px) {
+			rotate: -45deg;
+		}
+		padding-bottom: var(--p-height);
+
+		&[data-highlight="true"] {
+			background: linear-gradient(
+				to bottom,
+				transparent,
+				transparent 50%,
+				var(--colors-orange-400) 50%
+			);
+		}
+
+		.odd,
+		.even {
+			display: flex;
+			flex-direction: column;
+			gap: var(--p-height);
+
+			div {
+				display: flex;
+				gap: 2rem;
+			}
+
+			[data-animate="true"] & {
+				animation-name: zzz-animation;
+				animation-duration: 37s;
+				animation-iteration-count: infinite;
+				animation-timing-function: linear;
+				will-change: transform;
+			}
+		}
+
+		.even {
+			position: absolute;
+			top: 0;
+			margin-top: var(--p-height);
+			animation-direction: reverse;
+		}
+
+		p {
+			font-size: var(--p-font-size);
+			font-weight: 900;
+			color: rgb(from var(--colors-fg-muted) r g b / 0.08);
+			line-height: var(--p-line-height);
+			margin: var(--p-margin);
+			padding: var(--p-padding);
+		}
+	}
+
+	@keyframes zzz-animation {
+		to {
+			transform: translateX(var(--zzz-translate-x));
+		}
+	}
+</style>

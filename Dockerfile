@@ -1,7 +1,8 @@
-FROM node:25-alpine
+FROM node:24-alpine AS build
 
 RUN apk -U upgrade
-RUN apk --no-cache add curl wget pnpm
+RUN npm i -g corepack@latest
+RUN corepack enable pnpm
 
 WORKDIR /app
 COPY . .
@@ -9,4 +10,12 @@ COPY . .
 RUN pnpm i --frozen-lockfile
 RUN pnpm run build
 
-CMD [ "node", "/app/build" ]
+FROM denoland/deno:alpine AS run
+
+RUN apk -U upgrade
+RUN apk add curl wget
+
+WORKDIR /app
+COPY --from=build /app .
+
+CMD [ "deno", "-A", "/app/build/index.js" ]

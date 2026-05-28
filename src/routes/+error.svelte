@@ -1,55 +1,25 @@
 <script lang="ts">
 	import { page } from "$app/state";
-	import { css, cx } from "styled-system/css";
-	import { container, emptyState } from "styled-system/recipes";
+	import { cx } from "styled-system/css";
+	import { emptyState } from "styled-system/recipes";
 	import ZZZ from "../components/ZZZ.svelte";
 	import { LucideCircleX } from "@lucide/svelte";
+	import { container } from "styled-system/patterns";
 </script>
 
 <!-- metaを実装したいけど気持ち悪い事になるので妥協 -->
 
-<ZZZ
-	class={css({
-		pos: "absolute",
-		top: "0",
-		left: "0",
-		w: "full",
-		h: { "2xlDown": "vh", "2xl": "60rem" },
-		maxH: "full",
-		overflow: "hidden",
-		clipPath: "inset(0)",
-		userSelect: "none",
-		_after: {
-			pos: "absolute",
-			top: "0",
-			left: "0",
-			content: `""`,
-			w: "full",
-			h: { "2xlDown": "vh", "2xl": "60rem" },
-			maxH: "full",
-			bgGradient: "to-b",
-			gradientFrom: "transparent",
-			gradientTo: "bg",
-		},
-	})}
-	disableHighlight
-	text={page.status}
-/>
+<div class="zzz">
+	<ZZZ disableHighlight>
+		{page.status}
+	</ZZZ>
+</div>
 <main class={cx(container(), emptyState().root)}>
 	<div class={emptyState().content}>
 		<div class={emptyState().indicator}>
 			<LucideCircleX />
 		</div>
-		<h1
-			class={cx(
-				css({
-					fontFamily: "mono",
-					fontWeight: "bold",
-					color: "fg.muted",
-					fontSize: "7xl",
-				}),
-			)}
-		>
+		<h1>
 			{page.status}
 		</h1>
 		<p class={emptyState().description}>
@@ -57,3 +27,38 @@
 		</p>
 	</div>
 </main>
+
+<style>
+	.zzz {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100vh;
+		overflow: hidden;
+		clip-path: inset(0);
+		user-select: none;
+		z-index: var(--z-index-hide);
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.zzz::after {
+		position: absolute;
+		top: 0;
+		left: 0;
+		content: "";
+		width: 100%;
+		height: 100vh;
+		background: linear-gradient(transparent, var(--colors-bg));
+	}
+
+	h1 {
+		font-family: var(--fonts-mono);
+		font-weight: 700;
+		font-size: 6rem;
+		color: var(--colors-fg-muted);
+	}
+</style>

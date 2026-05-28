@@ -6,8 +6,8 @@ export default defineConfig({
 	outdir: "styled-system",
 	minify: true,
 	conditions: {
-		light: "[data-color-mode=light] &",
-		dark: "[data-color-mode=dark] &",
+		light: "@media (prefers-color-scheme: light)",
+		dark: "@media (prefers-color-scheme: dark)",
 	},
 	preflight: true,
 
@@ -38,12 +38,6 @@ export default defineConfig({
 				},
 			},
 			recipes: {
-				container: {
-					base: {
-						animationName: "fade-in",
-						animationDuration: "slow",
-					},
-				},
 				link: {
 					variants: {
 						variant: {
@@ -80,6 +74,30 @@ export default defineConfig({
 								_expanded: {
 									bg: "colorPalette.subtle",
 								},
+							},
+						},
+					},
+				},
+				icon: {
+					variants: {
+						size: {
+							xs: {
+								minWidth: "3",
+							},
+							sm: {
+								minWidth: "4",
+							},
+							md: {
+								minWidth: "5",
+							},
+							lg: {
+								minWidth: "6",
+							},
+							xl: {
+								minWidth: "7",
+							},
+							"2xl": {
+								minWidth: "8",
 							},
 						},
 					},

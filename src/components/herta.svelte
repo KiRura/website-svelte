@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { css, cx } from "styled-system/css";
 	import { button } from "styled-system/recipes";
 	import herta from "$lib/assets/herta.webp";
 	import kurukuru from "$lib/assets/kurukuru.webp";
-	import { Presence } from "@ark-ui/svelte";
 	import kuru1 from "$lib/assets/kuru1.opus";
 	import kuru2 from "$lib/assets/kuru2.opus";
 	import { onMount } from "svelte";
+	import { fly } from "svelte/transition";
+	import { cubicIn } from "svelte/easing";
 
 	let isKurukuru = $state(false);
 	let kurukuruTimeout = $state<NodeJS.Timeout | null>(null);
@@ -24,23 +24,9 @@
 	});
 </script>
 
-<!-- data-state="open"の時だけwidthの計算に異常が発生する -->
-<!-- position: fixedが機能しない -->
-<!-- ChromeよりFirefoxの方が若干widthが細い差異が見られるためブラウザのバグと判断 -->
-<!-- 2025-1-16: drop-shadowのせいだと分かった -->
-
-<div
-	class={css({
-		w: "fit",
-		mx: "auto",
-		// filter: "drop-shadow(0 0 16px {colors.bg/80})",
-	})}
->
+<div class="root">
 	<button
-		class={cx(
-			button({ variant: "plain" }),
-			css({ "--height": "{sizes.24}", h: "var(--height)", overflow: "hidden" }),
-		)}
+		class={button({ variant: "plain" })}
 		onclick={() => {
 			if (kurukuruTimeout) clearTimeout(kurukuruTimeout);
 			window.scrollTo({ top: 0, behavior: "smooth" });
@@ -49,48 +35,53 @@
 				isKurukuru = false;
 			}, 1000);
 
-			const sound = sounds[Math.round(Math.random())];
+			const sound = sounds[Math.trunc(Math.random())];
 			sound.volume = 0.3;
 			sound.play();
 		}}
 	>
-		<Presence
-			present={isKurukuru}
-			class={css({
-				h: "var(--height)",
-				pos: "fixed",
-				bottom: "0",
-				zIndex: "docked",
-				_closed: {
-					animationName: "slide-to-bottom-full",
-					animationDuration: "slowest",
-					animationTimingFunction: "ease-in",
-				},
-			})}
-		>
+		{#if isKurukuru}
 			<img
 				src={kurukuru}
 				alt="kurukuru~"
-				class={css({ h: "full", objectFit: "cover" })}
+				class="kurukuru"
+				out:fly={{ y: "100%", opacity: 1, easing: cubicIn }}
 			/>
-		</Presence>
-		<Presence
-			present={!isKurukuru}
-			class={css({
-				h: "full",
-				_open: {
-					animationName: "slide-from-bottom-full",
-					animationDuration: "slowest",
-					animationTimingFunction: "ease-in-smooth",
-				},
-			})}
-		>
+		{:else}
 			<img
 				src={herta}
 				alt="herta"
 				loading="lazy"
-				class={css({ h: "full", objectFit: "cover" })}
+				class="herta"
+				in:fly={{ y: "100%", opacity: 1 }}
 			/>
-		</Presence>
+		{/if}
 	</button>
 </div>
+
+<style>
+	.root {
+		width: fit-content;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	button {
+		--height: 6rem;
+		height: var(--height);
+		overflow: hidden;
+	}
+
+	.kurukuru {
+		height: var(--height);
+		object-fit: cover;
+		position: fixed;
+		bottom: 0;
+		z-index: var(--z-index-docked);
+	}
+
+	.herta {
+		height: 100%;
+		object-fit: cover;
+	}
+</style>

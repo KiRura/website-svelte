@@ -33,31 +33,66 @@
 <MetaTags {...metaTags} />
 
 <SvelteTheme attribute="data-color-mode">
-	{#if dev}
-		<RenderScan />
-	{/if}
-	<Header />
-	{@render children()}
+	<div class="body">
+		{#if dev}
+			<RenderScan />
+		{/if}
+		<Header />
+		<div class="main">
+			{@render children()}
+		</div>
+	</div>
 </SvelteTheme>
 
 <style>
 	:global {
 		@layer reset {
+			:root {
+				--nav-width: 4rem;
+				interpolate-size: allow-keywords;
+			}
+
 			* {
 				scrollbar-color: var(--colors-border-emphasized) var(--colors-bg);
+				scroll-margin-top: 2rem;
 			}
 
 			body {
-				scroll-behavior: smooth;
+				min-height: 100vh;
+			}
+
+			svg {
+				flex-shrink: 0;
+			}
+
+			.fadein {
+				animation: fade-in 200ms ease-out;
+			}
+		}
+
+		@layer base {
+			* {
+				font-feature-settings: "palt";
 			}
 		}
 
 		@media (prefers-reduced-motion: reduce) {
 			* {
-				animation: none;
-				transition: none;
-				scroll-behavior: unset;
+				animation: none !important;
+				transition: none !important;
+				will-change: auto !important;
+				scroll-behavior: auto !important;
 			}
+		}
+	}
+
+	.body {
+		display: grid;
+		grid-template-columns: fit-content(100%) 1fr;
+
+		.main {
+			position: relative;
+			border-left-width: 1px;
 		}
 	}
 </style>
