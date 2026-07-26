@@ -11,7 +11,8 @@ RUN npm run build
 
 FROM base AS run
 WORKDIR /app
+COPY package*.json ./
+COPY --from=build /app/build ./build
 RUN npm i --omit dev
-COPY --from=build /app/build ./
 
 CMD ["node", "./build"]
