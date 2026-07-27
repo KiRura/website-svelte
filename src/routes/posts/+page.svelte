@@ -41,7 +41,7 @@
 			{#if post.coverImage}
 				{const img = post.coverImage}
 				<img
-					src="{img.url}?w=384"
+					src="{img.url}?w=384&fm=webp"
 					alt={img.alt}
 					width={img.width}
 					height={img.height}
