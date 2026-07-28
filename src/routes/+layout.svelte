@@ -107,6 +107,11 @@
 			color-scheme: light dark;
 		}
 
+		body {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+
 		* {
 			box-sizing: border-box;
 		}
