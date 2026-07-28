@@ -35,6 +35,25 @@
 		<h1>{data.post.title}</h1>
 	{/if}
 
+	{#if data.post.coverImage}
+		{const img = data.post.coverImage}
+		<img
+			src="{img.url}?fm=webp"
+			alt={img.alt}
+			width={img.width}
+			height={img.height}
+			fetchpriority="high"
+		/>
+	{/if}
+
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html data.post.content}
 </article>
+
+<style>
+	hgroup {
+		p {
+			font-style: italic;
+		}
+	}
+</style>

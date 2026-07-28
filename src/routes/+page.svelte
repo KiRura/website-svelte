@@ -78,11 +78,15 @@
 				{@render Links(links.filter((link) => !link.main))}
 			</ul>
 		</section>
-		<small>
-			<a href="https://codeberg.org/KiRura/website-svelte" target="_blank">
+		<p>
+			<a
+				class="source"
+				href="https://codeberg.org/KiRura/website-svelte"
+				target="_blank"
+			>
 				ソース (新しいタブで開きます)
 			</a>
-		</small>
+		</p>
 	</main>
 </div>
 
@@ -101,5 +105,9 @@
 <style>
 	h1 {
 		font-family: monospace;
+	}
+
+	.source {
+		font-size: small;
 	}
 </style>

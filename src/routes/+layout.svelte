@@ -116,6 +116,12 @@
 			box-sizing: border-box;
 		}
 
+		img {
+			max-inline-size: 100%;
+			height: auto;
+			object-fit: cover;
+		}
+
 		.container {
 			max-width: var(--max-width);
 			margin-left: auto;

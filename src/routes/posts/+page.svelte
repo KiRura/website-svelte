@@ -45,6 +45,7 @@
 					alt={img.alt}
 					width={img.width}
 					height={img.height}
+					loading="lazy"
 				/>
 			{/if}
 		</article>
