@@ -170,12 +170,11 @@
 
 	.root {
 		.wrap {
-			height: 100vh;
+			min-height: 100vh;
 			display: grid;
 			grid-template-rows: fit-content(100%) 1fr fit-content(100%);
 
 			.main {
-				overflow: auto;
 				grid-row-start: 2;
 			}
 		}
