@@ -56,6 +56,10 @@
 	] as const;
 </script>
 
+<svelte:head>
+	<title>KiRura</title>
+</svelte:head>
+
 <div class="container">
 	<header>
 		<hgroup>

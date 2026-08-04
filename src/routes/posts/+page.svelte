@@ -74,7 +74,7 @@
 		}
 
 		> img {
-			width: 8rem;
+			width: min(8rem, 25%);
 			height: auto;
 			aspect-ratio: 1 / 1;
 			object-fit: cover;
