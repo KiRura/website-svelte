@@ -184,6 +184,7 @@
 	.navigation {
 		--limited-padding-x: min(4vw, var(--padding-x));
 		position: sticky;
+		background: Background;
 
 		&:not([data-is-bottom]) {
 			top: 0;
