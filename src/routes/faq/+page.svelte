@@ -1,5 +1,5 @@
 <svelte:head>
-	<title>FAQ</title>
+	<title>FAQ - KiRura</title>
 </svelte:head>
 
 <main class="container">

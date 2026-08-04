@@ -5,6 +5,10 @@
 	let { data } = $props();
 </script>
 
+<svelte:head>
+	<title>{data.post.title} - KiRura</title>
+</svelte:head>
+
 <article class="container">
 	<p>
 		{#if data.post.publishedAt}
