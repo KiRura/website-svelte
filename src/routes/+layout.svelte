@@ -183,13 +183,16 @@
 
 	.navigation {
 		--limited-padding-x: min(4vw, var(--padding-x));
+		position: sticky;
 
 		&:not([data-is-bottom]) {
+			top: 0;
 			grid-row-start: 1;
 			border-bottom: solid;
 		}
 
 		&[data-is-bottom] {
+			bottom: 0;
 			grid-row-start: 3;
 			border-top: solid;
 		}
