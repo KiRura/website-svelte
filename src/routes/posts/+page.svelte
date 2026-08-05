@@ -2,11 +2,33 @@
 	import { resolve } from "$app/paths";
 	import { formatDistanceToNow, formatISO9075 } from "date-fns";
 	import { ja } from "date-fns/locale/ja";
+	import { TYPES } from "./feed.[type]/types";
 
 	let { data } = $props();
+
+	const types = new Map<TYPES, string>([
+		[TYPES.Atom, "Atom 1.0"],
+		[TYPES.Xml, "RSS 2.0"],
+		[TYPES.Json, "JSON Feed 1.0"],
+	]);
 </script>
 
 <main class="container">
+	<aside>
+		<h2>RSS</h2>
+		<ul>
+			{#each types as feedType (feedType)}
+				<li>
+					<a
+						href={resolve("/posts/feed.[type]", { type: feedType[0] })}
+						target="_blank"
+					>
+						{feedType[1]}
+					</a>
+				</li>
+			{/each}
+		</ul>
+	</aside>
 	{#each data.posts.contents as post (post.id)}
 		<article>
 			<div>
