@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
-	import { page } from "$app/state";
+	import { page, navigating } from "$app/state";
+	import { fly } from "svelte/transition";
 	import type { ResolvedPathname } from "$app/types";
+	import { afterNavigate } from "$app/navigation";
 
 	let { children } = $props();
 
@@ -30,6 +32,11 @@
 			href: resolve("/faq"),
 		},
 	];
+
+	let isNavigating = $state(false);
+	afterNavigate(() => {
+		isNavigating = true;
+	});
 </script>
 
 <svelte:head>
@@ -42,13 +49,39 @@
 	style:--max-width={`${config.maxWidth}rem`}
 	style:--line-height={config.lineHeight}
 	style:--padding-x={`${config.paddingX}rem`}
+	data-navigating={isNavigating || undefined}
+	data-loading={navigating.type !== null || undefined}
 >
 	<div class="root">
 		<div class="wrap">
 			{@render Nav()}
-			<div class="main">
-				{@render children()}
-			</div>
+			{#key page.route.id}
+				{let fromRouteLength =
+					navigating.from?.route.id?.split("/").length || 0}
+				{let toRouteLength = navigating.to?.route.id?.split("/").length || 0}
+				<div
+					class="main"
+					in:fly={{
+						...(fromRouteLength === toRouteLength
+							? {
+									y: "3rem",
+								}
+							: fromRouteLength > toRouteLength
+								? {
+										x: "-3rem",
+									}
+								: fromRouteLength < toRouteLength
+									? {
+											x: "3rem",
+										}
+									: {}),
+						duration: 250,
+					}}
+					onintroend={() => (isNavigating = false)}
+				>
+					{@render children()}
+				</div>
+			{/key}
 			{@render Nav({ bottom: true })}
 		</div>
 		<dialog id="config">
@@ -97,7 +130,13 @@
 
 		{#snippet Nav(props?: { bottom?: boolean })}
 			{#if (props?.bottom && config.bottomNav) || (!props?.bottom && config.topNav)}
-				<div class={["navigation"]} data-is-bottom={props?.bottom}>
+				<div
+					class="navigation"
+					data-is-bottom={props?.bottom}
+					transition:fly={{ y: props?.bottom ? "100%" : "-100%" }}
+				>
+					<!-- svelte-ignore a11y_missing_attribute -->
+					<img class="icon" src="/icon/kirura_bg.svg" aria-hidden="true" />
 					<nav>
 						<ul>
 							{#each pages as _page (_page.href)}
@@ -169,6 +208,11 @@
 	}
 
 	.root {
+		[data-navigating] & {
+			width: 100%;
+			overflow-x: clip;
+		}
+
 		.wrap {
 			min-height: 100vh;
 			display: grid;
@@ -185,6 +229,7 @@
 		--limited-padding-x: min(4vw, var(--padding-x));
 		position: sticky;
 		background: Background;
+		z-index: 1;
 
 		&:not([data-is-bottom]) {
 			top: 0;
@@ -199,9 +244,24 @@
 		}
 
 		display: grid;
-		grid-template-columns: 1fr fit-content(100%);
+		grid-template-columns: fit-content(100%) 1fr fit-content(100%);
 		column-rule: thin solid;
 		align-items: center;
+
+		.icon {
+			border-radius: 100vmax;
+			height: 2rem;
+			margin-left: var(--limited-padding-x);
+			margin-right: var(--limited-padding-x);
+			animation-duration: 1s;
+			animation-iteration-count: infinite;
+			animation-timing-function: linear;
+			animation-delay: 1s;
+
+			[data-loading] & {
+				animation-name: rotate;
+			}
+		}
 
 		nav {
 			overflow-x: auto;
@@ -262,5 +322,23 @@
 		display: flex;
 		justify-content: end;
 		padding-inline-start: 0;
+	}
+
+	@keyframes rotate {
+		25% {
+			opacity: 0.2;
+		}
+
+		50% {
+			opacity: 1;
+		}
+
+		75% {
+			opacity: 0.2;
+		}
+
+		to {
+			transform: rotateY(1turn);
+		}
 	}
 </style>
