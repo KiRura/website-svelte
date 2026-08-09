@@ -85,7 +85,14 @@
 			{@render Nav({ bottom: true })}
 		</div>
 		<dialog id="config">
-			<form method="dialog">
+			<form
+				method="dialog"
+				onsubmit={() => {
+					for (const [key, value] of Object.entries(config)) {
+						localStorage.setItem(key, String(value));
+					}
+				}}
+			>
 				{@render CloseButton()}
 				<label>
 					本文最大横幅
