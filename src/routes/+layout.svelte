@@ -221,6 +221,10 @@
 			.main {
 				grid-row-start: 2;
 				overflow-x: auto;
+
+				[data-loading] & {
+					filter: opacity(0.5);
+				}
 			}
 		}
 	}
