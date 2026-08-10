@@ -1,4 +1,4 @@
-import { MICROCMS_API_KEY } from "$env/static/private";
+import { MICROCMS_API_KEY, MICRO_CMS_SUBDOMAIN } from "$env/static/private";
 import {
 	createClient,
 	type MicroCMSImage,
@@ -21,7 +21,7 @@ enum ENDPOINTS {
 }
 
 const client = createClient({
-	serviceDomain: "kirura",
+	serviceDomain: MICRO_CMS_SUBDOMAIN,
 	apiKey: MICROCMS_API_KEY,
 });
 
