@@ -297,6 +297,7 @@
 
 						&[aria-current] {
 							color: VisitedText;
+							font-weight: bold;
 						}
 					}
 				}
