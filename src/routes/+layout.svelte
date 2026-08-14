@@ -46,9 +46,9 @@
 <!-- https://github.com/sveltejs/svelte/issues/16071 -->
 <css-prop
 	style:display="contents"
-	style:--max-width={`${config.maxWidth}rem`}
+	style:--max-width="{config.maxWidth}rem"
 	style:--line-height={config.lineHeight}
-	style:--padding-x={`${config.paddingX}rem`}
+	style:--padding-x="{config.paddingX}rem"
 	data-navigating={isNavigating || undefined}
 	data-loading={navigating.type !== null || undefined}
 >
