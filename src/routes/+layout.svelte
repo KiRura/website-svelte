@@ -4,6 +4,7 @@
 	import { fly } from "svelte/transition";
 	import type { ResolvedPathname } from "$app/types";
 	import { afterNavigate } from "$app/navigation";
+	import "../app.css";
 
 	let { children } = $props();
 
@@ -28,8 +29,8 @@
 			href: resolve("/posts"),
 		},
 		{
-			label: "FAQ",
-			href: resolve("/faq"),
+			label: "概要",
+			href: resolve("/about"),
 		},
 	];
 
@@ -174,46 +175,6 @@
 </css-prop>
 
 <style>
-	:global {
-		:root {
-			color-scheme: light dark;
-		}
-
-		body {
-			margin: 0;
-		}
-
-		* {
-			box-sizing: border-box;
-		}
-
-		img {
-			max-inline-size: 100%;
-			height: auto;
-			object-fit: cover;
-		}
-
-		.container {
-			max-width: calc(var(--max-width) + var(--padding-x) * 2);
-			margin-left: auto;
-			margin-right: auto;
-			padding-left: var(--padding-x);
-			padding-right: var(--padding-x);
-
-			line-height: var(--line-height);
-			text-autospace: normal;
-
-			p {
-				text-align: justify;
-			}
-		}
-
-		pre {
-			max-inline-size: 100%;
-			overflow-x: auto;
-		}
-	}
-
 	.root {
 		[data-navigating] & {
 			width: 100%;
@@ -239,7 +200,7 @@
 	.navigation {
 		--limited-padding-x: min(4vw, var(--padding-x));
 		position: sticky;
-		background: Background;
+		background: Canvas;
 		z-index: 1;
 
 		&:not([data-is-bottom]) {

@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>{data.post.title} - KiRura</title>
+	<title>{data.post.title}</title>
 </svelte:head>
 
 <article class="container">

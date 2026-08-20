@@ -31,7 +31,8 @@
 		{
 			label: "KiRura (GitHub)",
 			href: "https://github.com/KiRura",
-			description: "[kirura.]f5.siドメインのメアドは自動でフラグ付けの対象になるらしい",
+			description:
+				"[kirura.]f5.siドメインのメアドは自動でフラグ付けの対象になるらしい",
 		},
 		{
 			label: "@KiRura@misskey.blue",

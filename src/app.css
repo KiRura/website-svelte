@@ -1,0 +1,37 @@
+:root {
+	color-scheme: light dark;
+}
+
+body {
+	margin: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+img {
+	max-inline-size: 100%;
+	height: auto;
+	object-fit: cover;
+}
+
+.container {
+	max-width: calc(var(--max-width) + var(--padding-x) * 2);
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: var(--padding-x);
+	padding-right: var(--padding-x);
+
+	line-height: var(--line-height);
+	text-autospace: normal;
+
+	p {
+		text-align: justify;
+	}
+}
+
+pre {
+	max-inline-size: 100%;
+	overflow-x: auto;
+}
