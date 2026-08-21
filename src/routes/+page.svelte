@@ -7,7 +7,7 @@
 	}[] = [
 		{
 			label: "@kirura:matrix.mq1.dev",
-			href: "https://matrix.to/#/@kirura:matrix.mq1.dev",
+			href: "https://matrix.to/#/@kirura:matrix.org",
 			description: "何かあれば",
 			main: true,
 		},
