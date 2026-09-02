@@ -6,7 +6,7 @@
 		main?: boolean;
 	}[] = [
 		{
-			label: "@kirura:matrix.mq1.dev",
+			label: "@kirura:matrix.org",
 			href: "https://matrix.to/#/@kirura:matrix.org",
 			description: "何かあれば",
 			main: true,
