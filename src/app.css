@@ -1,37 +1,133 @@
-:root {
-	color-scheme: light dark;
-}
+@layer kiso, tokens, base;
 
-body {
-	margin: 0;
-}
+@import "kiso.css" layer(kiso);
 
-* {
-	box-sizing: border-box;
-}
+@layer tokens {
+	:root {
+		--colors-brand: hsl(14.62, 96.39%, 67.45%);
 
-img {
-	max-inline-size: 100%;
-	height: auto;
-	object-fit: cover;
-}
+		--colors-bg-light: hsl(from var(--colors-brand) h 7% 93%);
+		--colors-bg-dark: hsl(from var(--colors-brand) h 7% 7%);
+		--colors-bg: light-dark(var(--colors-bg-light), var(--colors-bg-dark));
+		&:has([data-bg-oled]) {
+			--colors-bg: light-dark(var(--colors-bg-light), #000);
+		}
+		--colors-bg-surface: light-dark(
+			hsl(from var(--colors-bg) h s calc(l - 17)),
+			hsl(from var(--colors-bg) h s calc(l + 17))
+		);
 
-.container {
-	max-width: calc(var(--max-width) + var(--padding-x) * 2);
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: var(--padding-x);
-	padding-right: var(--padding-x);
+		--colors-fg: light-dark(var(--colors-bg-dark), #fff);
+		--colors-fg-brand: light-dark(
+			hsl(from var(--colors-brand) h s 37%),
+			var(--colors-brand)
+		);
 
-	line-height: var(--line-height);
-	text-autospace: normal;
-
-	p {
-		text-align: justify;
+		--colors-border: var(--colors-bg-surface);
+		--colors-border-surface: light-dark(
+			hsl(from var(--colors-border) h s calc(l - 17)),
+			hsl(from var(--colors-border) h s calc(l + 17))
+		);
 	}
 }
 
-pre {
-	max-inline-size: 100%;
-	overflow-x: auto;
+@layer base {
+	:root {
+		color-scheme: light dark;
+		background-color: var(--colors-bg);
+		color: var(--colors-fg);
+		scrollbar-color: var(--colors-border-surface) var(--colors-bg);
+	}
+
+	* {
+		border-width: 0;
+		border-inline-width: 0;
+		column-rule-width: 0;
+		row-rule-width: 0;
+		border-style: solid;
+		border-inline-style: solid;
+		column-rule-style: solid;
+		row-rule-style: solid;
+		border-color: var(--colors-border);
+		border-inline-color: var(--colors-border);
+		column-rule-color: var(--colors-border);
+		row-rule-color: var(--colors-border);
+
+		:not(body) {
+			margin: revert;
+		}
+	}
+
+	a:not(.button) {
+		color: var(--colors-fg-brand);
+		text-decoration: revert;
+	}
+
+	button {
+		border-width: 1px;
+		border-color: var(--colors-border-surface);
+		background-color: var(--colors-bg-surface);
+		&:active {
+			background-color: var(--colors-border-surface);
+		}
+	}
+
+	input {
+		background-color: var(--colors-bg-surface);
+
+		&[type="number"] {
+			font-family: var(--fonts-mono);
+		}
+
+		&[type="checkbox"]:checked {
+			color: var(--colors-fg-brand);
+		}
+	}
+
+	dialog:open {
+		border-width: 1px;
+		padding: 1rem;
+		background-color: var(--colors-bg);
+		color: var(--colors-fg);
+
+		animation: 0.25s fade-in;
+
+		@keyframes fade-in {
+			from {
+				opacity: 0;
+			}
+		}
+	}
+
+	ul,
+	ol,
+	menu {
+		list-style-type: revert;
+		padding-inline-start: revert;
+	}
+
+	blockquote {
+		border-inline-start-width: 3px;
+		padding-inline-start: 1rem;
+	}
+
+	.container {
+		max-width: calc(var(--max-width) + var(--padding-x) * 2);
+		min-height: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		padding-left: var(--padding-x);
+		padding-right: var(--padding-x);
+
+		line-height: var(--line-height);
+
+		background-color: #fff;
+		@media (prefers-color-scheme: dark) {
+			background-color: inherit;
+		}
+
+		p {
+			text-align: justify;
+		}
+	}
 }

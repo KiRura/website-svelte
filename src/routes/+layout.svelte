@@ -11,9 +11,8 @@
 	let config = $state({
 		maxWidth: 37,
 		lineHeight: 1.8,
-		topNav: true,
-		bottomNav: true,
 		paddingX: 1.2,
+		bgOled: false,
 	});
 
 	const pages: {
@@ -42,6 +41,17 @@
 
 <svelte:head>
 	<link rel="icon" href="/icon/rounded/favicon.ico" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link
+		rel="preconnect"
+		href="https://fonts.gstatic.com"
+		crossorigin="anonymous"
+	/>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Zalando+Sans:ital,wdth,wght@0,75..125,200..900;1,75..125,200..900&display=swap"
+		rel="stylesheet"
+	/>
 </svelte:head>
 
 <!-- https://github.com/sveltejs/svelte/issues/16071 -->
@@ -52,147 +62,120 @@
 	style:--padding-x="{config.paddingX}rem"
 	data-navigating={isNavigating || undefined}
 	data-loading={navigating.type !== null || undefined}
+	data-bg-oled={config.bgOled || undefined}
 >
 	<div class="root">
-		<div class="wrap">
-			{@render Nav()}
-			{#key page.route.id}
-				{let fromRouteLength =
-					navigating.from?.route.id?.split("/").length || 0}
-				{let toRouteLength = navigating.to?.route.id?.split("/").length || 0}
-				<div
-					class="main"
-					in:fly={{
-						...(fromRouteLength === toRouteLength
-							? {
-									y: "3rem",
-								}
-							: fromRouteLength > toRouteLength
-								? {
-										x: "-3rem",
-									}
-								: fromRouteLength < toRouteLength
-									? {
-											x: "3rem",
-										}
-									: {}),
-						duration: 250,
-					}}
-					onintroend={() => (isNavigating = false)}
-				>
-					{@render children()}
-				</div>
-			{/key}
-			{@render Nav({ bottom: true })}
-		</div>
-		<dialog id="config">
-			<form
-				method="dialog"
-				onsubmit={() => {
-					for (const [key, value] of Object.entries(config)) {
-						localStorage.setItem(key, String(value));
-					}
-				}}
-			>
-				{@render CloseButton()}
-				<label>
-					本文最大横幅
-					<div class="unit">
-						<input
-							type="number"
-							bind:value={config.maxWidth}
-							min="0"
-							step="any"
-						/>
-						rem
-					</div>
-				</label>
-				<label>
-					本文両端余白
-					<div class="unit">
-						<input type="number" bind:value={config.paddingX} step="any" />
-						rem
-					</div>
-				</label>
-				<label>
-					本文行幅
-					<input type="number" bind:value={config.lineHeight} step="any" />
-				</label>
-				<label>
-					上側ナビゲーション
-					<input type="checkbox" bind:checked={config.topNav} />
-				</label>
-				<label>
-					下側ナビゲーション
-					<input type="checkbox" bind:checked={config.bottomNav} />
-				</label>
-				{@render CloseButton()}
-			</form>
-
-			{#snippet CloseButton()}
-				<menu class="control">
-					<button>閉じる</button>
-				</menu>
-			{/snippet}
-		</dialog>
-
-		{#snippet Nav(props?: { bottom?: boolean })}
-			{#if (props?.bottom && config.bottomNav) || (!props?.bottom && config.topNav)}
-				<div
-					class="navigation"
-					data-is-bottom={props?.bottom}
-					transition:fly={{ y: props?.bottom ? "100%" : "-100%" }}
-				>
-					<!-- svelte-ignore a11y_missing_attribute -->
-					<img class="icon" src="/icon/kirura_bg.svg" aria-hidden="true" />
-					<nav>
-						<ul>
-							{#each pages as _page (_page.href)}
-								{let current = $derived(
-									(_page.href === "/"
-										? page.route.id === "/"
-										: page.route.id?.startsWith(_page.href.split("#")[0])) ||
-										undefined,
-								)}
-
-								<li>
-									<a href={_page.href} aria-current={current}>
-										{_page.label}
-									</a>
-								</li>
-							{/each}
-						</ul>
-					</nav>
-					<menu class="control">
-						<li>
-							<button command="show-modal" commandfor="config">設定</button>
-						</li>
-					</menu>
-				</div>
-			{/if}
-		{/snippet}
+		{@render Nav()}
+		{#key page.route.id}
+			<div class="main">
+				{@render children()}
+			</div>
+		{/key}
+		{@render Nav({ bottom: true })}
 	</div>
+	<dialog id="config" closedby="any">
+		<form
+			method="dialog"
+			onsubmit={() => {
+				for (const [key, value] of Object.entries(config)) {
+					localStorage.setItem(key, String(value));
+				}
+			}}
+		>
+			{@render CloseButton()}
+			<label>
+				本文最大横幅
+				<div class="unit">
+					<input
+						type="number"
+						bind:value={config.maxWidth}
+						min="0"
+						step="any"
+					/>
+					rem
+				</div>
+			</label>
+			<label>
+				本文両端余白
+				<div class="unit">
+					<input type="number" bind:value={config.paddingX} step="any" />
+					rem
+				</div>
+			</label>
+			<label>
+				本文行幅
+				<input type="number" bind:value={config.lineHeight} step="any" />
+			</label>
+			<label>
+				ブラックテーマ
+				<input type="checkbox" bind:checked={config.bgOled} />
+			</label>
+			{@render CloseButton()}
+		</form>
+
+		{#snippet CloseButton()}
+			<menu class="control">
+				<button>閉じる</button>
+			</menu>
+		{/snippet}
+	</dialog>
+
+	{#snippet Nav(props?: { bottom?: boolean })}
+		<div
+			class="navigation"
+			data-is-bottom={props?.bottom}
+			transition:fly={{ y: props?.bottom ? "100%" : "-100%" }}
+		>
+			<!-- svelte-ignore a11y_missing_attribute -->
+			<img class="icon" src="/icon/kirura_bg.svg" aria-hidden="true" />
+			<nav>
+				<ul>
+					{#each pages as _page (_page.href)}
+						{let current = $derived(
+							(_page.href === "/"
+								? page.route.id === "/"
+								: page.route.id?.startsWith(_page.href.split("#")[0])) ||
+								undefined,
+						)}
+
+						<li>
+							<a href={_page.href} aria-current={current}>
+								{_page.label}
+							</a>
+						</li>
+					{/each}
+				</ul>
+			</nav>
+			<menu class="control">
+				<li>
+					<button command="show-modal" commandfor="config">設定</button>
+				</li>
+			</menu>
+		</div>
+	{/snippet}
 </css-prop>
 
 <style>
 	.root {
-		[data-navigating] & {
-			width: 100%;
-			overflow-x: clip;
-		}
+		min-height: 100vh;
+		display: grid;
+		grid-template-rows: fit-content(100%) 1fr fit-content(100%);
 
-		.wrap {
-			min-height: 100vh;
-			display: grid;
-			grid-template-rows: fit-content(100%) 1fr fit-content(100%);
+		/* @media (pointer: coarse) and (orientation: landscape) {
+			grid-template-columns: fit-content(100%) 1fr fit-content(100%);
+			grid-template-rows: none;
+		} */
 
-			.main {
-				grid-row-start: 2;
-				overflow-x: auto;
+		.main {
+			animation: 250ms fade-in;
+			grid-row-start: 2;
+			/* @media (pointer: coarse) and (orientation: landscape) {
+				grid-row-start: revert;
+				grid-column-start: 2;
+			} */
 
-				[data-loading] & {
-					filter: opacity(0.5);
-				}
+			[data-loading] & {
+				filter: opacity(0.5);
 			}
 		}
 	}
@@ -200,24 +183,56 @@
 	.navigation {
 		--limited-padding-x: min(4vw, var(--padding-x));
 		position: sticky;
-		background: Canvas;
+		background: var(--colors-bg);
 		z-index: 1;
 
 		&:not([data-is-bottom]) {
 			top: 0;
 			grid-row-start: 1;
-			border-bottom: solid;
+			border-bottom-width: 1px;
+
+			@media (pointer: coarse) {
+				/* @media (orientation: landscape) {
+					grid-row-start: revert;
+					grid-column-start: 1;
+					border-bottom-width: 0;
+					border-inline-end-width: 1px;
+				} */
+
+				/* @media (orientation: portrait) { */
+				display: none;
+				/* } */
+			}
 		}
 
 		&[data-is-bottom] {
 			bottom: 0;
 			grid-row-start: 3;
-			border-top: solid;
+			border-top-width: 1px;
+
+			@media (pointer: none) or (pointer: fine) {
+				display: none;
+			}
+
+			/* @media (orientation: landscape) and (pointer: coarse) {
+				bottom: revert;
+				top: 0;
+				grid-row-start: revert;
+				grid-column-start: 3;
+				border-top-width: 0;
+				border-inline-start-width: 1px;
+			} */
 		}
 
 		display: grid;
 		grid-template-columns: fit-content(100%) 1fr fit-content(100%);
-		column-rule: thin solid;
+		/* @media (pointer: coarse) and (orientation: landscape) {
+			grid-template-rows: fit-content(100%) 1fr fit-content(100%);
+			grid-template-columns: none;
+			height: 100dvh;
+		} */
+		column-rule-width: 1px;
+		row-rule-width: 1px;
 		align-items: center;
 
 		.icon {
@@ -251,14 +266,12 @@
 
 				> li {
 					a {
-						color: LinkText;
-						&:active {
-							color: ActiveText;
-						}
+						color: var(--colors-fg-brand);
+						text-decoration: none;
 
 						&[aria-current] {
-							color: VisitedText;
 							font-weight: bold;
+							text-decoration: revert;
 						}
 					}
 				}
@@ -312,6 +325,12 @@
 
 		to {
 			transform: rotateY(1turn);
+		}
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
 		}
 	}
 </style>
