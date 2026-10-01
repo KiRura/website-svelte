@@ -84,19 +84,11 @@
 		}
 	}
 
-	dialog:open {
+	dialog {
 		border-width: 1px;
 		padding: 1rem;
 		background-color: var(--colors-bg);
 		color: var(--colors-fg);
-
-		animation: 0.25s fade-in;
-
-		@keyframes fade-in {
-			from {
-				opacity: 0;
-			}
-		}
 	}
 
 	ul,
