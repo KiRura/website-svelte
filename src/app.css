@@ -33,6 +33,10 @@
 			hsl(from var(--colors-border) h s calc(l + 17))
 		);
 
+		--fonts-heading: sans-serif;
+		--fonts-body: sans-serif;
+		--fonts-mono: monospace;
+
 		&:has([data-use-font]) {
 			--fonts-heading: "IBM Plex Sans JP", "Noto Sans JP", sans-serif;
 			--fonts-body: "Zalando Sans", "Noto Sans JP", sans-serif;
@@ -47,7 +51,10 @@
 		background-color: var(--colors-bg);
 		color: var(--colors-fg);
 		scrollbar-color: var(--colors-border-surface) var(--colors-bg);
-		font-family: var(--fonts-body, revert);
+		font-family: revert;
+		&:has([data-use-font]) {
+			font-family: var(--fonts-body);
+		}
 		font-feature-settings: "calt";
 		&:has([data-liga]) {
 			font-feature-settings: "calt", "liga";
@@ -103,7 +110,7 @@
 		background-color: var(--colors-bg-surface);
 
 		&[type="number"] {
-			font-family: var(--fonts-mono, monospace);
+			font-family: var(--fonts-mono);
 		}
 
 		&[type="checkbox"]:checked {
@@ -133,7 +140,7 @@
 	code,
 	kbd,
 	samp {
-		font-family: var(--fonts-mono, revert);
+		font-family: var(--fonts-mono);
 	}
 
 	.container {
