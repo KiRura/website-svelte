@@ -40,14 +40,14 @@ export const GET: RequestHandler = async ({ url, params }) => {
 	const baseUrl = `${url.protocol}//${url.host}`;
 
 	const feed = new Feed({
-		title: "きるら",
-		description: "しがないSvelteサイト",
+		title: "KiRura",
+		description: "しがないサイト",
 		link: baseUrl,
 		id: baseUrl,
 		language: "ja",
 		updated: lastUpdateDate,
 		author: {
-			name: "きるら",
+			name: "KiRura",
 			email: "kirura@kirura.f5.si",
 			link: "https://www.kirura.f5.si",
 		},
