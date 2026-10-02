@@ -132,7 +132,7 @@
 			</div>
 			<menu class="control">
 				<button onclick={() => (config = ConfigSchema.parse({}))} type="button"
-					>リセット</button
+					>初期化</button
 				>
 				<button onclick={loadConfig} type="button">取消</button>
 				<button onclick={saveConfig} class="save">保存</button>
