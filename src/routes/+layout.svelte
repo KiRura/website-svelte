@@ -3,7 +3,6 @@
 	import { page, navigating } from "$app/state";
 	import { fly } from "svelte/transition";
 	import type { ResolvedPathname } from "$app/types";
-	import { afterNavigate } from "$app/navigation";
 	import "../app.css";
 
 	let { children } = $props();
@@ -13,6 +12,8 @@
 		lineHeight: 1.8,
 		paddingX: 1.2,
 		bgOled: false,
+		useBrowserFont: true,
+		liga: false,
 	});
 
 	const pages: {
@@ -32,26 +33,23 @@
 			href: resolve("/about"),
 		},
 	];
-
-	let isNavigating = $state(false);
-	afterNavigate(() => {
-		isNavigating = true;
-	});
 </script>
 
 <svelte:head>
 	<link rel="icon" href="/icon/rounded/favicon.ico" />
 
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link
-		rel="preconnect"
-		href="https://fonts.gstatic.com"
-		crossorigin="anonymous"
-	/>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Zalando+Sans:ital,wdth,wght@0,75..125,200..900;1,75..125,200..900&display=swap"
-		rel="stylesheet"
-	/>
+	{#if !config.useBrowserFont}
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link
+			rel="preconnect"
+			href="https://fonts.gstatic.com"
+			crossorigin="anonymous"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght,MONO@0,300..800,0..1;1,300..800,0..1&family=IBM+Plex+Sans+JP:wght@100;200;300;400;500;600;700&family=Noto+Sans+JP:wght@100..900&family=Zalando+Sans:ital,wdth,wght@0,75..125,200..900;1,75..125,200..900&display=swap"
+			rel="stylesheet"
+		/>
+	{/if}
 </svelte:head>
 
 <!-- https://github.com/sveltejs/svelte/issues/16071 -->
@@ -60,9 +58,10 @@
 	style:--max-width="{config.maxWidth}rem"
 	style:--line-height={config.lineHeight}
 	style:--padding-x="{config.paddingX}rem"
-	data-navigating={isNavigating || undefined}
 	data-loading={navigating.type !== null || undefined}
 	data-bg-oled={config.bgOled || undefined}
+	data-use-font={!config.useBrowserFont || undefined}
+	data-liga={config.liga || undefined}
 >
 	<div class="root">
 		{@render Nav()}
@@ -109,6 +108,14 @@
 			<label>
 				ブラックテーマ
 				<input type="checkbox" bind:checked={config.bgOled} />
+			</label>
+			<label>
+				ブラウザ指定のフォントを使う
+				<input type="checkbox" bind:checked={config.useBrowserFont} />
+			</label>
+			<label>
+				リガチャ
+				<input type="checkbox" bind:checked={config.liga} />
 			</label>
 			{@render CloseButton()}
 		</form>

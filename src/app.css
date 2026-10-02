@@ -18,6 +18,10 @@
 		);
 
 		--colors-fg: light-dark(var(--colors-bg-dark), #fff);
+		--colors-fg-sub: light-dark(
+			hsl(from var(--colors-fg) h s calc(l + 17)),
+			hsl(from var(--colors-fg) h s calc(l - 17))
+		);
 		--colors-fg-brand: light-dark(
 			hsl(from var(--colors-brand) h s 37%),
 			var(--colors-brand)
@@ -28,6 +32,12 @@
 			hsl(from var(--colors-border) h s calc(l - 17)),
 			hsl(from var(--colors-border) h s calc(l + 17))
 		);
+
+		&:has([data-use-font]) {
+			--fonts-heading: "IBM Plex Sans JP", "Noto Sans JP", sans-serif;
+			--fonts-body: "Zalando Sans", "Noto Sans JP", sans-serif;
+			--fonts-mono: "Google Sans Code", "IBM Plex Sans JP", monospace;
+		}
 	}
 }
 
@@ -37,6 +47,11 @@
 		background-color: var(--colors-bg);
 		color: var(--colors-fg);
 		scrollbar-color: var(--colors-border-surface) var(--colors-bg);
+		font-family: var(--fonts-body, revert);
+		font-feature-settings: "calt";
+		&:has([data-liga]) {
+			font-feature-settings: "calt", "liga";
+		}
 	}
 
 	* {
@@ -63,10 +78,22 @@
 		text-decoration: revert;
 	}
 
+	a,
+	button {
+		&:not(:active) {
+			transition: transform 0.25s;
+		}
+
+		&:active {
+			transform: scale(0.93);
+		}
+	}
+
 	button {
 		border-width: 1px;
 		border-color: var(--colors-border-surface);
 		background-color: var(--colors-bg-surface);
+
 		&:active {
 			background-color: var(--colors-border-surface);
 		}
@@ -76,7 +103,7 @@
 		background-color: var(--colors-bg-surface);
 
 		&[type="number"] {
-			font-family: var(--fonts-mono);
+			font-family: var(--fonts-mono, monospace);
 		}
 
 		&[type="checkbox"]:checked {
@@ -101,6 +128,12 @@
 	blockquote {
 		border-inline-start-width: 3px;
 		padding-inline-start: 1rem;
+	}
+
+	code,
+	kbd,
+	samp {
+		font-family: var(--fonts-mono, revert);
 	}
 
 	.container {

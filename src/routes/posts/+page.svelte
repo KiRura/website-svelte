@@ -78,7 +78,7 @@
 	main {
 		display: flex;
 		flex-direction: column;
-		row-rule: dotted;
+		row-rule-width: 1px;
 		gap: 2rem;
 	}
 
@@ -88,7 +88,7 @@
 
 		time {
 			font-size: small;
-			color: GrayText;
+			color: var(--colors-fg-sub);
 		}
 
 		> div {

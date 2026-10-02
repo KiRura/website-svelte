@@ -109,7 +109,7 @@
 
 <style>
 	h1 {
-		font-family: monospace;
+		font-family: var(--fonts-mono, monospace);
 	}
 
 	.source {
