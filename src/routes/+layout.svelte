@@ -216,6 +216,7 @@
 			bottom: 0;
 			grid-row-start: 3;
 			border-top-width: 1px;
+			padding-bottom: env(safe-area-inset-bottom);
 
 			@media (pointer: none) or (pointer: fine) {
 				display: none;
