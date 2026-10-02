@@ -4,5 +4,6 @@
 		"rules": {
 			"tags": ["fresh"]
 		}
-	}
+	},
+	"preferPackageJson": true
 }

@@ -4,17 +4,36 @@
 	import { fly } from "svelte/transition";
 	import type { ResolvedPathname } from "$app/types";
 	import "../app.css";
+	import * as z from "@zod/zod/mini";
+	import { onMount } from "svelte";
 
 	let { children } = $props();
 
-	let config = $state({
-		maxWidth: 37,
-		lineHeight: 1.8,
-		paddingX: 1.2,
-		bgOled: false,
-		useBrowserFont: true,
-		liga: false,
+	const LOCALSTORAGE_KEYS = {
+		Config: "config",
+	} as const; // enum使えないらしい
+	const ConfigSchema = z.object({
+		maxWidth: z._default(z.number().check(z.nonnegative()), 37),
+		lineHeight: z._default(z.number(), 1.8),
+		paddingX: z._default(z.number(), 1.2),
+		bgOled: z._default(z.boolean(), false),
+		useBrowserFont: z._default(z.boolean(), true),
+		liga: z._default(z.boolean(), false),
 	});
+	let config = $state(ConfigSchema.parse({}));
+
+	function loadConfig() {
+		const storageConfig = localStorage.getItem(LOCALSTORAGE_KEYS.Config);
+		if (!storageConfig) return;
+
+		const loadedConfig = ConfigSchema.parse(JSON.parse(storageConfig));
+		config = loadedConfig;
+	}
+	function saveConfig() {
+		localStorage.setItem("config", JSON.stringify(config));
+	}
+
+	onMount(loadConfig);
 
 	const pages: {
 		label: string;
@@ -73,58 +92,52 @@
 		{@render Nav({ bottom: true })}
 	</div>
 	<dialog id="config" closedby="any">
-		<form
-			method="dialog"
-			onsubmit={() => {
-				for (const [key, value] of Object.entries(config)) {
-					localStorage.setItem(key, String(value));
-				}
-			}}
-		>
-			{@render CloseButton()}
-			<label>
-				本文最大横幅
-				<div class="unit">
-					<input
-						type="number"
-						bind:value={config.maxWidth}
-						min="0"
-						step="any"
-					/>
-					rem
-				</div>
-			</label>
-			<label>
-				本文両端余白
-				<div class="unit">
-					<input type="number" bind:value={config.paddingX} step="any" />
-					rem
-				</div>
-			</label>
-			<label>
-				本文行幅
-				<input type="number" bind:value={config.lineHeight} step="any" />
-			</label>
-			<label>
-				ブラックテーマ
-				<input type="checkbox" bind:checked={config.bgOled} />
-			</label>
-			<label>
-				ブラウザ指定のフォントを使う
-				<input type="checkbox" bind:checked={config.useBrowserFont} />
-			</label>
-			<label>
-				リガチャ
-				<input type="checkbox" bind:checked={config.liga} />
-			</label>
-			{@render CloseButton()}
-		</form>
-
-		{#snippet CloseButton()}
+		<form method="dialog">
+			<div class="config">
+				<label>
+					本文最大横幅
+					<div class="unit">
+						<input
+							type="number"
+							bind:value={config.maxWidth}
+							min="0"
+							step="any"
+						/>
+						rem
+					</div>
+				</label>
+				<label>
+					本文両端余白
+					<div class="unit">
+						<input type="number" bind:value={config.paddingX} step="any" />
+						rem
+					</div>
+				</label>
+				<label>
+					本文行幅
+					<input type="number" bind:value={config.lineHeight} step="any" />
+				</label>
+				<label>
+					ブラックテーマ
+					<input type="checkbox" bind:checked={config.bgOled} />
+				</label>
+				<label>
+					ブラウザ指定のフォントを使う
+					<input type="checkbox" bind:checked={config.useBrowserFont} />
+				</label>
+				<label>
+					リガチャ
+					<input type="checkbox" bind:checked={config.liga} />
+				</label>
+			</div>
 			<menu class="control">
-				<button>閉じる</button>
+				<button onclick={() => (config = ConfigSchema.parse({}))} type="button"
+					>リセット</button
+				>
+				<button onclick={loadConfig} type="button">取消</button>
+				<button onclick={saveConfig} class="save">保存</button>
 			</menu>
-		{/snippet}
+		</form>
 	</dialog>
 
 	{#snippet Nav(props?: { bottom?: boolean })}
@@ -146,7 +159,7 @@
 						)}
 
 						<li>
-							<a href={_page.href} aria-current={current}>
+							<a class="button" href={_page.href} aria-current={current}>
 								{_page.label}
 							</a>
 						</li>
@@ -261,25 +274,35 @@
 		nav {
 			overflow-x: auto;
 			scrollbar-width: thin;
+			height: 100%;
+			display: flex;
 
 			ul {
+				list-style: none;
 				display: flex;
-				align-items: center;
-				gap: 2rem;
+				width: fit-content;
 				white-space: nowrap;
 				padding-inline-start: 0;
-				list-style-position: inside;
-				padding-left: var(--limited-padding-x);
-				padding-right: var(--limited-padding-x);
+				margin-block: 0;
 
 				> li {
-					a {
+					flex: 1;
+					display: flex;
+					a.button {
 						color: var(--colors-fg-brand);
 						text-decoration: none;
+						border-width: 0;
+						border-radius: 0;
+						padding-inline: 1rem;
+
+						&:not([aria-current]) {
+							background-color: transparent;
+						}
 
 						&[aria-current] {
 							font-weight: bold;
 							text-decoration: revert;
+							color: var(--colors-fg);
 						}
 					}
 				}
@@ -292,22 +315,63 @@
 		}
 	}
 
-	dialog > form {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-
-		> label {
-			display: flex;
-			justify-content: space-between;
-			gap: 0.5rem;
+	dialog {
+		&,
+		&::backdrop {
+			animation: fade-in 0.25s;
 		}
 
-		.unit {
+		&::backdrop {
+			backdrop-filter: var(--blur);
+		}
+
+		border-radius: 8px;
+	}
+
+	dialog > form {
+		.config {
 			display: flex;
-			align-items: center;
-			gap: 0.2rem;
-			justify-content: end;
+			flex-direction: column;
+			gap: 1rem;
+			row-rule-width: 1px;
+
+			> label {
+				display: flex;
+				justify-content: space-between;
+				input {
+					margin-inline-start: auto;
+				}
+				&:not(:has(input[type="checkbox"])) {
+					flex-wrap: wrap;
+				}
+				column-gap: 2rem;
+				row-gap: 0.5rem;
+			}
+
+			.unit {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: end;
+				justify-content: end;
+				margin-left: auto;
+				column-gap: 0.25rem;
+			}
+		}
+
+		.control {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			margin-block-end: 0;
+
+			.save {
+				flex: 1;
+				min-width: 33%;
+				color-scheme: dark;
+				@media (prefers-color-scheme: dark) {
+					color-scheme: light;
+				}
+			}
 		}
 	}
 

@@ -79,6 +79,7 @@
 		display: flex;
 		flex-direction: column;
 		row-rule-width: 1px;
+		row-rule-style: dashed;
 		gap: 2rem;
 	}
 

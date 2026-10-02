@@ -4,13 +4,16 @@
 
 @layer tokens {
 	:root {
-		--colors-brand: hsl(14.62, 96.39%, 67.45%);
+		--colors-brand: hsl(14.62 96.39% 67.45%);
 
 		--colors-bg-light: hsl(from var(--colors-brand) h 7% 93%);
 		--colors-bg-dark: hsl(from var(--colors-brand) h 7% 7%);
 		--colors-bg: light-dark(var(--colors-bg-light), var(--colors-bg-dark));
 		&:has([data-bg-oled]) {
-			--colors-bg: light-dark(var(--colors-bg-light), #000);
+			--colors-bg: light-dark(
+				var(--colors-bg-light),
+				hsl(from var(--colors-bg-dark) h s 0)
+			);
 		}
 		--colors-bg-surface: light-dark(
 			hsl(from var(--colors-bg) h s calc(l - 17)),
@@ -36,6 +39,11 @@
 		--fonts-heading: sans-serif;
 		--fonts-body: sans-serif;
 		--fonts-mono: monospace;
+
+		--blur: blur(8px);
+		@media (prefers-reduced-transparency: reduce) {
+			--blur: blur(0);
+		}
 
 		&:has([data-use-font]) {
 			--fonts-heading: "IBM Plex Sans JP", "Noto Sans JP", sans-serif;
@@ -74,9 +82,16 @@
 		border-inline-color: var(--colors-border);
 		column-rule-color: var(--colors-border);
 		row-rule-color: var(--colors-border);
+		outline-color: var(--colors-fg-sub);
+		outline-offset: 3px;
 
 		:not(body) {
 			margin: revert;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			animation-duration: 0s !important;
+			transition-duration: 0s !important;
 		}
 	}
 
@@ -86,9 +101,10 @@
 	}
 
 	a,
-	button {
+	button,
+	.button {
 		&:not(:active) {
-			transition: transform 0.25s;
+			transition-duration: 0.25s;
 		}
 
 		&:active {
@@ -96,10 +112,18 @@
 		}
 	}
 
-	button {
+	button,
+	.button {
 		border-width: 1px;
 		border-color: var(--colors-border-surface);
 		background-color: var(--colors-bg-surface);
+		color: var(--colors-fg);
+		border-radius: 4px;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.2rem 0.8rem;
 
 		&:active {
 			background-color: var(--colors-border-surface);
@@ -120,7 +144,7 @@
 
 	dialog {
 		border-width: 1px;
-		padding: 1rem;
+		padding: revert;
 		background-color: var(--colors-bg);
 		color: var(--colors-fg);
 	}
