@@ -2,7 +2,7 @@ import * as z from "@zod/zod";
 import type { RequestHandler } from "./$types";
 import { StatusCodes } from "http-status-codes";
 import { Feed } from "feed";
-import { getPosts, type PostWithContent } from "$lib/server/cms";
+import { getPosts, type PostWithContent } from "#lib/server/cms/index.js";
 import { TYPES } from "./types";
 
 export const GET: RequestHandler = async ({ url, params }) => {

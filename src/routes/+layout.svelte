@@ -35,22 +35,10 @@
 
 	onMount(loadConfig);
 
-	const pages: {
-		label: string;
-		href: ResolvedPathname;
-	}[] = [
-		{
-			label: "Top",
-			href: resolve("/"),
-		},
-		{
-			label: "呟き",
-			href: resolve("/posts"),
-		},
-		{
-			label: "概要",
-			href: resolve("/about"),
-		},
+	const pages: { label: string; href: ResolvedPathname }[] = [
+		{ label: "Top", href: resolve("/") },
+		{ label: "呟き", href: resolve("posts") },
+		{ label: "概要", href: resolve("about") },
 	];
 </script>
 
@@ -134,6 +122,7 @@
 				<button onclick={() => (config = ConfigSchema.parse({}))} type="button"
 					>初期化</button
 				>
+
 				<button onclick={loadConfig} type="button">取消</button>
 				<button onclick={saveConfig} class="save">保存</button>
 			</menu>
