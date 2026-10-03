@@ -1,4 +1,4 @@
-import z from "zod";
+import * as z from "@zod/zod";
 import type { RequestHandler } from "./$types";
 import { StatusCodes } from "http-status-codes";
 import { Feed } from "feed";
