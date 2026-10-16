@@ -13,6 +13,7 @@
 		Config: "config",
 	} as const; // enum使えないらしい
 	const ConfigSchema = z.object({
+		SPA: z._default(z.boolean(), true),
 		maxWidth: z._default(z.number().check(z.nonnegative()), 37),
 		lineHeight: z._default(z.number(), 1.8),
 		paddingX: z._default(z.number(), 1.2),
@@ -62,6 +63,7 @@
 <!-- https://github.com/sveltejs/svelte/issues/16071 -->
 <css-prop
 	style:display="contents"
+	data-sveltekit-reload={!config.SPA || undefined}
 	style:--max-width="{config.maxWidth}rem"
 	style:--line-height={config.lineHeight}
 	style:--padding-x="{config.paddingX}rem"
@@ -82,6 +84,10 @@
 	<dialog id="config" closedby="any">
 		<form method="dialog">
 			<div class="config">
+				<label>
+					SPAナビゲーション
+					<input type="checkbox" bind:checked={config.SPA} />
+				</label>
 				<label>
 					本文最大横幅
 					<div class="unit">
