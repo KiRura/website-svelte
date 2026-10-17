@@ -84,10 +84,12 @@
 	<dialog id="config" closedby="any">
 		<form method="dialog">
 			<div class="config">
+				<h2>動作</h2>
 				<label>
 					SPAナビゲーション
 					<input type="checkbox" bind:checked={config.SPA} />
 				</label>
+				<h2>外観</h2>
 				<label>
 					本文最大横幅
 					<div class="unit">
@@ -327,10 +329,17 @@
 		.config {
 			display: flex;
 			flex-direction: column;
-			gap: 1rem;
-			row-rule-width: 1px;
+
+			> h2:first-child {
+				margin-block-start: 0;
+			}
 
 			> label {
+				margin-inline: 0.5rem;
+				padding-block: 0.5rem;
+				&:not(:last-child, :has(+ h2)) {
+					border-bottom-width: 1px;
+				}
 				display: flex;
 				justify-content: space-between;
 				input {

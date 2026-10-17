@@ -15,8 +15,7 @@
 			{@render time(data.post.publishedAt, "公開")}
 		{/if}
 		{#if data.post.publishedAt !== data.post.updatedAt}
-			<br />
-			{@render time(data.post.updatedAt, "更新")}
+			, {@render time(data.post.updatedAt, "更新")}
 		{/if}
 	</p>
 
@@ -30,25 +29,27 @@
 		</time>
 	{/snippet}
 
-	{#if data.post.subtitle !== undefined}
-		<hgroup>
+	<div class="heading">
+		{#if data.post.subtitle !== undefined}
+			<hgroup>
+				<h1>{data.post.title}</h1>
+				<p>{data.post.subtitle}</p>
+			</hgroup>
+		{:else}
 			<h1>{data.post.title}</h1>
-			<p>{data.post.subtitle}</p>
-		</hgroup>
-	{:else}
-		<h1>{data.post.title}</h1>
-	{/if}
+		{/if}
 
-	{#if data.post.coverImage}
-		{const img = data.post.coverImage}
-		<img
-			src="{img.url}?fm=webp"
-			alt={img.alt}
-			width={img.width}
-			height={img.height}
-			fetchpriority="high"
-		/>
-	{/if}
+		{#if data.post.coverImage}
+			{const img = data.post.coverImage}
+			<img
+				src="{img.url}?fm=webp"
+				alt={img.alt}
+				width={img.width}
+				height={img.height}
+				fetchpriority="high"
+			/>
+		{/if}
+	</div>
 
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html data.post.content}
@@ -56,8 +57,18 @@
 
 <style>
 	hgroup {
-		p {
+		h1 + p {
 			font-style: italic;
+			color: var(--colors-fg-sub);
+		}
+	}
+
+	.heading {
+		border-block-end-width: 1px;
+		border-style: dashed;
+
+		img {
+			margin-block-end: 1rem;
 		}
 	}
 </style>
