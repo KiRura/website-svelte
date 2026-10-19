@@ -1,7 +1,7 @@
 <script lang="ts">
 	const links: {
 		label: string;
-		href: string;
+		href: `${string}:${string}`;
 		description?: string;
 		main?: boolean;
 	}[] = [
@@ -70,18 +70,27 @@
 	</header>
 	<main>
 		<section>
-			<hgroup>
-				<h2>リンク集</h2>
-				<p>新しいタブで開きます</p>
-			</hgroup>
+			<h2>リンク集</h2>
 			<h3>主要連絡先</h3>
-			<ul>
+			<dl>
 				{@render Links(links.filter((link) => link.main))}
-			</ul>
+			</dl>
 			<h3>その他</h3>
-			<ul>
+			<dl>
 				{@render Links(links.filter((link) => !link.main))}
-			</ul>
+			</dl>
+		</section>
+		<section>
+			<h2>物置</h2>
+			<dl>
+				<dt>
+					<a
+						href="https://music.youtube.com/playlist?list=PLfBfS6MX0Qv0"
+						target="_blank">プレイリスト</a
+					>
+				</dt>
+				<dd>そこはかとなく、順番に意味がある</dd>
+			</dl>
 		</section>
 		<p>
 			<a
@@ -98,11 +107,9 @@
 {#snippet Links(_links: typeof links)}
 	{#each _links as link (link.href)}
 		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-		<li><a href={link.href} target="_blank">{link.label}</a></li>
+		<dt><a href={link.href} target="_blank">{link.label}</a></dt>
 		{#if link.description !== undefined}
-			<ul>
-				<li>{link.description}</li>
-			</ul>
+			<dd>{link.description}</dd>
 		{/if}
 	{/each}
 {/snippet}
