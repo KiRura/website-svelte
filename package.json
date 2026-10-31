@@ -15,11 +15,11 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
-		"@sveltejs/adapter-node": "^6.0.0",
+		"@sveltejs/adapter-node": "^6.0.1",
 		"@sveltejs/enhanced-img": "^1.0.0",
-		"@sveltejs/kit": "^3.1.0",
+		"@sveltejs/kit": "^3.1.1",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
-		"@types/node": "^26.6.5",
+		"@types/node": "^26.6.6",
 		"date-fns": "^4.4.0",
 		"eslint": "^10.13.0",
 		"eslint-config-prettier": "^10.1.8",
@@ -28,10 +28,10 @@
 		"kiso.css": "^1.2.4",
 		"prettier": "^3.9.10",
 		"prettier-plugin-svelte": "^4.1.1",
-		"svelte": "^5.57.2",
+		"svelte": "^5.57.3",
 		"svelte-check": "^4.7.7",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.72.0",
+		"typescript-eslint": "^8.72.1",
 		"vite": "^8.3.5"
 	},
 	"dependencies": {
