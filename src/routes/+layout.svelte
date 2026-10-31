@@ -64,7 +64,7 @@
 <css-prop
 	style:display="contents"
 	data-sveltekit-reload={!config.SPA || undefined}
-	data-sveltekit-preload-data={config.SPA || false}
+	data-sveltekit-preload-data={config.SPA ? "hover" : false}
 	style:--max-width="{config.maxWidth}rem"
 	style:--line-height={config.lineHeight}
 	style:--padding-x="{config.paddingX}rem"
