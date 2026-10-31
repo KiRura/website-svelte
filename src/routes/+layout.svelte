@@ -64,6 +64,7 @@
 <css-prop
 	style:display="contents"
 	data-sveltekit-reload={!config.SPA || undefined}
+	data-sveltekit-preload-data={config.SPA || false}
 	style:--max-width="{config.maxWidth}rem"
 	style:--line-height={config.lineHeight}
 	style:--padding-x="{config.paddingX}rem"
