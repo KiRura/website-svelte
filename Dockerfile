@@ -1,7 +1,7 @@
 FROM node:26 AS base
 RUN apt update
 RUN apt install -y curl wget
-RUN wget -qO- https://get.pnpm.io | env ENV="$HOME/.shrc" SHELL="$(which sh)" sh -
+RUN wget -qO- https://get.pnpm.io | env ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
 
 FROM base AS build
 
