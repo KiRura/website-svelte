@@ -1,22 +1,20 @@
-FROM denoland/deno:latest AS base
+FROM node:26 AS base
 RUN apt update
-RUN apt install -y curl
+RUN apt install -y curl wget
+RUN wget -qO- https://get.pnpm.io | env ENV="$HOME/.shrc" SHELL="$(which sh)" sh -
 
 FROM base AS build
 
 WORKDIR /app
 COPY . .
-RUN deno ci
-RUN deno task build
+RUN pnpm ci
+RUN pnpm build
 
 FROM base AS run
 WORKDIR /app
 COPY --from=build /app/build ./build
 
-COPY package.json deno.json deno.lock ./
-RUN deno ci --prod
+COPY package.json pnpm-* ./
+RUN pnpm ci --prod
 
-COPY entrypoint.sh .
-RUN chmod +x ./entrypoint.sh
-
-ENTRYPOINT [ "./entrypoint.sh" ]
+CMD [ "node", "./build/index.js" ]

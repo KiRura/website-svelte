@@ -1,9 +1,0 @@
-{
-	"allowScripts": ["npm:fsevents@2.3.3", "npm:sharp@0.34.5"],
-	"lint": {
-		"rules": {
-			"tags": ["fresh"]
-		}
-	},
-	"preferPackageJson": true
-}
