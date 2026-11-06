@@ -12,8 +12,14 @@
 	const LOCALSTORAGE_KEYS = {
 		Config: "config",
 	} as const; // enum使えないらしい
+	const WRITING_MODES = new Map([
+		["horizontal", "横書き"] as const,
+		["vertical", "縦書き"] as const,
+	]);
+
 	const ConfigSchema = z.object({
 		SPA: z._default(z.boolean(), true),
+		writingMode: z._default(z.literal([...WRITING_MODES.keys()]), "horizontal"),
 		maxWidth: z._default(z.number().check(z.nonnegative()), 37),
 		lineHeight: z._default(z.number(), 1.8),
 		paddingX: z._default(z.number(), 1.2),
@@ -72,6 +78,7 @@
 	data-bg-oled={config.bgOled || undefined}
 	data-use-font={!config.useBrowserFont || undefined}
 	data-liga={config.liga || undefined}
+	data-vertical={config.writingMode === "vertical" || undefined}
 >
 	<div class="root">
 		{@render Nav()}
@@ -91,6 +98,14 @@
 					<input type="checkbox" bind:checked={config.SPA} />
 				</label>
 				<h2>外観</h2>
+				<label>
+					組方向 (試験的)
+					<select bind:value={config.writingMode}>
+						{#each WRITING_MODES as [mode, text] (mode)}
+							<option value={mode}>{text}</option>
+						{/each}
+					</select>
+				</label>
 				<label>
 					本文最大横幅
 					<div class="unit">
@@ -175,9 +190,9 @@
 
 <style>
 	.root {
-		min-height: 100vh;
+		min-block-size: auto;
 		display: grid;
-		grid-template-rows: fit-content(100%) 1fr fit-content(100%);
+		grid-template-rows: auto 1fr auto;
 
 		/* @media (pointer: coarse) and (orientation: landscape) {
 			grid-template-columns: fit-content(100%) 1fr fit-content(100%);
@@ -205,9 +220,9 @@
 		z-index: 1;
 
 		&:not([data-is-bottom]) {
-			top: 0;
+			inset-block-start: 0;
 			grid-row-start: 1;
-			border-bottom-width: 1px;
+			border-block-end-width: 1px;
 
 			@media (pointer: coarse) {
 				/* @media (orientation: landscape) {
@@ -224,9 +239,9 @@
 		}
 
 		&[data-is-bottom] {
-			bottom: 0;
+			inset-block-end: 0;
 			grid-row-start: 3;
-			border-top-width: 1px;
+			border-block-start-width: 1px;
 			padding-bottom: env(safe-area-inset-bottom);
 
 			@media (pointer: none) or (pointer: fine) {
@@ -244,21 +259,19 @@
 		}
 
 		display: grid;
-		grid-template-columns: fit-content(100%) 1fr fit-content(100%);
+		grid-template-columns: auto 1fr auto;
 		/* @media (pointer: coarse) and (orientation: landscape) {
 			grid-template-rows: fit-content(100%) 1fr fit-content(100%);
 			grid-template-columns: none;
 			height: 100dvh;
 		} */
 		column-rule-width: 1px;
-		row-rule-width: 1px;
 		align-items: center;
 
 		.icon {
 			border-radius: 100vmax;
-			height: 2rem;
-			margin-left: var(--limited-padding-x);
-			margin-right: var(--limited-padding-x);
+			block-size: 2rem;
+			margin-inline: var(--limited-padding-x);
 			animation-duration: 1s;
 			animation-iteration-count: infinite;
 			animation-timing-function: linear;
@@ -270,15 +283,15 @@
 		}
 
 		nav {
-			overflow-x: auto;
+			overflow-inline: auto;
 			scrollbar-width: thin;
-			height: 100%;
+			block-size: 100%;
 			display: flex;
 
 			ul {
 				list-style: none;
 				display: flex;
-				width: fit-content;
+				inline-size: fit-content;
 				white-space: nowrap;
 				padding-inline-start: 0;
 				margin-block: 0;
@@ -308,8 +321,7 @@
 		}
 
 		menu {
-			padding-right: var(--limited-padding-x);
-			padding-left: var(--limited-padding-x);
+			padding-inline: var(--limited-padding-x);
 		}
 	}
 
@@ -339,7 +351,7 @@
 				margin-inline: 0.5rem;
 				padding-block: 0.5rem;
 				&:not(:last-child, :has(+ h2)) {
-					border-bottom-width: 1px;
+					border-block-end-width: 1px;
 				}
 				display: flex;
 				justify-content: space-between;
@@ -358,7 +370,7 @@
 				flex-wrap: wrap;
 				align-items: end;
 				justify-content: end;
-				margin-left: auto;
+				margin-inline-start: auto;
 				column-gap: 0.25rem;
 			}
 		}

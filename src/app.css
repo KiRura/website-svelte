@@ -67,6 +67,10 @@
 		&:has([data-liga]) {
 			font-feature-settings: "calt", "liga";
 		}
+
+		&:has([data-vertical]) {
+			writing-mode: vertical-rl;
+		}
 	}
 
 	* {
@@ -123,7 +127,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 0.2rem 0.8rem;
+		padding-block: 0.2rem;
+		padding-inline: 0.8rem;
 
 		&:active {
 			background-color: var(--colors-border-surface);
@@ -168,12 +173,10 @@
 	}
 
 	.container {
-		max-width: calc(var(--max-width) + var(--padding-x) * 2);
-		min-height: 100%;
-		margin-left: auto;
-		margin-right: auto;
-		padding-left: var(--padding-x);
-		padding-right: var(--padding-x);
+		max-inline-size: calc(var(--max-width) + var(--padding-x) * 2);
+		min-block-size: auto;
+		margin-inline: auto;
+		padding-inline: var(--padding-x);
 
 		line-height: var(--line-height);
 
