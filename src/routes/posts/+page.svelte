@@ -100,8 +100,9 @@
 		}
 
 		> img {
-			width: min(8rem, 25%);
-			height: auto;
+			inline-size: min(8rem, 25%);
+			block-size: auto;
+			margin-block: 1rem;
 			aspect-ratio: 1 / 1;
 			object-fit: cover;
 		}
