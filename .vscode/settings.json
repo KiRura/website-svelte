@@ -1,5 +1,6 @@
 {
 	"[json][jsonc][typescript][javascript][svelte][yaml]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	}
+	},
+	"svelte.plugin.typescript.enable": true
 }
