@@ -23,7 +23,7 @@
 		"date-fns": "^4.4.0",
 		"eslint": "^10.13.0",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-svelte": "^3.23.1",
+		"eslint-plugin-svelte": "^3.24.1",
 		"globals": "^17.13.0",
 		"kiso.css": "^1.2.4",
 		"prettier": "^3.9.10",
