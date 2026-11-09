@@ -20,8 +20,9 @@
 			</li>
 			<li>Chromiumブラウザではあらゆる色について指定できない</li>
 			<li>
-				Firefox系ブラウザでは大体のものは<a href="about:config" target="_blank"
-					>about:config</a
+				Firefox系ブラウザでは大体のものは<a
+					href="about:config"
+					target="_blank">about:config</a
 				>で指定できるので比較的良心的
 			</li>
 			<ul>

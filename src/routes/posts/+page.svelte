@@ -56,7 +56,9 @@
 
 				{#snippet TitleLink()}
 					<h2>
-						<a href={resolve("/posts/[id]", { id: post.id })}>{post.title}</a>
+						<a href={resolve("/posts/[id]", { id: post.id })}
+							>{post.title}</a
+						>
 					</h2>
 				{/snippet}
 			</div>

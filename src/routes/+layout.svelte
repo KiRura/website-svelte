@@ -19,7 +19,10 @@
 
 	const ConfigSchema = z.object({
 		SPA: z._default(z.boolean(), true),
-		writingMode: z._default(z.literal([...WRITING_MODES.keys()]), "horizontal"),
+		writingMode: z._default(
+			z.literal([...WRITING_MODES.keys()]),
+			"horizontal",
+		),
 		maxWidth: z._default(z.number().check(z.nonnegative()), 37),
 		lineHeight: z._default(z.number(), 1.8),
 		paddingX: z._default(z.number(), 1.2),
@@ -121,7 +124,11 @@
 				<label>
 					本文両端余白
 					<div class="unit">
-						<input type="number" bind:value={config.paddingX} step="any" />
+						<input
+							type="number"
+							bind:value={config.paddingX}
+							step="any"
+						/>
 						rem
 					</div>
 				</label>
@@ -143,8 +150,9 @@
 				</label>
 			</div>
 			<menu class="control">
-				<button onclick={() => (config = ConfigSchema.parse({}))} type="button"
-					>初期化</button
+				<button
+					onclick={() => (config = ConfigSchema.parse({}))}
+					type="button">初期化</button
 				>
 
 				<button onclick={loadConfig} type="button">取消</button>
@@ -167,8 +175,9 @@
 						{let current = $derived(
 							(_page.href === "/"
 								? page.route.id === "/"
-								: page.route.id?.startsWith(_page.href.split("#")[0])) ||
-								undefined,
+								: page.route.id?.startsWith(
+										_page.href.split("#")[0],
+									)) || undefined,
 						)}
 
 						<li>
